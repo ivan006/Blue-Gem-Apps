@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+use App\Http\Resources\User as UserResource;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +13,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Route::get('/phpversion', function () {
+  echo phpversion();
 });
+
+Route::resource('/example','example');
+Route::get('/blogEdit/{a?}/{b?}', 'blog@edit');
+Route::post('/blog/{a?}/{b?}', 'blog@store');
+Route::get('/blog/{a?}/{b?}', 'blog@show')->middleware('ivans');;
+Route::get('/blogApi/{a?}/{b?}/{c?}/{d?}', 'blogApi@show');
