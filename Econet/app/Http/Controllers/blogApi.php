@@ -51,7 +51,7 @@ class blogApi extends Controller
 
 
           if (1==1) {
-            $dir = '../public/images';
+            $dir = "../public/images";
             function dirToArray($dir) {
               $result = array();
               $cdir = scandir($dir);

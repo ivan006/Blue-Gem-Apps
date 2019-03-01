@@ -6,19 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class blogM extends Model
 {
-  public static function ViewPagePath($a,$b){
+  public static function ViewPageLocation($dir,$a,$b){
     $s = "/";
+    $root= $dir;
     if (isset($b)) {
-      $ViewPagePath = $s.$a.$s.$b;
-      return $ViewPagePath;
+      $ViewPageLocation = $s.$a.$s.$b;
+      if (is_dir($root.$ViewPageLocation)) {
+        return $ViewPageLocation;
+      } else {
+        return null;
+      }
     } elseif (isset($a)) {
-      $ViewPagePath = $s.$a;
-      return  $ViewPagePath;
+      $ViewPageLocation = $s.$a;
+      if (is_dir($root.$ViewPageLocation)) {
+        return $ViewPageLocation;
+      } else {
+        return null;
+      }
     } else {
-      $ViewPagePath = null;
-      return  $ViewPagePath;
+      return  null;
     }
   }
+
+
 
 
 
@@ -38,7 +48,7 @@ class blogM extends Model
     return  $result;
   }
 
-  public static function ViewPageList($dir) {
+  public static function ViewPagesLocations($dir,$staticdir) {
     $result = array();
     $cdir = scandir($dir);
     foreach ($cdir as $key => $value) {
@@ -49,11 +59,11 @@ class blogM extends Model
           $a1 = array(".","..","smart","rich.txt");
           $dif = array_diff_key($sub_sub_dirs,$a1);
           if (!empty($dif)) {
-            $result[$value] = self::ViewPageList($sub_dir);
-            $url = str_replace("../public/images/", "", $sub_dir);
+            $result[$value] = self::ViewPagesLocations($sub_dir,$staticdir);
+            $url = str_replace($staticdir."/", "", $sub_dir);
             $result[$value]["url"] = url('/')."/blog/".$url;
           } else {
-            $url = str_replace("../public/images/", "", $sub_dir);
+            $url = str_replace($staticdir."/", "", $sub_dir);
             $result[$value] = url('/')."/blog/".$url;
           }
         }
@@ -64,8 +74,8 @@ class blogM extends Model
   public static function SavePageContent($dir) {
 
   }
-  public static function ViewPagesDir($dir) {
-
+  public static function ViewPagesLocationBase() {
+    return "../public/images";
   }
 
 

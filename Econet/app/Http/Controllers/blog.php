@@ -36,20 +36,20 @@ class blog extends Controller
     public function store(Request $request, $a=null, $b=null)
     {
       if (1==1) {
-        $ViewPageContentDir = "../public/images".blogM::ViewPagePath($a,$b);
+        $ViewPageContentLocation = blogM::ViewPagesLocationBase().blogM::ViewPageLocation($dir,$a,$b);
 
         $s = "/";
         $filename =  $request->get('file');
-        $file =  $ViewPageContentDir.$s.$filename;
+        $file =  $ViewPageContentLocation.$s.$filename;
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
         file_put_contents($file,$contents);
       }
 
-      $ViewPagePathView = "blog".blogM::ViewPagePath($a,$b);
-      $ViewPagePathEdit = "blogEdit".blogM::ViewPagePath($a,$b);
-      return redirect('/'.$ViewPagePathEdit);
+      $ViewPageLocationMode1 = "blog".blogM::ViewPageLocation($dir,$a,$b);
+      $ViewPageLocationMode2 = "blogEdit".blogM::ViewPageLocation($dir,$a,$b);
+      return redirect('/'.$ViewPageLocationMode2);
     }
 
     /**
@@ -59,28 +59,28 @@ class blog extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($a=null, $b=null){
-      // ViewPageList start
+      // ViewPagesLocations start
         if (1==1) {
-          $dir = '../public/images';
-          $ViewPageList = blogM::ViewPageList($dir);
+          $dir = blogM::ViewPagesLocationBase();
+          $ViewPagesLocations = blogM::ViewPagesLocations($dir,$dir);
         }
-      // ViewPageList end
+      // ViewPagesLocations end
       if (1==1) {
-        $ViewPageContentDir = "../public/images".blogM::ViewPagePath($a,$b);
+        $ViewPageContentLocation = blogM::ViewPagesLocationBase().blogM::ViewPageLocation($dir,$a,$b);
 
 
 
-        $ViewPageContent = blogM::ViewPageContent($ViewPageContentDir);
+        $ViewPageContent = blogM::ViewPageContent($ViewPageContentLocation);
 
       }
 
 
       // $dir = blogM::ViewPageModes($a,$b)["dir"];
       // $dir2 = blogM::ViewPageModes($a,$b)["dir2"];
-      $ViewPagePathView = "blog".blogM::ViewPagePath($a,$b);
-      $ViewPagePathEdit = "blogEdit".blogM::ViewPagePath($a,$b);
+      $ViewPageLocationMode1 = "blog".blogM::ViewPageLocation($dir,$a,$b);
+      $ViewPageLocationMode2 = "blogEdit".blogM::ViewPageLocation($dir,$a,$b);
 
-      return view('view', compact('ViewPageContent','ViewPageList', 'a', 'b', 'ViewPagePathView', 'ViewPagePathEdit'));
+      return view('view', compact('ViewPageContent','ViewPagesLocations', 'a', 'b', 'ViewPageLocationMode1', 'ViewPageLocationMode2'));
     }
 
 
@@ -95,24 +95,24 @@ class blog extends Controller
       // menu start
 
         if (1==1) {
-          $dir = '../public/images';
+          $dir = blogM::ViewPagesLocationBase();
 
-          $ViewPageList = blogM::ViewPageList($dir);
+          $ViewPagesLocations = blogM::ViewPagesLocations($dir,$dir);
         }
       // menu end
       if (1==1) {
 
-        $ViewPageContentDir = "../public/images".blogM::ViewPagePath($a,$b);
+        $ViewPageContentLocation = blogM::ViewPagesLocationBase().blogM::ViewPageLocation($dir,$a,$b);
 
-        $ViewPageContent = blogM::ViewPageContent($ViewPageContentDir);
+        $ViewPageContent = blogM::ViewPageContent($ViewPageContentLocation);
       }
 
 
-      $ViewPagePathView = "blog".blogM::ViewPagePath($a,$b);
-      $ViewPagePathEdit = "blogEdit".blogM::ViewPagePath($a,$b);
+      $ViewPageLocationMode1 = "blog".blogM::ViewPageLocation($dir,$a,$b);
+      $ViewPageLocationMode2 = "blogEdit".blogM::ViewPageLocation($dir,$a,$b);
 
 
-      return view('edit', compact('ViewPageContent','ViewPageList', 'a', 'b', 'ViewPagePathView', 'ViewPagePathEdit'));
+      return view('edit', compact('ViewPageContent','ViewPagesLocations', 'a', 'b', 'ViewPageLocationMode1', 'ViewPageLocationMode2'));
     }
 
     /**

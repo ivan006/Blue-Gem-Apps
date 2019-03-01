@@ -54,11 +54,11 @@
     <?php }?>
     </ul>
   <?php }?>
-  <?php ivan($ViewPageList) ?>
+  <?php ivan($ViewPagesLocations) ?>
 </div>
 <br>
 
-<a href="{{ URL::asset($ViewPagePathEdit) }}">edit</a>
+<a href="{{ URL::asset($ViewPageLocationMode2) }}">edit</a>
 <br>
 <div class="" style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;">
 
