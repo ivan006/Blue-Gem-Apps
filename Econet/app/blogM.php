@@ -6,51 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class blogM extends Model
 {
-  public static function ViewPageModes($a,$b){
+  public static function ViewPagePath($a,$b){
     $s = "/";
-    $prefix = "blog";
-    $suffix = "Edit";
     if (isset($b)) {
-      $dir = $prefix.$s.$a.$s.$b;
-      $dir2 = $prefix.$suffix.$s.$a.$s.$b;
-      return  array("dir" =>$dir, "dir2" => $dir2);
+      $ViewPagePath = $s.$a.$s.$b;
+      return $ViewPagePath;
     } elseif (isset($a)) {
-      $dir = $prefix.$s.$a;
-      $dir2 = $prefix.$suffix.$s.$a;
-      return  array("dir" =>$dir, "dir2" => $dir2);
+      $ViewPagePath = $s.$a;
+      return  $ViewPagePath;
     } else {
-      $dir = $prefix;
-      $dir2 = $prefix.$suffix;
-      return  array("dir" =>$dir, "dir2" => $dir2);
+      $ViewPagePath = null;
+      return  $ViewPagePath;
     }
   }
 
-  public static function ViewPageContentDir($a,$b){
-    $s = "/";
-    $root= '../public/images';
-    if (isset($b)) {
-      $dir = $root.$s.$a.$s.$b;
-      if (is_dir($dir)) {
-        return $dir;
-      } else {
-        return $root;
-      }
-    } elseif (isset($a)) {
-      $dir = $root.$s.$a;
-      if (is_dir($dir)) {
-        return $dir;
-      } else {
-        return $root;
-      }
-    } else {
-      $dir = $root;
-      if (is_dir($dir)) {
-        return $dir;
-      } else {
-        return $root;
-      }
-    }
-  }
+
+
   public static function ViewPageContent($dir) {
     $result = array();
     $cdir = scandir($dir);

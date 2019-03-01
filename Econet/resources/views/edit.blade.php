@@ -54,25 +54,25 @@
     <?php }?>
     </ul>
   <?php }?>
-  <?php ivan($ivan1) ?>
+  <?php ivan($ViewPageList) ?>
 </div>
 <br>
 
 
-<a href="{{ URL::asset($dir) }}">view</a>
+<a href="{{ URL::asset($ViewPagePathView) }}">view</a>
 <br>
 <h1>Rich Data</h1>
 
 
- <form class="" action="{{ URL::asset($dir)}}" method="post">
+ <form class="" action="{{ URL::asset($ViewPagePathView)}}" method="post">
    <!-- surname 1: [r]Education/Destiny Code/smart/surname.txt[/r]<br>  surname 2: [r]Education/Graft Your Garden/smart/surname.txt[/r]<br>      -->
 
    {{csrf_field()}}
    <input type="submit" name="submit" value="Submit">
    <textarea class="" name="contents"  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php
      $rich = 'rich.txt';
-     if (isset($ivan2[$rich])) {
-       echo $ivan2[$rich];
+     if (isset($ViewPageContent[$rich])) {
+       echo $ViewPageContent[$rich];
      }
      ?></textarea>
    <input style="display: none;" type="text"  name="file" value="<?php echo $rich; ?>"  placeholder="Enter title">
@@ -94,7 +94,7 @@
 
 <?php
 $ivan3 = array();
-$ivan3["smart"] = $ivan2['smart'];
+$ivan3["smart"] = $ViewPageContent['smart'];
 $ivan_json =  json_encode($ivan3);?>
 var myjson = <?php echo $ivan_json; ?>;
 var opt = {

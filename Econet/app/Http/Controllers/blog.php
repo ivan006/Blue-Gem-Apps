@@ -36,20 +36,20 @@ class blog extends Controller
     public function store(Request $request, $a=null, $b=null)
     {
       if (1==1) {
-        $dir = blogM::ViewPageContentDir($a,$b);
+        $ViewPageContentDir = "../public/images".blogM::ViewPagePath($a,$b);
 
         $s = "/";
         $filename =  $request->get('file');
-        $file =  $dir.$s.$filename;
+        $file =  $ViewPageContentDir.$s.$filename;
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
         file_put_contents($file,$contents);
       }
 
-      $dir = blogM::ViewPageModes($a,$b)["dir"];
-      $dir2 = blogM::ViewPageModes($a,$b)["dir2"];
-      return redirect('/'.$dir2);
+      $ViewPagePathView = "blog".blogM::ViewPagePath($a,$b);
+      $ViewPagePathEdit = "blogEdit".blogM::ViewPagePath($a,$b);
+      return redirect('/'.$ViewPagePathEdit);
     }
 
     /**
@@ -62,23 +62,25 @@ class blog extends Controller
       // ViewPageList start
         if (1==1) {
           $dir = '../public/images';
-          $ivan1 = blogM::ViewPageList($dir);
+          $ViewPageList = blogM::ViewPageList($dir);
         }
       // ViewPageList end
       if (1==1) {
-        $dir = blogM::ViewPageContentDir($a,$b);
+        $ViewPageContentDir = "../public/images".blogM::ViewPagePath($a,$b);
 
 
 
-        $ivan2 = blogM::ViewPageContent($dir);
+        $ViewPageContent = blogM::ViewPageContent($ViewPageContentDir);
 
       }
 
 
-      $dir = blogM::ViewPageModes($a,$b)["dir"];
-      $dir2 = blogM::ViewPageModes($a,$b)["dir2"];
+      // $dir = blogM::ViewPageModes($a,$b)["dir"];
+      // $dir2 = blogM::ViewPageModes($a,$b)["dir2"];
+      $ViewPagePathView = "blog".blogM::ViewPagePath($a,$b);
+      $ViewPagePathEdit = "blogEdit".blogM::ViewPagePath($a,$b);
 
-      return view('view', compact('ivan2','ivan1', 'a', 'b', 'dir', 'dir2'));
+      return view('view', compact('ViewPageContent','ViewPageList', 'a', 'b', 'ViewPagePathView', 'ViewPagePathEdit'));
     }
 
 
@@ -95,21 +97,22 @@ class blog extends Controller
         if (1==1) {
           $dir = '../public/images';
 
-          $ivan1 = blogM::ViewPageList($dir);
+          $ViewPageList = blogM::ViewPageList($dir);
         }
       // menu end
       if (1==1) {
-        $dir = blogM::ViewPageContentDir($a,$b);
 
-        $ivan2 = blogM::ViewPageContent($dir);
+        $ViewPageContentDir = "../public/images".blogM::ViewPagePath($a,$b);
+
+        $ViewPageContent = blogM::ViewPageContent($ViewPageContentDir);
       }
 
 
-      $dir = blogM::ViewPageModes($a,$b)["dir"];
-      $dir2 = blogM::ViewPageModes($a,$b)["dir2"];
+      $ViewPagePathView = "blog".blogM::ViewPagePath($a,$b);
+      $ViewPagePathEdit = "blogEdit".blogM::ViewPagePath($a,$b);
 
 
-      return view('edit', compact('ivan2','ivan1', 'a', 'b', 'dir', 'dir2'));
+      return view('edit', compact('ViewPageContent','ViewPageList', 'a', 'b', 'ViewPagePathView', 'ViewPagePathEdit'));
     }
 
     /**

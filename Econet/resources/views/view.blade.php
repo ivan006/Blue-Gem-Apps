@@ -54,17 +54,17 @@
     <?php }?>
     </ul>
   <?php }?>
-  <?php ivan($ivan1) ?>
+  <?php ivan($ViewPageList) ?>
 </div>
 <br>
 
-<a href="{{ URL::asset($dir2) }}">edit</a>
+<a href="{{ URL::asset($ViewPagePathEdit) }}">edit</a>
 <br>
 <div class="" style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;">
 
   <?php
-  if (isset($ivan2["rich.txt"])) {
-    echo $ivan2["rich.txt"];
+  if (isset($ViewPageContent["rich.txt"])) {
+    echo $ViewPageContent["rich.txt"];
   }
   ?>
 
