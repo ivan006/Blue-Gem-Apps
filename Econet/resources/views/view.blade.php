@@ -63,8 +63,8 @@
 <div class="" style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;">
 
   <?php
-  if (isset($viewPageContent["rich.txt"])) {
-    echo $viewPageContent["rich.txt"];
+  if (isset($ivan2["rich.txt"])) {
+    echo $ivan2["rich.txt"];
   }
   ?>
 

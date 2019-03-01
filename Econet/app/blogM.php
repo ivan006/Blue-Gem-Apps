@@ -80,10 +80,10 @@ class blogM extends Model
           if (!empty($dif)) {
             $result[$value] = self::ViewPageList($sub_dir);
             $url = str_replace("../public/images/", "", $sub_dir);
-            $result[$value]["url"] = "http://b-blog.test/blog/".$url;
+            $result[$value]["url"] = url('/')."/blog/".$url;
           } else {
             $url = str_replace("../public/images/", "", $sub_dir);
-            $result[$value] = "http://b-blog.test/blog/".$url;
+            $result[$value] = url('/')."/blog/".$url;
           }
         }
       }

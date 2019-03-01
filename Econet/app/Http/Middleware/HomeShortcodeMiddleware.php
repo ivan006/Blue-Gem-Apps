@@ -48,7 +48,7 @@ class HomeShortcodeMiddleware
               $parameter = str_replace("[r]", "", $shortcode);
               $parameter = str_replace("[/r]", "", $parameter);
 
-              $retrieval_path = "http://b-blog.test/blogApi/".$parameter;
+              $retrieval_path = url('/')."/blogApi/".$parameter;
 
               $result = file_get_contents($retrieval_path);
 
