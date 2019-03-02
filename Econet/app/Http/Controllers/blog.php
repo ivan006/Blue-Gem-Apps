@@ -45,7 +45,7 @@ class blog extends Controller
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
-        file_put_contents($file,$contents);
+        // file_put_contents($file,$contents);
       }
 
       $VPgLocMode1 = "blog".blogM::VPgLoc($VPgsLocBase,$a,$b);
@@ -53,7 +53,12 @@ class blog extends Controller
 
       if (1==1) {
         $VPgCont = blogM::VPgCont($VPgContLoc);
-        blogM::EPgCont2($VPgContLoc, $VPgCont);
+        blogM::EPgCont($VPgContLoc, $VPgCont);
+
+        // $thing = blogM::EPgCont2($VPgContLoc, $VPgCont);
+        // echo "<pre>";
+        // var_dump($thing);
+        // echo "</pre>";
       }
 
       return redirect('/'.$VPgLocMode2);

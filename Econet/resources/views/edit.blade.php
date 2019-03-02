@@ -41,7 +41,7 @@
 
 
 <div class="g-multi-level-dropdown">
-  <?php function ivan($post = array()){?>
+  <?php function ivan($post){?>
     <ul>
     <?php foreach($post as $key => $value){?>
       @if (is_array($value))

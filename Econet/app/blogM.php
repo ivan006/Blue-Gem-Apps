@@ -73,48 +73,41 @@ class blogM extends Model
     return $result;
   }
 
-  public static function EPgCont($VPgsLocBase) {
-    $result = array();
-    $VPgContItem = scandir($VPgsLocBase);
-    foreach ($VPgContItem as $key => $value) {
-      $VPgContItemLoc = $VPgsLocBase . DIRECTORY_SEPARATOR . $value;
-      if (!in_array($value,array(".","..")))  {
-        if (is_dir($VPgContItemLoc)){
-          $result[$value] = self::VPgCont($VPgContItemLoc);
-        } else {
-          $result[$value] = file_get_contents($VPgContItemLoc);
-        }
-      }
-    }
-    return  $result;
-  }
-  public static function EPgCont2($VPgContLoc,$VPgCont) {
 
-
-    $result = array();
+  public static function EPgCont($VPgContLoc,$VPgCont) {
+    // $result = array();
     // $VPgContItem = scandir($VPgsLocBase);
+    foreach($VPgCont as $key => $value) {
+      $VPgContItemLoc = $VPgContLoc . DIRECTORY_SEPARATOR . $key;
+      if (!is_string($value)){
+        // mkdir($VPgContItemLoc);
 
-    foreach($VPgCont as $VPgContItem) {
-      $VPgContItemLoc = $VPgContLoc . DIRECTORY_SEPARATOR . $VPgContItem;
-      // $VPgContItemLoc = $VPgContLoc . DIRECTORY_SEPARATOR . key($VPgContItem);
-      if (is_array($VPgContItemLoc)){
-        mkdir($VPgContItemLoc);
-
-        self::EPgCont2($VPgContLoc, $VPgContItem);
-
-      } elseif (is_string($VPgContItemLoc) or is_numeric($VPgContItemLoc))  {
-        if (1==1) {
-
-
-          $content = "some text here";
-          fwrite(fopen($VPgContItemLoc,"wb"),$content);
-          fclose(fopen($VPgContItemLoc,"wb"));
-        }
-
+        self::EPgCont($VPgContItemLoc, $value);
+      } else {
+        $content = "some text here";
+        fwrite(fopen($VPgContItemLoc,"wb"),$content);
+        fclose(fopen($VPgContItemLoc,"wb"));
       }
-
     }
+    // return $VPgCont;
   }
+  public static function EPgCont3($post){
+
+    foreach($post as $key => $value){
+      if (is_array($value)) {
+        $value['url'] ;
+        $key ;
+        ivan($value);
+      } else {
+        if ($key !== "url") {
+          $value;
+          $key;
+        }
+      }
+    }
+
+  }
+  // ivan($VPgsLocs)
 
 
 
