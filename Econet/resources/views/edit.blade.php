@@ -54,17 +54,17 @@
     <?php }?>
     </ul>
   <?php }?>
-  <?php ivan($ViewPagesLocations) ?>
+  <?php ivan($ViewPagesLocs) ?>
 </div>
 <br>
 
 
-<a href="{{ URL::asset($ViewPageLocationMode1) }}">view</a>
+<a href="{{ URL::asset($ViewPageLocMode1) }}">view</a>
 <br>
 <h1>Rich Data</h1>
 
 
- <form class="" action="{{ URL::asset($ViewPageLocationMode1)}}" method="post">
+ <form class="" action="{{ URL::asset($ViewPageLocMode1)}}" method="post">
    <!-- surname 1: [r]Education/Destiny Code/smart/surname.txt[/r]<br>  surname 2: [r]Education/Graft Your Garden/smart/surname.txt[/r]<br>      -->
 
    {{csrf_field()}}

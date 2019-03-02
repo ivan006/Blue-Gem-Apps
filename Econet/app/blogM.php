@@ -6,20 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class blogM extends Model
 {
-  public static function ViewPageLocation($dir,$a,$b){
+  public static function ViewPageLoc($ViewPagesLocBase,$a,$b){
     $s = "/";
-    $root= $dir;
+    $root= $ViewPagesLocBase;
     if (isset($b)) {
-      $ViewPageLocation = $s.$a.$s.$b;
-      if (is_dir($root.$ViewPageLocation)) {
-        return $ViewPageLocation;
+      $ViewPageLoc = $s.$a.$s.$b;
+      if (is_dir($root.$ViewPageLoc)) {
+        return $ViewPageLoc;
       } else {
         return null;
       }
     } elseif (isset($a)) {
-      $ViewPageLocation = $s.$a;
-      if (is_dir($root.$ViewPageLocation)) {
-        return $ViewPageLocation;
+      $ViewPageLoc = $s.$a;
+      if (is_dir($root.$ViewPageLoc)) {
+        return $ViewPageLoc;
       } else {
         return null;
       }
@@ -32,38 +32,39 @@ class blogM extends Model
 
 
 
-  public static function ViewPageContent($dir) {
+
+  public static function ViewPageContent($ViewPagesLocBase) {
     $result = array();
-    $cdir = scandir($dir);
-    foreach ($cdir as $key => $value) {
+    $ViewPageContentItem = scandir($ViewPagesLocBase);
+    foreach ($ViewPageContentItem as $key => $value) {
       if (!in_array($value,array(".","..")))  {
-        $sub_dir = $dir . DIRECTORY_SEPARATOR . $value;
-        if (is_dir($sub_dir)){
-          $result[$value] = self::ViewPageContent($sub_dir);
+        $ViewPageContentItemLoc = $ViewPagesLocBase . DIRECTORY_SEPARATOR . $value;
+        if (is_dir($ViewPageContentItemLoc)){
+          $result[$value] = self::ViewPageContent($ViewPageContentItemLoc);
         } else {
-          $result[$value] = file_get_contents($sub_dir);
+          $result[$value] = file_get_contents($ViewPageContentItemLoc);
         }
       }
     }
     return  $result;
   }
 
-  public static function ViewPagesLocations($dir,$staticdir) {
+  public static function ViewPagesLocs($ViewPagesLocBase,$staticdir) {
     $result = array();
-    $cdir = scandir($dir);
-    foreach ($cdir as $key => $value) {
+    $ViewPageContentItem = scandir($ViewPagesLocBase);
+    foreach ($ViewPageContentItem as $key => $value) {
       if (!in_array($value,array(".","..")))  {
-        $sub_dir = $dir . DIRECTORY_SEPARATOR . $value;
-        if (is_dir($sub_dir) and basename($sub_dir) !== "smart"){
-          $sub_sub_dirs = scandir($sub_dir);
+        $ViewPageContentItemLoc = $ViewPagesLocBase . DIRECTORY_SEPARATOR . $value;
+        if (is_dir($ViewPageContentItemLoc) and basename($ViewPageContentItemLoc) !== "smart"){
+          $ViewPageContentItemSubLoc = scandir($ViewPageContentItemLoc);
           $a1 = array(".","..","smart","rich.txt");
-          $dif = array_diff_key($sub_sub_dirs,$a1);
+          $dif = array_diff_key($ViewPageContentItemSubLoc,$a1);
           if (!empty($dif)) {
-            $result[$value] = self::ViewPagesLocations($sub_dir,$staticdir);
-            $url = str_replace($staticdir."/", "", $sub_dir);
+            $result[$value] = self::ViewPagesLocs($ViewPageContentItemLoc,$staticdir);
+            $url = str_replace($staticdir."/", "", $ViewPageContentItemLoc);
             $result[$value]["url"] = url('/')."/blog/".$url;
           } else {
-            $url = str_replace($staticdir."/", "", $sub_dir);
+            $url = str_replace($staticdir."/", "", $ViewPageContentItemLoc);
             $result[$value] = url('/')."/blog/".$url;
           }
         }
@@ -71,10 +72,53 @@ class blogM extends Model
     }
     return $result;
   }
-  public static function SavePageContent($dir) {
 
+  public static function EditPageContent($ViewPagesLocBase) {
+    $result = array();
+    $ViewPageContentItem = scandir($ViewPagesLocBase);
+    foreach ($ViewPageContentItem as $key => $value) {
+      $ViewPageContentItemLoc = $ViewPagesLocBase . DIRECTORY_SEPARATOR . $value;
+      if (!in_array($value,array(".","..")))  {
+        if (is_dir($ViewPageContentItemLoc)){
+          $result[$value] = self::ViewPageContent($ViewPageContentItemLoc);
+        } else {
+          $result[$value] = file_get_contents($ViewPageContentItemLoc);
+        }
+      }
+    }
+    return  $result;
   }
-  public static function ViewPagesLocationBase() {
+  public static function EditPageContent2($ViewPageContentLoc,$ViewPageContent) {
+
+
+    $result = array();
+    // $ViewPageContentItem = scandir($ViewPagesLocBase);
+
+    foreach($ViewPageContent as $ViewPageContentItem) {
+      // $ViewPageContentItemLoc = $ViewPageContentLoc . DIRECTORY_SEPARATOR . $ViewPageContentItem;
+      $ViewPageContentItemLoc = $ViewPageContentLoc . DIRECTORY_SEPARATOR . key($ViewPageContentItem);
+      if (is_array($ViewPageContentItemLoc)){
+        mkdir($ViewPageContentItemLoc);
+
+        self::EditPageContent2($ViewPageContentLoc, $ViewPageContentItem);
+
+      } elseif (is_string($ViewPageContentItemLoc) or is_numeric($ViewPageContentItemLoc))  {
+        if (1==1) {
+
+
+          $content = "some text here";
+          fwrite(fopen($ViewPageContentItemLoc,"wb"),$content);
+          fclose(fopen($ViewPageContentItemLoc,"wb"));
+        }
+
+      }
+
+    }
+  }
+
+
+
+  public static function ViewPagesLocBase() {
     return "../public/images";
   }
 
