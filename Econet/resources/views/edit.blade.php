@@ -76,6 +76,7 @@
      }
      ?></textarea>
    <input style="display: none;" type="text"  name="file" value="<?php echo $rich; ?>"  placeholder="Enter title">
+   <textarea style="display: none;"  id="theLord" type="text" name="smart" value=""></textarea>
 
 
  </form>
@@ -110,4 +111,15 @@ var opt = {
 /* opt.propertyElement = '<textarea>'; */ // element of the property field, <input> is default
 /* opt.valueElement = '<textarea>'; */  // element of the value field, <input> is default
 $('#mydiv').jsonEditor(myjson, opt);
+</script>
+
+<script type="text/javascript">
+  // let thingydo = document.getElementById("myDiv").getElementsByTagName("DIV")[0].getElementsByClassName("value")[0];
+  let thingydo = document.getElementById("mydiv").getElementsByTagName("DIV")[0].getElementsByClassName("value")[0];
+  thingydo.onkeyup = function() {myFunctiondd()};
+
+  function myFunctiondd() {
+
+    document.getElementById("theLord").value = thingydo.value;
+  }
 </script>

@@ -53,13 +53,17 @@ class blog extends Controller
 
       if (1==1) {
         $VPgCont = blogM::VPgCont($VPgContLoc);
-        blogM::EPgCont($VPgContLoc, $VPgCont);
+
+        $EPgCont =  json_decode($request->get('smart'));
+        blogM::EPgCont($VPgContLoc, $EPgCont);
 
         // $thing = blogM::EPgCont2($VPgContLoc, $VPgCont);
         // echo "<pre>";
         // var_dump($thing);
         // echo "</pre>";
       }
+
+
 
       return redirect('/'.$VPgLocMode2);
     }

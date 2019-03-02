@@ -74,22 +74,24 @@ class blogM extends Model
   }
 
 
-  public static function EPgCont($VPgContLoc,$VPgCont) {
+  public static function EPgCont($VPgContLoc,$EPgCont) {
     // $result = array();
     // $VPgContItem = scandir($VPgsLocBase);
-    foreach($VPgCont as $key => $value) {
+    foreach($EPgCont as $key => $value) {
       $VPgContItemLoc = $VPgContLoc . DIRECTORY_SEPARATOR . $key;
       if (!is_string($value)){
         // mkdir($VPgContItemLoc);
 
         self::EPgCont($VPgContItemLoc, $value);
       } else {
-        $content = "some text here";
-        fwrite(fopen($VPgContItemLoc,"wb"),$content);
-        fclose(fopen($VPgContItemLoc,"wb"));
+        $content = $value."8===D";
+
+        $InflictedFile = fopen($VPgContItemLoc,"w");
+        fwrite($InflictedFile,$content);
+        fclose($InflictedFile);
       }
     }
-    // return $VPgCont;
+    // return $EPgCont;
   }
   public static function EPgCont3($post){
 
