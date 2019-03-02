@@ -54,25 +54,25 @@
     <?php }?>
     </ul>
   <?php }?>
-  <?php ivan($ViewPagesLocs) ?>
+  <?php ivan($VPgsLocs) ?>
 </div>
 <br>
 
 
-<a href="{{ URL::asset($ViewPageLocMode1) }}">view</a>
+<a href="{{ URL::asset($VPgLocMode1) }}">view</a>
 <br>
 <h1>Rich Data</h1>
 
 
- <form class="" action="{{ URL::asset($ViewPageLocMode1)}}" method="post">
+ <form class="" action="{{ URL::asset($VPgLocMode1)}}" method="post">
    <!-- surname 1: [r]Education/Destiny Code/smart/surname.txt[/r]<br>  surname 2: [r]Education/Graft Your Garden/smart/surname.txt[/r]<br>      -->
 
    {{csrf_field()}}
    <input type="submit" name="submit" value="Submit">
    <textarea class="" name="contents"  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php
      $rich = 'rich.txt';
-     if (isset($ViewPageContent[$rich])) {
-       echo $ViewPageContent[$rich];
+     if (isset($VPgCont[$rich])) {
+       echo $VPgCont[$rich];
      }
      ?></textarea>
    <input style="display: none;" type="text"  name="file" value="<?php echo $rich; ?>"  placeholder="Enter title">
@@ -93,9 +93,9 @@
 
 
 <?php
-if (isset($ViewPageContent['smart'])) {
+if (isset($VPgCont['smart'])) {
   $ivan3 = array();
-  $ivan3["smart"] = $ViewPageContent['smart'];
+  $ivan3["smart"] = $VPgCont['smart'];
   $ivan_json =  json_encode($ivan3);
 } else {
   $ivan_json =  null;

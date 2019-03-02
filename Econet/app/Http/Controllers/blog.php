@@ -36,27 +36,27 @@ class blog extends Controller
     public function store(Request $request, $a=null, $b=null)
     {
       if (1==1) {
-        $ViewPagesLocBase = blogM::ViewPagesLocBase();
-        $ViewPageContentLoc = $ViewPagesLocBase.blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
+        $VPgsLocBase = blogM::VPgsLocBase();
+        $VPgContLoc = $VPgsLocBase.blogM::VPgLoc($VPgsLocBase,$a,$b);
 
         $s = "/";
         $filename =  $request->get('file');
-        $file =  $ViewPageContentLoc.$s.$filename;
+        $file =  $VPgContLoc.$s.$filename;
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
         file_put_contents($file,$contents);
       }
 
-      $ViewPageLocMode1 = "blog".blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
-      $ViewPageLocMode2 = "blogEdit".blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
+      $VPgLocMode1 = "blog".blogM::VPgLoc($VPgsLocBase,$a,$b);
+      $VPgLocMode2 = "blogEdit".blogM::VPgLoc($VPgsLocBase,$a,$b);
 
       if (1==1) {
-        $ViewPageContent = blogM::ViewPageContent($ViewPageContentLoc);
-        blogM::EditPageContent2($ViewPageContentLoc, $ViewPageContent);
+        $VPgCont = blogM::VPgCont($VPgContLoc);
+        blogM::EPgCont2($VPgContLoc, $VPgCont);
       }
 
-      return redirect('/'.$ViewPageLocMode2);
+      return redirect('/'.$VPgLocMode2);
     }
 
     /**
@@ -66,28 +66,28 @@ class blog extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($a=null, $b=null){
-      // ViewPagesLocs start
+      // VPgsLocs start
         if (1==1) {
-          $ViewPagesLocBase = blogM::ViewPagesLocBase();
-          $ViewPagesLocs = blogM::ViewPagesLocs($ViewPagesLocBase,$ViewPagesLocBase);
+          $VPgsLocBase = blogM::VPgsLocBase();
+          $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
         }
-      // ViewPagesLocs end
+      // VPgsLocs end
       if (1==1) {
-        $ViewPageContentLoc = blogM::ViewPagesLocBase().blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
+        $VPgContLoc = blogM::VPgsLocBase().blogM::VPgLoc($VPgsLocBase,$a,$b);
 
 
 
-        $ViewPageContent = blogM::ViewPageContent($ViewPageContentLoc);
+        $VPgCont = blogM::VPgCont($VPgContLoc);
 
       }
 
 
-      // $dir = blogM::ViewPageModes($a,$b)["dir"];
-      // $dir2 = blogM::ViewPageModes($a,$b)["dir2"];
-      $ViewPageLocMode1 = "blog".blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
-      $ViewPageLocMode2 = "blogEdit".blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
+      // $dir = blogM::VPgModes($a,$b)["dir"];
+      // $dir2 = blogM::VPgModes($a,$b)["dir2"];
+      $VPgLocMode1 = "blog".blogM::VPgLoc($VPgsLocBase,$a,$b);
+      $VPgLocMode2 = "blogEdit".blogM::VPgLoc($VPgsLocBase,$a,$b);
 
-      return view('view', compact('ViewPageContent','ViewPagesLocs', 'a', 'b', 'ViewPageLocMode1', 'ViewPageLocMode2'));
+      return view('view', compact('VPgCont','VPgsLocs', 'a', 'b', 'VPgLocMode1', 'VPgLocMode2'));
     }
 
 
@@ -102,24 +102,24 @@ class blog extends Controller
       // menu start
 
         if (1==1) {
-          $ViewPagesLocBase = blogM::ViewPagesLocBase();
+          $VPgsLocBase = blogM::VPgsLocBase();
 
-          $ViewPagesLocs = blogM::ViewPagesLocs($ViewPagesLocBase,$ViewPagesLocBase);
+          $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
         }
       // menu end
       if (1==1) {
 
-        $ViewPageContentLoc = blogM::ViewPagesLocBase().blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
+        $VPgContLoc = blogM::VPgsLocBase().blogM::VPgLoc($VPgsLocBase,$a,$b);
 
-        $ViewPageContent = blogM::ViewPageContent($ViewPageContentLoc);
+        $VPgCont = blogM::VPgCont($VPgContLoc);
       }
 
 
-      $ViewPageLocMode1 = "blog".blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
-      $ViewPageLocMode2 = "blogEdit".blogM::ViewPageLoc($ViewPagesLocBase,$a,$b);
+      $VPgLocMode1 = "blog".blogM::VPgLoc($VPgsLocBase,$a,$b);
+      $VPgLocMode2 = "blogEdit".blogM::VPgLoc($VPgsLocBase,$a,$b);
 
 
-      return view('edit', compact('ViewPageContent','ViewPagesLocs', 'a', 'b', 'ViewPageLocMode1', 'ViewPageLocMode2'));
+      return view('edit', compact('VPgCont','VPgsLocs', 'a', 'b', 'VPgLocMode1', 'VPgLocMode2'));
     }
 
     /**

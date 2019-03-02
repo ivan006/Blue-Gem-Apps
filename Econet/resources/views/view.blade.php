@@ -54,17 +54,17 @@
     <?php }?>
     </ul>
   <?php }?>
-  <?php ivan($ViewPagesLocs) ?>
+  <?php ivan($VPgsLocs) ?>
 </div>
 <br>
 
-<a href="{{ URL::asset($ViewPageLocMode2) }}">edit</a>
+<a href="{{ URL::asset($VPgLocMode2) }}">edit</a>
 <br>
 <div class="" style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;">
 
   <?php
-  if (isset($ViewPageContent["rich.txt"])) {
-    echo $ViewPageContent["rich.txt"];
+  if (isset($VPgCont["rich.txt"])) {
+    echo $VPgCont["rich.txt"];
   }
   ?>
 
