@@ -84,7 +84,7 @@ class blogM extends Model
 
         self::EPgCont($VPgContItemLoc, $value);
       } else {
-        $content = $value."8===D";
+        $content = $value;
 
         $InflictedFile = fopen($VPgContItemLoc,"w");
         fwrite($InflictedFile,$content);
