@@ -58,7 +58,7 @@
 </div>
 <br>
 
-<a href="{{ URL::asset($VPgLocMode2) }}">edit</a>
+<a href="{{ URL::asset($VPgLocMode2) }}">Change mode</a>
 <br>
 <div class="" style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;">
 

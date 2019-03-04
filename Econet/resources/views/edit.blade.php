@@ -59,7 +59,8 @@
 <br>
 
 
-<a href="{{ URL::asset($VPgLocMode1) }}">view</a>
+<a href="{{ URL::asset($VPgLocMode1) }}">Change mode</a>
+<br>
 <br>
 
 
