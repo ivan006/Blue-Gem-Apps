@@ -45,7 +45,7 @@ class blog extends Controller
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
-        // file_put_contents($file,$contents);
+        file_put_contents($file,$contents);
       }
 
       $VPgLocMode1 = "blog".blogM::VPgLoc($VPgsLocBase,$a,$b);
