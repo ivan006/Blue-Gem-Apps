@@ -23,7 +23,7 @@ class HomeShortcodeMiddleware
         } else {
           $responceContent = $responce->content();
 
-          preg_match_all( '/\[list_pages_1\](.*)\[list_pages_2\](.*)\[list_pages_3\](.*)\[list_pages_4\]/', $responceContent, $matches);
+          preg_match_all( '/\[lp_i1\](.*)\[lp_i2\]\[lp_si1\](.*)\[lp_si2\](.*)\[lp_si3\](.*)\[lp_si4\]\[lp_i3\](.*)\[lp_i4\]/', $responceContent, $matches);
 
           if (!empty($matches[0])) {
 
@@ -32,48 +32,50 @@ class HomeShortcodeMiddleware
               // $shortcode = $value;
               // $parameter = str_replace("[r]", "", $shortcode);
               // $parameter = str_replace("[/r]", "", $parameter);
-              // \[list_pages_1\](.*)\[list_pages_2\](.*)\[list_pages_3\](.*)\[list_pages_4\]
+              //
+              // $retrieval_path = url('/')."/blogApi/".$parameter;
+              //
+              // $result = file_get_contents($retrieval_path);
 
 
+              // if ($result !== "[]") {
+                $VPgsLocBase = blogM::VPgsLocBase();
+                $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
+                ob_start();
+                ?>
+                <ul>
+                <?php foreach($VPgsLocs as $key => $value2){?>
 
-              $VPgsLocBase = blogM::VPgsLocBase();
-              $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
-              ob_start();
-              ?>
-              <ul>
-              <?php foreach($VPgsLocs as $key => $value){?>
+                  <?php if (is_array($value2)) { ?>
 
-                <?php if (is_array($value)) { ?>
-                  <?php echo($matches[1][0]); ?>
-
-
-                  <li><a href="{{$value['url']}}"><?php  echo $key;  ?> <span class="g-resp-sm-hide">+</span></a><?php ivan($value); ?></li>
-                <?php } else { ?>
+                    <li><a href="<?php  echo $value2['url'];  ?>"><?php  echo $key;  ?> <span class="g-resp-sm-hide">+</span></a><?php ivan($value2); ?></li>
+                  <?php } else { ?>
 
 
-                  <?php if ($key !== "url") { ?>
+                    <?php if ($key !== "url") { ?>
 
 
-                    <li><a href="<?php  echo $value;  ?>"><?php  echo $key;  ?></a></li>
+                      <?php  echo $matches[1][0];  ?>
+                      <li><a href="<?php  echo $value2;  ?>"><?php  echo $key;  ?></a></li>
 
+                    <?php } ?>
                   <?php } ?>
-                <?php } ?>
-              <?php }?>
-              </ul>
-              <pre>
-
-                <?php //var_dump($matches); ?>
-              </pre>
-
-              <?php
-              $result = ob_get_contents();
-              ob_end_clean();
+                <?php }?>
+                </ul>
 
 
-              $responceContent = str_replace($value, $result, $responceContent);
+                <?php
+                $result = ob_get_contents();
+                ob_end_clean();
 
+
+                $responceContent = str_replace($value, $result, $responceContent);
+              // }
 
             }
+            echo "<pre>";
+            // var_dump($matches);
+            echo "</pre>";
 
             $responce->setContent($responceContent);
 
