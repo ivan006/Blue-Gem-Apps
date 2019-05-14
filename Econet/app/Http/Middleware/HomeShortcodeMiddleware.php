@@ -23,7 +23,7 @@ class HomeShortcodeMiddleware
         } else {
           $responceContent = $responce->content();
 
-          preg_match_all( '/\[lp_i1\](.*)\[lp_i2\]\[lp_si1\](.*)\[lp_si2\](.*)\[lp_si3\](.*)\[lp_si4\]\[lp_i3\](.*)\[lp_i4\]/', $responceContent, $matches);
+          preg_match_all( '/\[menu_1\](.*)\[menu_2\](.*)\[menu_3\]\[menu_si_1\](.*)\[menu_si_2\](.*)\[menu_si_3\]\[menu_i_1\](.*)\[menu_i_2\](.*)\[menu_i_3\]/', $responceContent, $matches);
 
           if (!empty($matches[0])) {
 
@@ -42,29 +42,26 @@ class HomeShortcodeMiddleware
                 $VPgsLocBase = blogM::VPgsLocBase();
                 $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
                 ob_start();
+
+                function page_list($VPgsLocs){
+
+                  foreach($VPgsLocs as $key => $value2){
+                    if (is_array($value2)) {
                 ?>
-                <ul>
-                <?php foreach($VPgsLocs as $key => $value2){?>
-
-                  <?php if (is_array($value2)) { ?>
-
-                    <li><a href="<?php  echo $value2['url'];  ?>"><?php  echo $key;  ?> <span class="g-resp-sm-hide">+</span></a><?php ivan($value2); ?></li>
-                  <?php } else { ?>
-
-
-                    <?php if ($key !== "url") { ?>
-
-
-                      <?php  echo $matches[1][0];  ?>
-                      <li><a href="<?php  echo $value2;  ?>"><?php  echo $key;  ?></a></li>
-
-                    <?php } ?>
-                  <?php } ?>
-                <?php }?>
-                </ul>
-
-
+                      <li><a href="{{$value2['url']}}"><?php echo $key ?> <span class="g-resp-sm-hide">+</span></a><ul><?php page_list($value2); ?></ul></li>
                 <?php
+                    } else {
+                      if ($key !== "url") {
+                ?>
+                      <li><a href="<?php echo $value2 ?>"><?php echo $key ?></a></li>
+                <?php
+                      }
+                    }
+                  }
+
+                }
+                page_list($VPgsLocs);
+
                 $result = ob_get_contents();
                 ob_end_clean();
 
