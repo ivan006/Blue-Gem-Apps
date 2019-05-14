@@ -23,57 +23,55 @@ class HomeShortcodeMiddleware
         } else {
           $responceContent = $responce->content();
 
-          preg_match_all( '/\[r\](.*)\[\/r\]/', $responceContent, $matches);
+          preg_match_all( '/\[list_pages_1\](.*)\[list_pages_2\](.*)\[list_pages_3\](.*)\[list_pages_4\]/', $responceContent, $matches);
 
           if (!empty($matches[0])) {
 
 
             foreach ($matches[0] as $key => $value) {
-              $shortcode = $value;
-              $parameter = str_replace("[r]", "", $shortcode);
-              $parameter = str_replace("[/r]", "", $parameter);
-
-              $retrieval_path = url('/')."/blogApi/".$parameter;
-
-              $result = file_get_contents($retrieval_path);
+              // $shortcode = $value;
+              // $parameter = str_replace("[r]", "", $shortcode);
+              // $parameter = str_replace("[/r]", "", $parameter);
+              // \[list_pages_1\](.*)\[list_pages_2\](.*)\[list_pages_3\](.*)\[list_pages_4\]
 
 
-              if ($result !== "[]") {
-                $VPgsLocBase = blogM::VPgsLocBase();
-                $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
-                ob_start();
-                ?>
-                <ul>
-                <?php foreach($VPgsLocs as $key => $value){?>
 
-                  <?php if (is_array($value)) { ?>
+              $VPgsLocBase = blogM::VPgsLocBase();
+              $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
+              ob_start();
+              ?>
+              <ul>
+              <?php foreach($VPgsLocs as $key => $value){?>
 
-
-                    <li><a href="{{$value['url']}}"><?php  echo $key;  ?> <span class="g-resp-sm-hide">+</span></a><?php ivan($value); ?></li>
-                  <?php } else { ?>
+                <?php if (is_array($value)) { ?>
+                  <?php echo($matches[1][0]); ?>
 
 
-                    <?php if ($key !== "url") { ?>
+                  <li><a href="{{$value['url']}}"><?php  echo $key;  ?> <span class="g-resp-sm-hide">+</span></a><?php ivan($value); ?></li>
+                <?php } else { ?>
 
 
-                      <li><a href="{{$value}}"><?php  echo $key;  ?></a></li>
+                  <?php if ($key !== "url") { ?>
 
-                    <?php } ?>
+
+                    <li><a href="<?php  echo $value;  ?>"><?php  echo $key;  ?></a></li>
+
                   <?php } ?>
-                <?php }?>
-                </ul>
-                <pre>
+                <?php } ?>
+              <?php }?>
+              </ul>
+              <pre>
 
-                  <?php var_dump($matches); ?>
-                </pre>
+                <?php //var_dump($matches); ?>
+              </pre>
 
-                <?php
-                $result = ob_get_contents();
-                ob_end_clean();
+              <?php
+              $result = ob_get_contents();
+              ob_end_clean();
 
 
-                $responceContent = str_replace($shortcode, $result, $responceContent);
-              }
+              $responceContent = str_replace($value, $result, $responceContent);
+
 
             }
 
