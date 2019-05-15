@@ -17,62 +17,84 @@ class HomeShortcodeMiddleware
      */
     public function handle($request, Closure $next)
     {
+      // example
+      // <div class="g-multi-level-dropdown">
+      //   <ul>
+      //     [page_list]
+      //     [twig]
+      //     <li>
+      //       <a href="[link]">[name]+</a>
+      //       <ul>
+      //         [inner_twig]
+      //       </ul>
+      //     </li>
+      //     [/twig]
+      //     [leaf]
+      //     <li><a href="[link]">[name]</a></li>
+      //     [/leaf]
+      //     [/page_list]
+      //   </ul>
+      // </div>
+
         $responce = $next($request);
         if (!method_exists($responce, "content")) {
           return $responce;
         } else {
+
+
+          function page_list($VPgsLocs, $value, $preg_match_all){
+
+            foreach($VPgsLocs as $key => $value2){
+              preg_match_all( $preg_match_all, $value, $matches);
+              // echo "<pre>";
+              // var_dump($matches);
+              // echo "</pre>";
+              if (is_array($value2)) {
+
+                 echo  $matches[3][0];
+                 echo  $value2['url'];
+                 echo  $matches[5][0];
+                 echo $key ;
+                 echo  $matches[7][0];
+                 page_list($value2, $value, $preg_match_all);
+                 echo  $matches[9][0]; 
+
+              } else {
+                if ($key !== "url") {
+
+                  echo  $matches[13][0];
+                  echo  $value2;
+                  echo  $matches[15][0];
+                  echo $key;
+                  echo  $matches[17][0];
+                }
+              }
+            }
+
+          }
+
           $responceContent = $responce->content();
 
-          preg_match_all( '/\[menu_1\](.*)\[menu_2\](.*)\[menu_3\]\[menu_si_1\](.*)\[menu_si_2\](.*)\[menu_si_3\]\[menu_i_1\](.*)\[menu_i_2\](.*)\[menu_i_3\]/', $responceContent, $matches);
+          $preg_match_all = "/\[page_list\]((.|\n)*?)\[twig\]((.|\n)*?)\[link\]((.|\n)*?)\[name\]((.|\n)*?)\[inner_twig\]((.|\n)*?)\[\/twig\]((.|\n)*?)\[leaf\]((.|\n)*?)\[link\]((.|\n)*?)\[name\]((.|\n)*?)\[\/leaf\]((.|\n)*?)\[\/page_list\]/";
+
+          preg_match_all( $preg_match_all, $responceContent, $matches);
 
           if (!empty($matches[0])) {
 
-
             foreach ($matches[0] as $key => $value) {
-              // $shortcode = $value;
-              // $parameter = str_replace("[r]", "", $shortcode);
-              // $parameter = str_replace("[/r]", "", $parameter);
-              //
-              // $retrieval_path = url('/')."/blogApi/".$parameter;
-              //
-              // $result = file_get_contents($retrieval_path);
 
-
-              // if ($result !== "[]") {
                 $VPgsLocBase = blogM::VPgsLocBase();
                 $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
                 ob_start();
 
-                function page_list($VPgsLocs){
-
-                  foreach($VPgsLocs as $key => $value2){
-                    if (is_array($value2)) {
-                ?>
-                      <li><a href="{{$value2['url']}}"><?php echo $key ?> <span class="g-resp-sm-hide">+</span></a><ul><?php page_list($value2); ?></ul></li>
-                <?php
-                    } else {
-                      if ($key !== "url") {
-                ?>
-                      <li><a href="<?php echo $value2 ?>"><?php echo $key ?></a></li>
-                <?php
-                      }
-                    }
-                  }
-
-                }
-                page_list($VPgsLocs);
+                  page_list($VPgsLocs,  $value,$preg_match_all);
 
                 $result = ob_get_contents();
                 ob_end_clean();
 
-
                 $responceContent = str_replace($value, $result, $responceContent);
-              // }
 
             }
-            echo "<pre>";
-            // var_dump($matches);
-            echo "</pre>";
 
             $responce->setContent($responceContent);
 

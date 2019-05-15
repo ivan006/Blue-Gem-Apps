@@ -29,10 +29,6 @@ class blogM extends Model
   }
 
 
-
-
-
-
   public static function VPgCont($VPgsLocBase) {
     $result = array();
     $VPgContItem = scandir($VPgsLocBase);
@@ -73,7 +69,6 @@ class blogM extends Model
     return $result;
   }
 
-
   public static function EPgCont($VPgContLoc,$EPgCont) {
     // $result = array();
     // $VPgContItem = scandir($VPgsLocBase);
@@ -110,8 +105,6 @@ class blogM extends Model
 
   }
   // ivan($VPgsLocs)
-
-
 
   public static function VPgsLocBase() {
     return "../public/images";
