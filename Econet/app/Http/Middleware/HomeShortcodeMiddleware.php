@@ -57,7 +57,7 @@ class HomeShortcodeMiddleware
                  echo $key ;
                  echo  $matches[7][0];
                  page_list($value2, $value, $preg_match_all);
-                 echo  $matches[9][0]; 
+                 echo  $matches[9][0];
 
               } else {
                 if ($key !== "url") {

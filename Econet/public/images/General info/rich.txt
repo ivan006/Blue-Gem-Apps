@@ -1,17 +1,16 @@
-<div class="g-multi-level-dropdown">
-  <ul>
+<div style="margin: 1em; padding: 1em; background-color:rgba(0,0,0,0.5);">
     [page_list]
     [twig]
-    <li>
+    <div style="margin: 1em; padding: 1em; background-color:rgba(0,0,0,0.5);">
       <a href="[link]">[name]+</a>
-      <ul>
+      <div style="margin: 1em; padding: 1em; background-color:rgba(0,0,0,0.5);">
         [inner_twig]
-      </ul>
-    </li>
+      </div>
+    </div>
     [/twig]
     [leaf]
-    <li><a href="[link]">[name]</a></li>
+    <div style="margin: 1em; padding: 1em; background-color:rgba(0,0,0,0.5);"><a href="[link]">[name]</a></div>
     [/leaf]
     [/page_list]
-  </ul>
+
 </div>
