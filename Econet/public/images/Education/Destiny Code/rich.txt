@@ -1,3 +1,0 @@
-<div class="g-multi-level-dropdown">
-  [list_pages_1]111[list_pages_2]222[list_pages_3]333[list_pages_4]
-</div>
