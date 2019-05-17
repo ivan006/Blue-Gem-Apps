@@ -18,19 +18,25 @@ class HomeShortcodeMiddleware
     public function handle($request, Closure $next)
     {
       // example
-      // <div class="g-multi-level-dropdown">
+      // <div class="g-multi-level-dropdown"> 
       //   <ul>
       //     [page_list]
       //     [twig]
       //     <li>
-      //       <a href="[link]">[name]+</a>
+      //       <a href="[link]">
+      //         [name] +
+      //       </a>
       //       <ul>
       //         [inner_twig]
       //       </ul>
       //     </li>
       //     [/twig]
       //     [leaf]
-      //     <li><a href="[link]">[name]</a></li>
+      //     <li>
+      //       <a href="[link]">
+      //         [name]
+      //       </a>
+      //     </li>
       //     [/leaf]
       //     [/page_list]
       //   </ul>
@@ -49,33 +55,39 @@ class HomeShortcodeMiddleware
               // echo "<pre>";
               // var_dump($matches);
               // echo "</pre>";
+
+
               if (is_array($value2)) {
 
+                // $preg_match_all = "/\[link\]/";
+
+                $matches[3][0] = str_replace("[link]", $value2['url'], $matches[3][0]);
+                $matches[3][0] = str_replace("[name]", $key, $matches[3][0]);
+
                  echo  $matches[3][0];
-                 echo  $value2['url'];
+                 // echo  $value2['url'];
+                 // echo $key ;
+                  page_list($value2, $value, $preg_match_all);
                  echo  $matches[5][0];
-                 echo $key ;
-                 echo  $matches[7][0];
-                 page_list($value2, $value, $preg_match_all);
-                 echo  $matches[9][0];
 
               } else {
                 if ($key !== "url") {
 
-                  echo  $matches[13][0];
-                  echo  $value2;
-                  echo  $matches[15][0];
-                  echo $key;
-                  echo  $matches[17][0];
+                  // echo  $value2;
+                  // echo $key;
+                  $matches[9][0] = str_replace("[name]", $key, $matches[9][0]);
+                  $matches[9][0] = str_replace("[link]", $value2, $matches[9][0]);
+                  echo  $matches[9][0];
                 }
               }
             }
-
           }
+
+
 
           $responceContent = $responce->content();
 
-          $preg_match_all = "/\[page_list\]((.|\n)*?)\[twig\]((.|\n)*?)\[link\]((.|\n)*?)\[name\]((.|\n)*?)\[inner_twig\]((.|\n)*?)\[\/twig\]((.|\n)*?)\[leaf\]((.|\n)*?)\[link\]((.|\n)*?)\[name\]((.|\n)*?)\[\/leaf\]((.|\n)*?)\[\/page_list\]/";
+          $preg_match_all = "/\[page_list\]((.|\n)*?)\[twig\]((.|\n)*?)\[inner_twig\]((.|\n)*?)\[\/twig\]((.|\n)*?)\[leaf\]((.|\n)*?)\[\/leaf\]((.|\n)*?)\[\/page_list\]/";
 
           preg_match_all( $preg_match_all, $responceContent, $matches);
 

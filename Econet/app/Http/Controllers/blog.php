@@ -14,7 +14,16 @@ class blog extends Controller
      */
     public function index()
     {
-        //
+      // menu start
+        if (1==1) {
+          $VPgsLocsForBase = blogM::VPgsLocsForBase();
+        }
+      // menu end
+
+      $page_tools = blogM::page_tools(null, null);
+
+
+      return view('browse', compact('page_tools', 'VPgsLocsForBase'));
     }
 
     /**
@@ -36,8 +45,8 @@ class blog extends Controller
     public function store(Request $request, $a=null, $b=null)
     {
       if (1==1) {
-        $VPgsLocBase = blogM::VPgsLocBase();
-        $VPgContLoc = $VPgsLocBase.blogM::VPgLoc($VPgsLocBase,$a,$b);
+
+        $VPgContLoc = blogM::VPgContLoc($a,$b);
 
         $s = "/";
         $filename =  $request->get('file');
@@ -48,11 +57,10 @@ class blog extends Controller
         file_put_contents($file,$contents);
       }
 
-      $VPgLocMode1 = "blog".blogM::VPgLoc($VPgsLocBase,$a,$b);
-      $VPgLocMode2 = "blogEdit".blogM::VPgLoc($VPgsLocBase,$a,$b);
+      $page_tools = blogM::page_tools($a,$b);
 
       if (1==1) {
-        $VPgCont = blogM::VPgCont($VPgContLoc);
+        $VPgCont = blogM::VPgContForBase($a,$b);
 
         $EPgCont =  json_decode($request->get('smart'));
         blogM::EPgCont($VPgContLoc, $EPgCont);
@@ -65,7 +73,7 @@ class blog extends Controller
 
 
 
-      return redirect('/'.$VPgLocMode2);
+      return redirect('/'.$page_tools['edit']);
     }
 
     /**
@@ -75,28 +83,32 @@ class blog extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($a=null, $b=null){
-      // VPgsLocs start
+      // menu start
         if (1==1) {
-          $VPgsLocBase = blogM::VPgsLocBase();
-          $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
+
+          $VPgsLocsForBase = blogM::VPgsLocsForBase();
         }
-      // VPgsLocs end
+      // menu end
       if (1==1) {
-        $VPgContLoc = blogM::VPgsLocBase().blogM::VPgLoc($VPgsLocBase,$a,$b);
+
+        $VPgCont = blogM::VPgContForBase($a,$b);
+
+        $VSiteHeader = blogM::VPgCont(blogM::VPgsLocBase());
+        $VSiteHeader = $VSiteHeader['header.html'];
 
 
-
-        $VPgCont = blogM::VPgCont($VPgContLoc);
 
       }
 
 
       // $dir = blogM::VPgModes($a,$b)["dir"];
       // $dir2 = blogM::VPgModes($a,$b)["dir2"];
-      $VPgLocMode1 = "blog".blogM::VPgLoc($VPgsLocBase,$a,$b);
-      $VPgLocMode2 = "blogEdit".blogM::VPgLoc($VPgsLocBase,$a,$b);
 
-      return view('view', compact('VPgCont','VPgsLocs', 'a', 'b', 'VPgLocMode1', 'VPgLocMode2'));
+
+      $page_tools = blogM::page_tools($a,$b);
+      $general_tools = blogM::general_tools();
+
+      return view('view', compact('VPgCont','VPgsLocsForBase', 'a', 'b', 'page_tools', 'VSiteHeader', 'general_tools'));
     }
 
 
@@ -111,24 +123,25 @@ class blog extends Controller
       // menu start
 
         if (1==1) {
-          $VPgsLocBase = blogM::VPgsLocBase();
 
-          $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
+          $VPgsLocsForBase = blogM::VPgsLocsForBase();
+
+
         }
       // menu end
       if (1==1) {
 
-        $VPgContLoc = blogM::VPgsLocBase().blogM::VPgLoc($VPgsLocBase,$a,$b);
 
-        $VPgCont = blogM::VPgCont($VPgContLoc);
+        $VPgCont = blogM::VPgContForBase($a,$b);
       }
 
 
-      $VPgLocMode1 = "blog".blogM::VPgLoc($VPgsLocBase,$a,$b);
-      $VPgLocMode2 = "blogEdit".blogM::VPgLoc($VPgsLocBase,$a,$b);
+
+      $page_tools = blogM::page_tools($a,$b);
+      $general_tools = blogM::general_tools();
 
 
-      return view('edit', compact('VPgCont','VPgsLocs', 'a', 'b', 'VPgLocMode1', 'VPgLocMode2'));
+      return view('edit', compact('VPgCont','VPgsLocsForBase', 'a', 'b', 'general_tools', 'page_tools'));
     }
 
     /**

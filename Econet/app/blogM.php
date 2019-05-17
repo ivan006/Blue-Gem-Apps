@@ -29,6 +29,7 @@ class blogM extends Model
   }
 
 
+
   public static function VPgCont($VPgsLocBase) {
     $result = array();
     $VPgContItem = scandir($VPgsLocBase);
@@ -45,6 +46,36 @@ class blogM extends Model
     return  $result;
   }
 
+  public static function VPgContForBase($a,$b) {
+    return  blogM::VPgCont(blogM::VPgContLoc($a,$b));
+  }
+
+  public static function page_tools($a,$b) {
+    $page_tools['view'] = "blog".blogM::VPgLocForBase($a,$b);
+    $page_tools['edit'] = "blogEdit".blogM::VPgLocForBase($a,$b);
+    $page_tools['add'] = "blogAdd".blogM::VPgLocForBase($a,$b);
+
+    return  $page_tools;
+  }
+  public static function general_tools() {
+    $general_tools['browse_groups'] = "groups";
+
+    return  $general_tools;
+  }
+
+  public static function VPgContLoc($a,$b) {
+    return blogM::VPgsLocBase().blogM::VPgLocForBase($a,$b);
+  }
+  public static function VPgLocForBase($a,$b) {
+    return blogM::VPgLoc(blogM::VPgsLocBase(),$a,$b);
+  }
+
+  public static function VPgsLocsForBase() {
+    $VPgsLocBase = blogM::VPgsLocBase();
+    $staticdir = blogM::VPgsLocBase();
+    $result = blogM::VPgsLocs($VPgsLocBase,$staticdir);
+    return $result;
+  }
   public static function VPgsLocs($VPgsLocBase,$staticdir) {
     $result = array();
     $VPgContItem = scandir($VPgsLocBase);
