@@ -9,22 +9,22 @@ use App\groupsM;
 class postsM extends Model
 {
 
-  public static function allTools($a,$b) {
-    $all_tools['posts_read'] = postsM::groupTools()['posts_read_suffix'].postsM::postURLSuffix($a,$b);
-    $all_tools['posts_update'] = postsM::groupTools()['posts_read_suffix']."Edit".postsM::postURLSuffix($a,$b);
-    $all_tools['groups_read'] = postsM::groupTools()['groups_read'];
-    $all_tools['groups_create'] = postsM::groupTools()['groups_create'];
-    $all_tools['posts_read_suffix'] = postsM::groupTools()['posts_read_suffix'];
+  public static function allURLs($a,$b) {
+    $allURLs['posts_read'] = postsM::groupURLs()['posts_read_suffix'].postsM::postURLSuffix($a,$b);
+    $allURLs['posts_update'] = postsM::groupURLs()['posts_read_suffix']."Edit".postsM::postURLSuffix($a,$b);
+    $allURLs['groups_read'] = postsM::groupURLs()['groups_read'];
+    $allURLs['groups_create'] = postsM::groupURLs()['groups_create'];
+    $allURLs['posts_read_suffix'] = postsM::groupURLs()['posts_read_suffix'];
 
 
-    return $all_tools;
+    return $allURLs;
   }
-  public static function groupTools() {
-    $group_tools['groups_read'] = "";
-    $group_tools['groups_create'] = "add";
-    $group_tools['posts_read_suffix'] = "posts";
+  public static function groupURLs() {
+    $groupURLs['groups_read'] = "";
+    $groupURLs['groups_create'] = "add";
+    $groupURLs['posts_read_suffix'] = "posts";
 
-    return $group_tools;
+    return $groupURLs;
   }
   public static function postURLSuffix($a,$b){
     $s = "/";
@@ -94,10 +94,10 @@ class postsM extends Model
           if (!empty($whiteList)) {
             $result[$value] = postsM::deepList($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = url('/')."/".postsM::groupTools()['posts_read_suffix']."/".$url;
+            $result[$value]["url"] = url('/')."/".postsM::groupURLs()['posts_read_suffix']."/".$url;
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = url('/')."/".postsM::groupTools()['posts_read_suffix']."/".$url;
+            $result[$value] = url('/')."/".postsM::groupURLs()['posts_read_suffix']."/".$url;
           }
         }
       }

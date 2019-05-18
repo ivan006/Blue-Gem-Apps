@@ -1,7 +1,7 @@
 <span style="background-color: rgba(0,0,0,0.3); padding: 1em;">
   Groups
-  <a href="{{ URL::asset( $groupTools['groups_create']) }}">Create</a>
-  <a href="{{ URL::asset( $groupTools['groups_read']) }}">Read</a>
+  <a href="{{ URL::asset( $groupURLs['groups_create']) }}">Create</a>
+  <a href="{{ URL::asset( $groupURLs['groups_read']) }}">Read</a>
 </span>
 
 

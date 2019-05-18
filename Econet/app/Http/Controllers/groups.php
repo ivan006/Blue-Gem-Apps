@@ -53,9 +53,9 @@ class groups extends Controller
         }
       // menu end
 
-      $groupTools = postsM::groupTools();
+      $groupURLs = postsM::groupURLs();
 
-      return view('browse', compact('groupsList','groupTools'));
+      return view('browse', compact('groupsList','groupURLs'));
     }
 
     /**

@@ -5,8 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use App\postsM;
 use App\groupsM;
-use App\toolsM;
-
 
 class HomeShortcodeMiddleware
 {

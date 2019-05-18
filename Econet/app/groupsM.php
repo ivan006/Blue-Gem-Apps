@@ -27,10 +27,10 @@ class groupsM extends Model
           if (!empty($whiteList)) {
             // $result[$value] = postsM::deepList($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = url('/')."/".postsM::groupTools()['posts_read_suffix']."/".$url;
+            $result[$value]["url"] = url('/')."/".postsM::groupURLs()['posts_read_suffix']."/".$url;
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = url('/')."/".postsM::groupTools()['posts_read_suffix']."/".$url;
+            $result[$value] = url('/')."/".postsM::groupURLs()['posts_read_suffix']."/".$url;
           }
         }
       }

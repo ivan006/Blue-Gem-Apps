@@ -60,9 +60,9 @@ class posts extends Controller
 
       }
 
-      $allTools = postsM::allTools($a,$b);
+      $allURLs = postsM::allURLs($a,$b);
 
-      return redirect($allTools['posts_update']);
+      return redirect($allURLs['posts_update']);
     }
 
     /**
@@ -93,9 +93,9 @@ class posts extends Controller
 
 
 
-      $allTools = postsM::allTools($a,$b);
+      $allURLs = postsM::allURLs($a,$b);
 
-      return view('view', compact('postDeepRead','postsDeepList', 'a', 'b', 'VSiteHeader', 'allTools'));
+      return view('view', compact('postDeepRead','postsDeepList', 'a', 'b', 'VSiteHeader', 'allURLs'));
     }
 
 
@@ -124,10 +124,10 @@ class posts extends Controller
 
 
 
-      $allTools = postsM::allTools($a,$b);
+      $allURLs = postsM::allURLs($a,$b);
 
 
-      return view('edit', compact('postDeepRead','postsDeepList', 'a', 'b', 'allTools'));
+      return view('edit', compact('postDeepRead','postsDeepList', 'a', 'b', 'allURLs'));
     }
 
     /**
