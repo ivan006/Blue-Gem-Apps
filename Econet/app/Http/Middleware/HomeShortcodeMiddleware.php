@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\blogM;
+use App\postsM;
+use App\groupsM;
+use App\toolsM;
 
 
 class HomeShortcodeMiddleware
@@ -18,7 +20,7 @@ class HomeShortcodeMiddleware
     public function handle($request, Closure $next)
     {
       // example
-      // <div class="g-multi-level-dropdown"> 
+      // <div class="g-multi-level-dropdown">
       //   <ul>
       //     [page_list]
       //     [twig]
@@ -95,8 +97,8 @@ class HomeShortcodeMiddleware
 
             foreach ($matches[0] as $key => $value) {
 
-                $VPgsLocBase = blogM::VPgsLocBase();
-                $VPgsLocs = blogM::VPgsLocs($VPgsLocBase,$VPgsLocBase);
+                $siteURL = groupsM::siteURL();
+                $VPgsLocs = postsM::DeepRead($siteURL,$siteURL);
                 ob_start();
 
                   page_list($VPgsLocs,  $value,$preg_match_all);

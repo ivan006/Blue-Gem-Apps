@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\blogM;
+use App\postsM;
+use App\groupsM;
+use App\toolsM;
 
 class blog extends Controller
 {
@@ -16,14 +18,14 @@ class blog extends Controller
     {
       // menu start
         if (1==1) {
-          $VPgsLocsForBase = blogM::VPgsLocsForBase();
+          $postsDeepRead = postsM::postsDeepRead();
         }
       // menu end
 
-      $page_tools = blogM::page_tools(null, null);
+      $group_tools = toolsM::group_tools();
 
 
-      return view('browse', compact('page_tools', 'VPgsLocsForBase'));
+      return view('browse', compact('group_tools', 'postsDeepRead'));
     }
 
     /**
@@ -46,7 +48,7 @@ class blog extends Controller
     {
       if (1==1) {
 
-        $VPgContLoc = blogM::VPgContLoc($a,$b);
+        $VPgContLoc = postsM::VPgContLoc($a,$b);
 
         $s = "/";
         $filename =  $request->get('file');
@@ -57,23 +59,20 @@ class blog extends Controller
         file_put_contents($file,$contents);
       }
 
-      $page_tools = blogM::page_tools($a,$b);
+      $post_tools = toolsM::post_tools($a,$b);
 
       if (1==1) {
-        $VPgCont = blogM::VPgContForBase($a,$b);
+        $postDeepList = postsM::postDeepList($a,$b);
 
         $EPgCont =  json_decode($request->get('smart'));
-        blogM::EPgCont($VPgContLoc, $EPgCont);
+        postsM::EPgCont($VPgContLoc, $EPgCont);
 
-        // $thing = blogM::EPgCont2($VPgContLoc, $VPgCont);
-        // echo "<pre>";
-        // var_dump($thing);
-        // echo "</pre>";
+
       }
 
 
 
-      return redirect('/'.$page_tools['edit']);
+      return redirect('/'.$post_tools['edit']);
     }
 
     /**
@@ -86,14 +85,14 @@ class blog extends Controller
       // menu start
         if (1==1) {
 
-          $VPgsLocsForBase = blogM::VPgsLocsForBase();
+          $postsDeepRead = postsM::postsDeepRead($a,$b);
         }
       // menu end
       if (1==1) {
 
-        $VPgCont = blogM::VPgContForBase($a,$b);
+        $postDeepList = postsM::postDeepList($a,$b);
 
-        $VSiteHeader = blogM::VPgCont(blogM::VPgsLocBase());
+        $VSiteHeader = postsM::deepList(groupsM::groupURL());
         $VSiteHeader = $VSiteHeader['header.html'];
 
 
@@ -101,14 +100,13 @@ class blog extends Controller
       }
 
 
-      // $dir = blogM::VPgModes($a,$b)["dir"];
-      // $dir2 = blogM::VPgModes($a,$b)["dir2"];
 
 
-      $page_tools = blogM::page_tools($a,$b);
-      $general_tools = blogM::general_tools();
 
-      return view('view', compact('VPgCont','VPgsLocsForBase', 'a', 'b', 'page_tools', 'VSiteHeader', 'general_tools'));
+      $post_tools = toolsM::post_tools($a,$b);
+      $group_tools = toolsM::group_tools();
+
+      return view('view', compact('postDeepList','postsDeepRead', 'a', 'b', 'post_tools', 'VSiteHeader', 'group_tools'));
     }
 
 
@@ -124,7 +122,7 @@ class blog extends Controller
 
         if (1==1) {
 
-          $VPgsLocsForBase = blogM::VPgsLocsForBase();
+          $postsDeepRead = postsM::postsDeepRead($a,$b);
 
 
         }
@@ -132,16 +130,16 @@ class blog extends Controller
       if (1==1) {
 
 
-        $VPgCont = blogM::VPgContForBase($a,$b);
+        $postDeepList = postsM::postDeepList($a,$b);
       }
 
 
 
-      $page_tools = blogM::page_tools($a,$b);
-      $general_tools = blogM::general_tools();
+      $post_tools = toolsM::post_tools($a,$b);
+      $group_tools = toolsM::group_tools();
 
 
-      return view('edit', compact('VPgCont','VPgsLocsForBase', 'a', 'b', 'general_tools', 'page_tools'));
+      return view('edit', compact('postDeepList','postsDeepRead', 'a', 'b', 'group_tools', 'post_tools'));
     }
 
     /**

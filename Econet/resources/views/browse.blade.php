@@ -2,7 +2,8 @@
 <link rel="stylesheet" href="{{ URL::asset('js/FlexiJsonEditor/jsoneditor.css') }}"/>
 
 
-<a href="{{ URL::asset($page_tools['add']) }}">Add</a>
+{{ $group_tools}}
+
 <br>
 <br>
 <div class="" style="background-color: white; padding: 0em; width: 100%; height: 200px;">
@@ -89,7 +90,7 @@
       @endif
     <?php }?>
   <?php }?>
-  <?php ivan($VPgsLocsForBase) ?>
+  <?php ivan($postsDeepRead) ?>
   </div>
 </div>
 

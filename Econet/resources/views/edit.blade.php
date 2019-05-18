@@ -1,13 +1,14 @@
 
 <link rel="stylesheet" href="{{ URL::asset('js/FlexiJsonEditor/jsoneditor.css') }}"/>
 
-<a href="{{ URL::asset($page_tools['view']) }}">View</a>
-<a href="{{ URL::asset($general_tools['browse_groups']) }}">Browse groups</a>
+
+{{ $post_tools}}
+{{ $group_tools}}
 <br>
 <br>
 
 
- <form class="" action="{{ URL::asset($page_tools['view'])}}" method="post">
+ <form class="" action="{{ URL::asset($post_tools['view'])}}" method="post">
    <input type="submit" name="submit" value="Submit">
    <h1>Rich Data</h1>
    <!-- surname 1: [r]Education/Destiny Code/smart/surname.txt[/r]<br>  surname 2: [r]Education/Graft Your Garden/smart/surname.txt[/r]<br>      -->
@@ -15,8 +16,8 @@
    {{csrf_field()}}
    <textarea class="" name="contents"  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php
      $rich = 'rich.txt';
-     if (isset($VPgCont[$rich])) {
-       echo $VPgCont[$rich];
+     if (isset($postDeepList[$rich])) {
+       echo $postDeepList[$rich];
      }
      ?></textarea>
    <input style="display: none;" type="text"  name="file" value="<?php echo $rich; ?>"  placeholder="Enter title">
@@ -37,9 +38,9 @@
 
 <script type="text/javascript">
 <?php
-if (isset($VPgCont['smart'])) {
+if (isset($postDeepList['smart'])) {
   $ivan3 = array();
-  $ivan3["smart"] = $VPgCont['smart'];
+  $ivan3["smart"] = $postDeepList['smart'];
   $ivan_json =  json_encode($ivan3);
 } else {
   $ivan_json =  null;
