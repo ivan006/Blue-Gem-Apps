@@ -23,8 +23,8 @@
     echo $VSiteHeader;
   }
 
-  if (isset($VPgCont["rich.txt"])) {
-    echo $VPgCont["rich.txt"];
+  if (isset($postDeepRead["rich.txt"])) {
+    echo $postDeepRead["rich.txt"];
   }
   ?>
 

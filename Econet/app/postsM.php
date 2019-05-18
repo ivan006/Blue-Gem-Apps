@@ -20,7 +20,7 @@ class postsM extends Model
     return $all_tools;
   }
   public static function groupTools() {
-    $group_tools['groups_read'] = "groups";
+    $group_tools['groups_read'] = "";
     $group_tools['groups_create'] = "add";
     $group_tools['posts_read_suffix'] = "posts";
 

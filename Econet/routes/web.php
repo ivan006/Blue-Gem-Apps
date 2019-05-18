@@ -24,4 +24,4 @@ Route::get('/postsEdit/{a?}/{b?}', 'posts@edit');
 Route::post('/posts/{a?}/{b?}', 'posts@store');
 Route::get('/posts/{a?}/{b?}', 'posts@show')->middleware('ivans');;
 Route::get('/postsApi/{a?}/{b?}/{c?}/{d?}', 'blogApi@show');
-Route::get('/groups', 'groups@show');
+Route::get('/', 'groups@show');
