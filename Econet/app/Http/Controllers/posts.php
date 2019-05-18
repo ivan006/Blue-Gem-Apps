@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\postsM;
 use App\groupsM;
-use App\toolsM;
 
-class blog extends Controller
+class posts extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,16 +15,7 @@ class blog extends Controller
      */
     public function index()
     {
-      // menu start
-        if (1==1) {
-          $postsDeepRead = postsM::postsDeepRead();
-        }
-      // menu end
 
-      $group_tools = toolsM::group_tools();
-
-
-      return view('browse', compact('group_tools', 'postsDeepRead'));
     }
 
     /**
@@ -48,31 +38,31 @@ class blog extends Controller
     {
       if (1==1) {
 
-        $VPgContLoc = postsM::VPgContLoc($a,$b);
+        $postURL = postsM::postURL($a,$b);
 
         $s = "/";
         $filename =  $request->get('file');
-        $file =  $VPgContLoc.$s.$filename;
+        $file =  $postURL.$s.$filename;
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
         file_put_contents($file,$contents);
       }
 
-      $post_tools = toolsM::post_tools($a,$b);
+
 
       if (1==1) {
-        $postDeepList = postsM::postDeepList($a,$b);
+        $postDeepRead = postsM::postDeepRead($a,$b);
 
         $EPgCont =  json_decode($request->get('smart'));
-        postsM::EPgCont($VPgContLoc, $EPgCont);
+        postsM::EPgCont($postURL, $EPgCont);
 
 
       }
 
+      $allTools = postsM::allTools($a,$b);
 
-
-      return redirect('/'.$post_tools['edit']);
+      return redirect($allTools['posts_update']);
     }
 
     /**
@@ -85,14 +75,14 @@ class blog extends Controller
       // menu start
         if (1==1) {
 
-          $postsDeepRead = postsM::postsDeepRead($a,$b);
+          $postsDeepList = postsM::postsDeepList($a,$b);
         }
       // menu end
       if (1==1) {
 
-        $postDeepList = postsM::postDeepList($a,$b);
+        $postDeepRead = postsM::postDeepRead($a,$b);
 
-        $VSiteHeader = postsM::deepList(groupsM::groupURL());
+        $VSiteHeader = postsM::deepRead(groupsM::groupURL());
         $VSiteHeader = $VSiteHeader['header.html'];
 
 
@@ -103,10 +93,9 @@ class blog extends Controller
 
 
 
-      $post_tools = toolsM::post_tools($a,$b);
-      $group_tools = toolsM::group_tools();
+      $allTools = postsM::allTools($a,$b);
 
-      return view('view', compact('postDeepList','postsDeepRead', 'a', 'b', 'post_tools', 'VSiteHeader', 'group_tools'));
+      return view('view', compact('postDeepRead','postsDeepList', 'a', 'b', 'VSiteHeader', 'allTools'));
     }
 
 
@@ -122,7 +111,7 @@ class blog extends Controller
 
         if (1==1) {
 
-          $postsDeepRead = postsM::postsDeepRead($a,$b);
+          $postsDeepList = postsM::postsDeepList($a,$b);
 
 
         }
@@ -130,16 +119,15 @@ class blog extends Controller
       if (1==1) {
 
 
-        $postDeepList = postsM::postDeepList($a,$b);
+        $postDeepRead = postsM::postDeepRead($a,$b);
       }
 
 
 
-      $post_tools = toolsM::post_tools($a,$b);
-      $group_tools = toolsM::group_tools();
+      $allTools = postsM::allTools($a,$b);
 
 
-      return view('edit', compact('postDeepList','postsDeepRead', 'a', 'b', 'group_tools', 'post_tools'));
+      return view('edit', compact('postDeepRead','postsDeepList', 'a', 'b', 'allTools'));
     }
 
     /**

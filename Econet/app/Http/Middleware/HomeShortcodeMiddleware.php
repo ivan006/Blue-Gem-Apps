@@ -98,7 +98,7 @@ class HomeShortcodeMiddleware
             foreach ($matches[0] as $key => $value) {
 
                 $siteURL = groupsM::siteURL();
-                $VPgsLocs = postsM::DeepRead($siteURL,$siteURL);
+                $VPgsLocs = postsM::deepList($siteURL,$siteURL);
                 ob_start();
 
                   page_list($VPgsLocs,  $value,$preg_match_all);

@@ -5,12 +5,27 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\postsM;
 use App\groupsM;
-use App\toolsM;
 
 class postsM extends Model
 {
 
+  public static function allTools($a,$b) {
+    $all_tools['posts_read'] = postsM::groupTools()['posts_read_suffix'].postsM::postURLSuffix($a,$b);
+    $all_tools['posts_update'] = postsM::groupTools()['posts_read_suffix']."Edit".postsM::postURLSuffix($a,$b);
+    $all_tools['groups_read'] = postsM::groupTools()['groups_read'];
+    $all_tools['groups_create'] = postsM::groupTools()['groups_create'];
+    $all_tools['posts_read_suffix'] = postsM::groupTools()['posts_read_suffix'];
 
+
+    return $all_tools;
+  }
+  public static function groupTools() {
+    $group_tools['groups_read'] = "groups";
+    $group_tools['groups_create'] = "add";
+    $group_tools['posts_read_suffix'] = "posts";
+
+    return $group_tools;
+  }
   public static function postURLSuffix($a,$b){
     $s = "/";
     $root= groupsM::siteURL();
@@ -40,17 +55,17 @@ class postsM extends Model
     return groupsM::siteURL().postsM::postURLSuffix($a,$b);
   }
 
-  public static function postDeepList($a,$b) {
-    return  postsM::deepList(postsM::postURL($a,$b));
+  public static function postDeepRead($a,$b) {
+    return  postsM::deepRead(postsM::postURL($a,$b));
   }
-  public static function deepList($groupURL) {
+  public static function deepRead($groupURL) {
     $result = array();
     $shallowList = scandir($groupURL);
     foreach ($shallowList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
         $VPgContItemLoc = $groupURL . DIRECTORY_SEPARATOR . $value;
         if (is_dir($VPgContItemLoc)){
-          $result[$value] = postsM::deepList($VPgContItemLoc);
+          $result[$value] = postsM::deepRead($VPgContItemLoc);
         } else {
           $result[$value] = file_get_contents($VPgContItemLoc);
         }
@@ -59,14 +74,14 @@ class postsM extends Model
     return  $result;
   }
 
-  public static function postsDeepRead($a,$b) {
+  public static function postsDeepList($a,$b) {
     $groupURL = postsM::postURL($a,$b);
     $staticdir = postsM::postURL($a,$b);
-    $result = postsM::deepRead($groupURL,$staticdir);
+    $result = postsM::deepList($groupURL,$staticdir);
     return $result;
   }
 
-  public static function deepRead($groupURL,$staticdir) {
+  public static function deepList($groupURL,$staticdir) {
     $result = array();
     $dataNameList = scandir($groupURL);
     foreach ($dataNameList as $key => $value) {
@@ -77,12 +92,12 @@ class postsM extends Model
           $blackList = array(".","..","smart","rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
-            $result[$value] = postsM::deepRead($dataLocation,$staticdir);
+            $result[$value] = postsM::deepList($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = url('/')."/blog/".$url;
+            $result[$value]["url"] = url('/')."/".postsM::groupTools()['posts_read_suffix']."/".$url;
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = url('/')."/blog/".$url;
+            $result[$value] = url('/')."/".postsM::groupTools()['posts_read_suffix']."/".$url;
           }
         }
       }

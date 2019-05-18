@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\postsM;
 use App\groupsM;
-use App\toolsM;
 
 class groupsM extends Model
 {
@@ -13,6 +12,32 @@ class groupsM extends Model
 
 
 
+  public static function groupsList() {
+    $groupURL = groupsM::siteURL();
+    $staticdir  = groupsM::siteURL();
+    $result = array();
+    $dataNameList = scandir($groupURL);
+    foreach ($dataNameList as $key => $value) {
+      if (!in_array($value,array(".","..")))  {
+        $dataLocation = $groupURL . "/" . $value;
+        if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
+          $subDataNameList = scandir($dataLocation);
+          $blackList = array(".","..","smart","rich.txt");
+          $whiteList = array_diff_key($subDataNameList,$blackList);
+          if (!empty($whiteList)) {
+            // $result[$value] = postsM::deepList($dataLocation,$staticdir);
+            $url = str_replace($staticdir."/", "", $dataLocation);
+            $result[$value]["url"] = url('/')."/".postsM::groupTools()['posts_read_suffix']."/".$url;
+          } else {
+            $url = str_replace($staticdir."/", "", $dataLocation);
+            $result[$value] = url('/')."/".postsM::groupTools()['posts_read_suffix']."/".$url;
+          }
+        }
+      }
+    }
+
+    return $result;
+  }
 
 
 

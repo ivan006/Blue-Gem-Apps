@@ -1,8 +1,16 @@
+<span style="background-color: rgba(0,0,0,0.3); padding: 1em;">
+  Groups
+  <a href="{{ URL::asset( $groupTools['groups_create']) }}">Create</a>
+  <a href="{{ URL::asset( $groupTools['groups_read']) }}">Read</a>
+</span>
+
+
+
 
 <link rel="stylesheet" href="{{ URL::asset('js/FlexiJsonEditor/jsoneditor.css') }}"/>
 
 
-{{ $group_tools}}
+
 
 <br>
 <br>
@@ -90,7 +98,7 @@
       @endif
     <?php }?>
   <?php }?>
-  <?php ivan($postsDeepRead) ?>
+  <?php ivan($groupsList) ?>
   </div>
 </div>
 
