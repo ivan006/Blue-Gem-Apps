@@ -1,13 +1,13 @@
 <span style="background-color: rgba(0,0,0,0.3); padding: 1em;">
-  Groups
-  <a href="{{ URL::asset( $allURLs['groups_create']) }}">Create</a>
-  <a href="{{ URL::asset( $allURLs['groups_read']) }}">Read</a>
+  Assets
+  <a href="{{ URL::asset( $allURLs['assets_create']) }}">Create</a>
+  <a href="{{ URL::asset( $allURLs['assets_read']) }}">Read</a>
 </span>
 <span style="background-color: rgba(0,0,0,0.3); padding: 1em;">
-  Posts
+  SubAssets
 
-  <a href="{{ URL::asset( $allURLs['posts_read']) }}">Read</a>
-  <a href="{{ URL::asset( $allURLs['posts_update']) }}">Update</a>
+  <a href="{{ URL::asset( $allURLs['sub_assets_read']) }}">Read</a>
+  <a href="{{ URL::asset( $allURLs['sub_assets_update']) }}">Update</a>
 </span>
 
 
@@ -17,7 +17,7 @@
 <br>
 
 
- <form class="" action="{{ URL::asset( $allURLs['posts_read']) }}" method="post">
+ <form class="" action="{{ URL::asset( $allURLs['sub_assets_read']) }}" method="post">
    <input type="submit" name="submit" value="Submit">
    <h1>Rich Data</h1>
    <!-- surname 1: [r]Education/Destiny Code/smart/surname.txt[/r]<br>  surname 2: [r]Education/Graft Your Garden/smart/surname.txt[/r]<br>      -->
@@ -25,8 +25,8 @@
    {{csrf_field()}}
    <textarea class="" name="contents"  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php
      $rich = 'rich.txt';
-     if (isset($postDeepRead[$rich])) {
-       echo $postDeepRead[$rich];
+     if (isset($SubAssetDeepRead[$rich])) {
+       echo $SubAssetDeepRead[$rich];
      }
      ?></textarea>
    <input style="display: none;" type="text"  name="file" value="<?php echo $rich; ?>"  placeholder="Enter title">
@@ -47,9 +47,9 @@
 
 <script type="text/javascript">
 <?php
-if (isset($postDeepRead['smart'])) {
+if (isset($SubAssetDeepRead['smart'])) {
   $ivan3 = array();
-  $ivan3["smart"] = $postDeepRead['smart'];
+  $ivan3["smart"] = $SubAssetDeepRead['smart'];
   $ivan_json =  json_encode($ivan3);
 } else {
   $ivan_json =  null;

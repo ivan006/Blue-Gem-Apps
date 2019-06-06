@@ -20,8 +20,8 @@ Route::get('/phpversion', function () {
 });
 
 Route::resource('/example','example');
-Route::get('/postsEdit/{a?}/{b?}', 'posts@edit');
-Route::post('/posts/{a?}/{b?}', 'posts@store');
-Route::get('/posts/{a?}/{b?}', 'posts@show')->middleware('ivans');;
-Route::get('/postsApi/{a?}/{b?}/{c?}/{d?}', 'blogApi@show');
-Route::get('/', 'groups@show');
+Route::get('/SubAssetsEdit/{a?}/{b?}', 'SubAssets@edit');
+Route::post('/SubAssets/{a?}/{b?}', 'SubAssets@store');
+Route::get('/SubAssets/{a?}/{b?}', 'SubAssets@show')->middleware('ivans');
+Route::get('/SubAssetsApi/{a?}/{b?}/{c?}/{d?}', 'blogApi@show');
+Route::get('/', 'Assets@show');

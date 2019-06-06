@@ -1,7 +1,7 @@
 <span style="background-color: rgba(0,0,0,0.3); padding: 1em;">
-  Groups
-  <a href="{{ URL::asset( $groupURLs['groups_create']) }}">Create</a>
-  <a href="{{ URL::asset( $groupURLs['groups_read']) }}">Read</a>
+  Assets
+  <a href="{{ URL::asset( $AssetURLs['assets_create']) }}">Create</a>
+  <a href="{{ URL::asset( $AssetURLs['assets_read']) }}">Read</a>
 </span>
 
 
@@ -62,8 +62,8 @@
 <br>
 <div class="container-fluid">
   <div class="row">
-  <?php function ivan($post){?>
-    <?php foreach($post as $key => $value){?>
+  <?php function ivan($SubAsset){?>
+    <?php foreach($SubAsset as $key => $value){?>
       @if (is_array($value))
 
         <div class="col-sm-3 col-md-12">
@@ -98,7 +98,7 @@
       @endif
     <?php }?>
   <?php }?>
-  <?php ivan($groupsList) ?>
+  <?php ivan($AssetsList) ?>
   </div>
 </div>
 

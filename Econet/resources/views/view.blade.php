@@ -1,13 +1,13 @@
 <span style="background-color: rgba(0,0,0,0.3); padding: 1em;">
-  Groups
-  <a href="{{ URL::asset( $allURLs['groups_create']) }}">Create</a>
-  <a href="{{ URL::asset( $allURLs['groups_read']) }}">Read</a>
+  Assets
+  <a href="{{ URL::asset( $allURLs['assets_create']) }}">Create</a>
+  <a href="{{ URL::asset( $allURLs['assets_read']) }}">Read</a>
 </span>
 <span style="background-color: rgba(0,0,0,0.3); padding: 1em;">
-  Posts
+  SubAssets
 
-  <a href="{{ URL::asset( $allURLs['posts_read']) }}">Read</a>
-  <a href="{{ URL::asset( $allURLs['posts_update']) }}">Update</a>
+  <a href="{{ URL::asset( $allURLs['sub_assets_read']) }}">Read</a>
+  <a href="{{ URL::asset( $allURLs['sub_assets_update']) }}">Update</a>
 </span>
 
 
@@ -23,8 +23,8 @@
     echo $VSiteHeader;
   }
 
-  if (isset($postDeepRead["rich.txt"])) {
-    echo $postDeepRead["rich.txt"];
+  if (isset($SubAssetDeepRead["rich.txt"])) {
+    echo $SubAssetDeepRead["rich.txt"];
   }
   ?>
 

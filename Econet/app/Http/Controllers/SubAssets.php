@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\postsM;
-use App\groupsM;
+use App\SubAssetsM;
+use App\AssetsM;
 
-class posts extends Controller
+class SubAssets extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,11 +38,11 @@ class posts extends Controller
     {
       if (1==1) {
 
-        $postURL = postsM::postURL($a,$b);
+        $SubAssetURL = SubAssetsM::SubAssetURL($a,$b);
 
         $s = "/";
         $filename =  $request->get('file');
-        $file =  $postURL.$s.$filename;
+        $file =  $SubAssetURL.$s.$filename;
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
@@ -52,17 +52,17 @@ class posts extends Controller
 
 
       if (1==1) {
-        $postDeepRead = postsM::postDeepRead($a,$b);
+        $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
 
         $EPgCont =  json_decode($request->get('smart'));
-        postsM::EPgCont($postURL, $EPgCont);
+        SubAssetsM::EPgCont($SubAssetURL, $EPgCont);
 
 
       }
 
-      $allURLs = postsM::allURLs($a,$b);
+      $allURLs = SubAssetsM::allURLs($a,$b);
 
-      return redirect($allURLs['posts_update']);
+      return redirect($allURLs['sub_assets_update']);
     }
 
     /**
@@ -75,14 +75,14 @@ class posts extends Controller
       // menu start
         if (1==1) {
 
-          $postsDeepList = postsM::postsDeepList($a,$b);
+          $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList($a,$b);
         }
       // menu end
       if (1==1) {
 
-        $postDeepRead = postsM::postDeepRead($a,$b);
+        $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
 
-        $VSiteHeader = postsM::deepRead(groupsM::groupURL());
+        $VSiteHeader = SubAssetsM::deepRead(AssetsM::AssetURL());
         $VSiteHeader = $VSiteHeader['header.html'];
 
 
@@ -93,9 +93,11 @@ class posts extends Controller
 
 
 
-      $allURLs = postsM::allURLs($a,$b);
+      $allURLs = SubAssetsM::allURLs($a,$b);
 
-      return view('view', compact('postDeepRead','postsDeepList', 'a', 'b', 'VSiteHeader', 'allURLs'));
+
+
+      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'a', 'b', 'VSiteHeader', 'allURLs'));
     }
 
 
@@ -107,27 +109,15 @@ class posts extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($a=null, $b=null){
-      // menu start
 
-        if (1==1) {
+      $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList($a,$b);
 
-          $postsDeepList = postsM::postsDeepList($a,$b);
+      $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
 
-
-        }
-      // menu end
-      if (1==1) {
+      $allURLs = SubAssetsM::allURLs($a,$b);
 
 
-        $postDeepRead = postsM::postDeepRead($a,$b);
-      }
-
-
-
-      $allURLs = postsM::allURLs($a,$b);
-
-
-      return view('edit', compact('postDeepRead','postsDeepList', 'a', 'b', 'allURLs'));
+      return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'a', 'b', 'allURLs'));
     }
 
     /**

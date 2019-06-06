@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\postsM;
-use App\groupsM;
+use App\SubAssetsM;
+use App\AssetsM;
 
 class HomeShortcodeMiddleware
 {
@@ -95,8 +95,8 @@ class HomeShortcodeMiddleware
 
             foreach ($matches[0] as $key => $value) {
 
-                $siteURL = groupsM::siteURL();
-                $VPgsLocs = postsM::deepList($siteURL,$siteURL);
+                $siteURL = AssetsM::siteURL();
+                $VPgsLocs = SubAssetsM::deepList($siteURL,$siteURL);
                 ob_start();
 
                   page_list($VPgsLocs,  $value,$preg_match_all);

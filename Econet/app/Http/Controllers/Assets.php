@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\postsM;
-use App\groupsM;
+use App\SubAssetsM;
+use App\AssetsM;
+// use Illuminate\Routing\Redirector;
+// use Illuminate\Routing\Facades\Route;
 
-class groups extends Controller
+class Assets extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -49,13 +51,15 @@ class groups extends Controller
     {
       // menu start
         if (1==1) {
-          $groupsList = groupsM::groupsList();
+          $AssetsList = AssetsM::AssetsList();
         }
       // menu end
 
-      $groupURLs = postsM::groupURLs();
+      $AssetURLs = SubAssetsM::AssetURLs();
 
-      return view('browse', compact('groupsList','groupURLs'));
+      // echo Route::getCurrentRoute()->getPath();
+
+      return view('browse', compact('AssetsList','AssetURLs'));
     }
 
     /**

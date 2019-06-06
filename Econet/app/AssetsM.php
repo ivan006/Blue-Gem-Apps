@@ -3,34 +3,34 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\postsM;
-use App\groupsM;
+use App\SubAssetsM;
+use App\AssetsM;
 
-class groupsM extends Model
+class AssetsM extends Model
 {
 
 
 
 
-  public static function groupsList() {
-    $groupURL = groupsM::siteURL();
-    $staticdir  = groupsM::siteURL();
+  public static function AssetsList() {
+    $AssetURL = AssetsM::siteURL();
+    $staticdir  = AssetsM::siteURL();
     $result = array();
-    $dataNameList = scandir($groupURL);
+    $dataNameList = scandir($AssetURL);
     foreach ($dataNameList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
-        $dataLocation = $groupURL . "/" . $value;
+        $dataLocation = $AssetURL . "/" . $value;
         if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
           $subDataNameList = scandir($dataLocation);
           $blackList = array(".","..","smart","rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
-            // $result[$value] = postsM::deepList($dataLocation,$staticdir);
+            // $result[$value] = SubAssetsM::deepList($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = url('/')."/".postsM::groupURLs()['posts_read_suffix']."/".$url;
+            $result[$value]["url"] = url('/')."/".SubAssetsM::AssetURLs()['sub_assets_read_suffix']."/".$url;
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = url('/')."/".postsM::groupURLs()['posts_read_suffix']."/".$url;
+            $result[$value] = url('/')."/".SubAssetsM::AssetURLs()['sub_assets_read_suffix']."/".$url;
           }
         }
       }
@@ -43,7 +43,7 @@ class groupsM extends Model
 
 
 
-  public static function VPgContForGroup($a,$b) {
+  public static function VPgContForAsset($a,$b) {
     $result = array();
     $VPgContItem = scandir($siteURL);
     foreach ($VPgContItem as $key => $value) {
@@ -59,8 +59,8 @@ class groupsM extends Model
 
 
 
-  public static function groupURL() {
-    return groupsM::siteURL()."/hey";
+  public static function AssetURL() {
+    return AssetsM::siteURL()."/hey";
   }
   public static function siteURL() {
     return "../public/images";
