@@ -17,7 +17,13 @@ class Assets extends Controller
      */
     public function index()
     {
-        //
+      $AssetsList = AssetsM::AssetsList();
+
+      $AssetURLs = SubAssetsM::AssetURLs();
+
+      // echo Route::getCurrentRoute()->getPath();
+
+      return view('browse', compact('AssetsList','AssetURLs'));
     }
 
     /**
@@ -27,7 +33,8 @@ class Assets extends Controller
      */
     public function create()
     {
-        //
+        // return view('WriteAsset', compact('allURLs'));
+        return view('WriteAsset');
     }
 
     /**
@@ -38,7 +45,9 @@ class Assets extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+      AssetsM::store($request);
+      return redirect( route('show', $request->get('name')));
     }
 
     /**
@@ -47,19 +56,10 @@ class Assets extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-      // menu start
-        if (1==1) {
-          $AssetsList = AssetsM::AssetsList();
-        }
-      // menu end
 
-      $AssetURLs = SubAssetsM::AssetURLs();
 
-      // echo Route::getCurrentRoute()->getPath();
-
-      return view('browse', compact('AssetsList','AssetURLs'));
     }
 
     /**

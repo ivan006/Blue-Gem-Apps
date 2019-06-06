@@ -19,9 +19,19 @@ Route::get('/phpversion', function () {
   echo phpversion();
 });
 
-Route::resource('/example','example');
-Route::get('/SubAssetsEdit/{a?}/{b?}', 'SubAssets@edit');
-Route::post('/SubAssets/{a?}/{b?}', 'SubAssets@store');
-Route::get('/SubAssets/{a?}/{b?}', 'SubAssets@show')->middleware('ivans');
-Route::get('/SubAssetsApi/{a?}/{b?}/{c?}/{d?}', 'blogApi@show');
-Route::get('/', 'Assets@show');
+Route::group(['middleware' => 'ivans'], function() {
+
+  // Route::get('/', function(){
+  //   return redirect( route('Assets.index'));
+  // });
+  // Route::resource('/Assets', 'Assets');
+  Route::resource('', 'Assets');
+  Route::resource('/SubAssets','SubAssets');
+});
+
+// Route::get('/SubAssetsEdit/{a?}/{b?}', 'SubAssets@edit');
+// Route::post('/SubAssets/{a?}/{b?}', 'SubAssets@store');
+// Route::get('/SubAssets/{a?}/{b?}', 'SubAssets@show')->middleware('ivans');
+// Route::get('/SubAssetsApi/{a?}/{b?}/{c?}/{d?}', 'blogApi@show');
+// Route::get('/', 'Assets@show');
+// Route::get('/create', 'Assets@create');

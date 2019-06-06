@@ -1,8 +1,4 @@
-<span style="background-color: rgba(0,0,0,0.3); padding: 1em;">
-  Assets
-  <a href="{{ URL::asset( $AssetURLs['assets_create']) }}">Create</a>
-  <a href="{{ URL::asset( $AssetURLs['assets_read']) }}">Read</a>
-</span>
+@include('includes.menu_assets')
 
 
 

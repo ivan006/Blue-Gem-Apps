@@ -72,26 +72,13 @@ class SubAssets extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($a=null, $b=null){
-      // menu start
-        if (1==1) {
 
-          $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList($a,$b);
-        }
-      // menu end
-      if (1==1) {
+      $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList($a,$b);
 
-        $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
+      $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
 
-        $VSiteHeader = SubAssetsM::deepRead(AssetsM::AssetURL());
-        $VSiteHeader = $VSiteHeader['header.html'];
-
-
-
-      }
-
-
-
-
+      $VSiteHeader = SubAssetsM::deepRead(AssetsM::AssetURL($b));
+      $VSiteHeader = $VSiteHeader['header.html'];
 
       $allURLs = SubAssetsM::allURLs($a,$b);
 

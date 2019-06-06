@@ -27,10 +27,10 @@ class AssetsM extends Model
           if (!empty($whiteList)) {
             // $result[$value] = SubAssetsM::deepList($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = url('/')."/".SubAssetsM::AssetURLs()['sub_assets_read_suffix']."/".$url;
+            $result[$value]["url"] = route('show', $url);
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = url('/')."/".SubAssetsM::AssetURLs()['sub_assets_read_suffix']."/".$url;
+            $result[$value] = route('show', $url);
           }
         }
       }
@@ -59,11 +59,15 @@ class AssetsM extends Model
 
 
 
-  public static function AssetURL() {
-    return AssetsM::siteURL()."/hey";
+  public static function AssetURL($value) {
+    return AssetsM::siteURL()."/".$value;
   }
   public static function siteURL() {
     return "../public/images";
+  }
+
+  public static function store($request) {
+    mkdir(self::siteURL()."/".$request->get('name'));
   }
 
 
