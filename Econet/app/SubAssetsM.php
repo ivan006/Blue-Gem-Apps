@@ -9,54 +9,41 @@ use App\AssetsM;
 class SubAssetsM extends Model
 {
 
-  public static function allURLs($a,$b) {
-    $allURLs['sub_assets_read'] = SubAssetsM::AssetURLs()['sub_assets_read_suffix'].SubAssetsM::SubAssetURLSuffix($a,$b);
-    $allURLs['sub_assets_update'] = SubAssetsM::AssetURLs()['sub_assets_read_suffix']."Edit".SubAssetsM::SubAssetURLSuffix($a,$b);
-    $allURLs['assets_read'] = SubAssetsM::AssetURLs()['assets_read'];
-    $allURLs['assets_create'] = SubAssetsM::AssetURLs()['assets_create'];
-    $allURLs['sub_assets_read_suffix'] = SubAssetsM::AssetURLs()['sub_assets_read_suffix'];
-
+  public static function allURLs() {
+    $allURLs['sub_assets_read'] =   route('SubAssets.show',SubAssetsM::SubAssetURLSuffix(func_get_args()[0]));
+    $allURLs['sub_assets_update'] = route('SubAssets.edit',SubAssetsM::SubAssetURLSuffix(func_get_args()[0]));
+    $allURLs['assets_read'] = route('Assets.index');
+    $allURLs['assets_create'] = route('Assets.create');
 
     return $allURLs;
   }
-  public static function AssetURLs() {
-    $AssetURLs['assets_read'] = "";
-    $AssetURLs['assets_create'] = "add";
-    $AssetURLs['sub_assets_read_suffix'] = "SubAssets";
+  // public static function AssetURLs() {
+  //   $AssetURLs['assets_read'] = "";
+  //   $AssetURLs['assets_create'] = "add";
+  //   $AssetURLs['sub_assets_read_suffix'] = "SubAssets";
+  //
+  //   return $AssetURLs;
+  // }
+  public static function SubAssetURLSuffix(){
 
-    return $AssetURLs;
-  }
-  public static function SubAssetURLSuffix($a,$b){
-    $s = "/";
-    $root= AssetsM::siteURL();
-    if (isset($b)) {
-      $VPgLoc = $s.$a.$s.$b;
-      if (is_dir($root.$VPgLoc)) {
-        return $VPgLoc;
-      } else {
-        return null;
-      }
-    } elseif (isset($a)) {
-      $VPgLoc = $s.$a;
-      if (is_dir($root.$VPgLoc)) {
-        return $VPgLoc;
-      } else {
-        return null;
-      }
-    } else {
-      return  null;
+    // $root= AssetsM::siteURL();
+    $VPgLoc = '';
+    foreach (func_get_args()[0] as $key => $value) {
+      $VPgLoc .= "".$value."/";
     }
+    return $VPgLoc;
+
   }
 
 
 
 
-  public static function SubAssetURL($a,$b) {
-    return AssetsM::siteURL().SubAssetsM::SubAssetURLSuffix($a,$b);
+  public static function SubAssetURL() {
+    return AssetsM::siteURL().SubAssetsM::SubAssetURLSuffix(func_get_args()[0]);
   }
 
-  public static function SubAssetDeepRead($a,$b) {
-    return  SubAssetsM::deepRead(SubAssetsM::SubAssetURL($a,$b));
+  public static function SubAssetDeepRead() {
+    return  SubAssetsM::deepRead(SubAssetsM::SubAssetURL(func_get_args()[0]));
   }
   public static function deepRead($AssetURL) {
     $result = array();
@@ -74,9 +61,9 @@ class SubAssetsM extends Model
     return  $result;
   }
 
-  public static function SubAssetsDeepList($a,$b) {
-    $AssetURL = SubAssetsM::SubAssetURL($a,$b);
-    $staticdir = SubAssetsM::SubAssetURL($a,$b);
+  public static function SubAssetsDeepList() {
+    $AssetURL = SubAssetsM::SubAssetURL(func_get_args()[0]);
+    $staticdir = SubAssetsM::SubAssetURL(func_get_args()[0]);
     $result = SubAssetsM::deepList($AssetURL,$staticdir);
     return $result;
   }
@@ -94,10 +81,10 @@ class SubAssetsM extends Model
           if (!empty($whiteList)) {
             $result[$value] = SubAssetsM::deepList($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = url('/')."/".SubAssetsM::AssetURLs()['sub_assets_read_suffix']."/".$url;
+            $result[$value]["url"] = route("SubAssets.show")."/".$url;
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = url('/')."/".SubAssetsM::AssetURLs()['sub_assets_read_suffix']."/".$url;
+            $result[$value] = route("SubAssets.show")."/".$url;
           }
         }
       }

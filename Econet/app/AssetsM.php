@@ -63,7 +63,7 @@ class AssetsM extends Model
     return AssetsM::siteURL()."/".$value;
   }
   public static function siteURL() {
-    return "../public/images";
+    return "../public/images/";
   }
 
   public static function store($request) {

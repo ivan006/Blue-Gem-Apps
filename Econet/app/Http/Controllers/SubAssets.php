@@ -34,11 +34,12 @@ class SubAssets extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $a=null, $b=null)
+    public function store(Request $request)
     {
       if (1==1) {
-
-        $SubAssetURL = SubAssetsM::SubAssetURL($a,$b);
+        // this work work as func_get_args() only expected the url
+        $SubAssetURL = SubAssetsM::SubAssetURL(func_get_args()[0]);
+        // this work work as func_get_args() only expected the url
 
         $s = "/";
         $filename =  $request->get('file');
@@ -60,7 +61,7 @@ class SubAssets extends Controller
 
       }
 
-      $allURLs = SubAssetsM::allURLs($a,$b);
+      $allURLs = SubAssetsM::allURLs(func_get_args()[0]);
 
       return redirect($allURLs['sub_assets_update']);
     }
@@ -71,21 +72,22 @@ class SubAssets extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($a=null, $b=null){
+    public function show(){
 
-      $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList($a,$b);
+      $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList(func_get_args());
 
-      $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
-
-      $VSiteHeader = SubAssetsM::deepRead(AssetsM::AssetURL($b));
+      $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead(func_get_args());
+      // $func_get_args =func_get_args();
+      // $VSiteHeader = SubAssetsM::deepRead(AssetsM::AssetURL(end($func_get_args)));
       // $VSiteHeader = $VSiteHeader['header.html'];
       $VSiteHeader ="";
 
-      $allURLs = SubAssetsM::allURLs($a,$b);
+      $allURLs = SubAssetsM::allURLs(func_get_args());
 
 
 
-      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'a', 'b', 'VSiteHeader', 'allURLs'));
+
+      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'VSiteHeader', 'allURLs'));
     }
 
 
@@ -96,13 +98,13 @@ class SubAssets extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($a=null, $b=null){
+    public function edit(){
 
-      $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList($a,$b);
+      $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList(func_get_args()[0]);
 
-      $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
+      $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead(func_get_args()[0]);
 
-      $allURLs = SubAssetsM::allURLs($a,$b);
+      $allURLs = SubAssetsM::allURLs(func_get_args()[0]);
 
 
       return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'a', 'b', 'allURLs'));

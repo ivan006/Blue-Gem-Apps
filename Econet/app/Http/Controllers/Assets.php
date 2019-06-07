@@ -19,11 +19,10 @@ class Assets extends Controller
     {
       $AssetsList = AssetsM::AssetsList();
 
-      $AssetURLs = SubAssetsM::AssetURLs();
-
+      
       // echo Route::getCurrentRoute()->getPath();
 
-      return view('browse', compact('AssetsList','AssetURLs'));
+      return view('browse', compact('AssetsList'));
     }
 
     /**
