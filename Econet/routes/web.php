@@ -21,11 +21,11 @@ Route::get('/phpversion', function () {
 
 Route::group(['middleware' => 'ivans'], function() {
 
-  // Route::get('/', function(){
-  //   return redirect( route('Assets.index'));
-  // });
-  // Route::resource('/Assets', 'Assets');
-  Route::resource('', 'Assets');
+  Route::get('/', function(){
+    return redirect( route('Assets.index'));
+  });
+  Route::resource('/Assets', 'Assets');
+  // Route::resource('', 'Assets');
   Route::resource('/SubAssets','SubAssets');
 });
 
