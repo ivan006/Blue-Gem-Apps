@@ -78,7 +78,8 @@ class SubAssets extends Controller
       $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
 
       $VSiteHeader = SubAssetsM::deepRead(AssetsM::AssetURL($b));
-      $VSiteHeader = $VSiteHeader['header.html'];
+      // $VSiteHeader = $VSiteHeader['header.html'];
+      $VSiteHeader ="";
 
       $allURLs = SubAssetsM::allURLs($a,$b);
 

@@ -27,10 +27,10 @@ class AssetsM extends Model
           if (!empty($whiteList)) {
             // $result[$value] = SubAssetsM::deepList($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = route('Assets.show', $url);
+            $result[$value]["url"] = route('SubAssets.show', $url);
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = route('Assets.show', $url);
+            $result[$value] = route('SubAssets.show', $url);
           }
         }
       }
