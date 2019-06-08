@@ -36,14 +36,17 @@ class SubAssets extends Controller
      */
     public function store(Request $request)
     {
+      $arguments = func_get_args();
+      array_shift($arguments);
+      array_shift($arguments);
       if (1==1) {
         // this work work as func_get_args() only expected the url
-        $SubAssetURL = SubAssetsM::SubAssetURL(func_get_args()[0]);
+        $SubAssetURL = SubAssetsM::SubAssetURL($arguments);
         // this work work as func_get_args() only expected the url
 
-        $s = "/";
+
         $filename =  $request->get('file');
-        $file =  $SubAssetURL.$s.$filename;
+        $file =  $SubAssetURL.$filename;
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
@@ -53,17 +56,18 @@ class SubAssets extends Controller
 
 
       if (1==1) {
-        $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($a,$b);
+        $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead($arguments);
 
         $EPgCont =  json_decode($request->get('smart'));
+
         SubAssetsM::EPgCont($SubAssetURL, $EPgCont);
 
 
       }
 
-      $allURLs = SubAssetsM::allURLs(func_get_args()[0]);
+      $allURLs = SubAssetsM::allURLs($arguments);
 
-      return redirect($allURLs['sub_assets_update']);
+      return redirect($allURLs['sub_assets_edit']);
     }
 
     /**
@@ -73,6 +77,9 @@ class SubAssets extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(){
+      $arguments = func_get_args();
+      array_shift($arguments);
+      array_shift($arguments);
 
       $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList(func_get_args());
 
@@ -100,14 +107,14 @@ class SubAssets extends Controller
      */
     public function edit(){
 
-      $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList(func_get_args()[0]);
+      $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList(func_get_args());
 
-      $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead(func_get_args()[0]);
+      $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead(func_get_args());
 
-      $allURLs = SubAssetsM::allURLs(func_get_args()[0]);
+      $allURLs = SubAssetsM::allURLs(func_get_args());
 
 
-      return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'a', 'b', 'allURLs'));
+      return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs'));
     }
 
     /**

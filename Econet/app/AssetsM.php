@@ -58,10 +58,24 @@ class AssetsM extends Model
   }
 
 
+  public static function AssetURLSuffix(){
 
-  public static function AssetURL($value) {
-    return AssetsM::siteURL()."/".$value;
+    // $VPgLoc = '';
+    // foreach (func_get_args()[0] as $key => $value) {
+    //   $VPgLoc .= "".$value."/";
+    // }
+
+    return func_get_args()[0];
   }
+
+
+  public static function AssetURL() {
+    // dd(func_get_args()[0]);
+    return AssetsM::siteURL().AssetsM::AssetURLSuffix(func_get_args()[0]['a']);
+  }
+  // public static function AssetURL($value) {
+  //   return AssetsM::siteURL()."/".$value;
+  // }
   public static function siteURL() {
     return "../public/images/";
   }

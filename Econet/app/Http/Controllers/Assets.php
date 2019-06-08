@@ -17,9 +17,10 @@ class Assets extends Controller
      */
     public function index()
     {
+      
       $AssetsList = AssetsM::AssetsList();
 
-      
+
       // echo Route::getCurrentRoute()->getPath();
 
       return view('browse', compact('AssetsList'));

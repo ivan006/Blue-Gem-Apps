@@ -8,7 +8,7 @@
 <br>
 
 
- <form class="" action="{{ URL::asset( $allURLs['sub_assets_read']) }}" method="post">
+ <form class="" action="{{ $allURLs['sub_assets_read'] }}" method="post">
    <input type="submit" name="submit" value="Submit">
    <h1>Rich Data</h1>
    <!-- surname 1: [r]Education/Destiny Code/smart/surname.txt[/r]<br>  surname 2: [r]Education/Graft Your Garden/smart/surname.txt[/r]<br>      -->

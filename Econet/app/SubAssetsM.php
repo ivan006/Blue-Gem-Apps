@@ -10,10 +10,24 @@ class SubAssetsM extends Model
 {
 
   public static function allURLs() {
-    $allURLs['sub_assets_read'] =   route('SubAssets.show',SubAssetsM::SubAssetURLSuffix(func_get_args()[0]));
-    $allURLs['sub_assets_update'] = route('SubAssets.edit',SubAssetsM::SubAssetURLSuffix(func_get_args()[0]));
-    $allURLs['assets_read'] = route('Assets.index');
+    $AssetURLSuffix = AssetsM::AssetURLSuffix(func_get_args()[0][0]);
+    $SubAssetURLSuffix = SubAssetsM::SubAssetURLSuffix(func_get_args()[0]);
+    $allURLs['sub_assets_read'] =   route('SubAssets.show',$AssetURLSuffix.$SubAssetURLSuffix);
+    $allURLs['sub_assets_edit'] = route('SubAssets.edit',$AssetURLSuffix.$SubAssetURLSuffix);
+    $allURLs['sub_assets_update'] = route('SubAssets.update',$AssetURLSuffix.$SubAssetURLSuffix);
+    $allURLs['sub_assets_destroy'] = route('SubAssets.destroy',$AssetURLSuffix.$SubAssetURLSuffix);
+    $allURLs['sub_assets_create'] = route('SubAssets.create',$AssetURLSuffix.$SubAssetURLSuffix);
+    $allURLs['sub_assets_index'] = route('SubAssets.index',$AssetURLSuffix.$SubAssetURLSuffix);
+
+
+    // $allURLs['assets_read'] =   route('Assets.show',AssetsM::AssetURLSuffix(func_get_args()[0]));
+    // $allURLs['assets_edit'] = route('Assets.edit',AssetsM::AssetURLSuffix(func_get_args()[0]));
+    // $allURLs['assets_update'] = route('Assets.update',AssetsM::AssetURLSuffix(func_get_args()[0]));
+    // $allURLs['assets_destroy'] = route('Assets.destroy',AssetsM::AssetURLSuffix(func_get_args()[0]));
+
     $allURLs['assets_create'] = route('Assets.create');
+    $allURLs['assets_index'] = route('Assets.index');
+
 
     return $allURLs;
   }
@@ -39,6 +53,7 @@ class SubAssetsM extends Model
 
 
   public static function SubAssetURL() {
+    // dd(func_get_args()[0]);
     return AssetsM::siteURL().SubAssetsM::SubAssetURLSuffix(func_get_args()[0]);
   }
 
@@ -70,6 +85,7 @@ class SubAssetsM extends Model
 
   public static function deepList($AssetURL,$staticdir) {
     $result = array();
+    // dd ($AssetURL);
     $dataNameList = scandir($AssetURL);
     foreach ($dataNameList as $key => $value) {
       if (!in_array($value,array(".","..")))  {

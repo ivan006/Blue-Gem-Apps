@@ -94,8 +94,10 @@ class HomeShortcodeMiddleware
           if (!empty($matches[0])) {
 
             foreach ($matches[0] as $key => $value) {
+                $arguments = $request->route()->parameters();
 
-                $siteURL = AssetsM::siteURL();
+                $siteURL = AssetsM::AssetURL($arguments);
+                // dd($siteURL);
                 $VPgsLocs = SubAssetsM::deepList($siteURL,$siteURL);
                 ob_start();
 
