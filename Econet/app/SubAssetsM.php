@@ -12,12 +12,12 @@ class SubAssetsM extends Model
   public static function allURLs() {
     $AssetURLSuffix = AssetsM::AssetURLSuffix(func_get_args()[0][0]);
     $SubAssetURLSuffix = SubAssetsM::SubAssetURLSuffix(func_get_args()[0]);
-    $allURLs['sub_assets_read'] =   route('SubAssets.show',$AssetURLSuffix.$SubAssetURLSuffix);
-    $allURLs['sub_assets_edit'] = route('SubAssets.edit',$AssetURLSuffix.$SubAssetURLSuffix);
-    $allURLs['sub_assets_update'] = route('SubAssets.update',$AssetURLSuffix.$SubAssetURLSuffix);
-    $allURLs['sub_assets_destroy'] = route('SubAssets.destroy',$AssetURLSuffix.$SubAssetURLSuffix);
-    $allURLs['sub_assets_create'] = route('SubAssets.create',$AssetURLSuffix.$SubAssetURLSuffix);
-    $allURLs['sub_assets_index'] = route('SubAssets.index',$AssetURLSuffix.$SubAssetURLSuffix);
+    $allURLs['sub_assets_read'] =   route('SubAssets.show',$AssetURLSuffix."/".$SubAssetURLSuffix);
+    $allURLs['sub_assets_edit'] = route('SubAssets.edit',$AssetURLSuffix."/".$SubAssetURLSuffix);
+    $allURLs['sub_assets_update'] = route('SubAssets.update',$AssetURLSuffix."/".$SubAssetURLSuffix);
+    $allURLs['sub_assets_destroy'] = route('SubAssets.destroy',$AssetURLSuffix."/".$SubAssetURLSuffix);
+    $allURLs['sub_assets_create'] = route('SubAssets.create',$AssetURLSuffix."/".$SubAssetURLSuffix);
+    $allURLs['sub_assets_index'] = route('SubAssets.index',$AssetURLSuffix."/".$SubAssetURLSuffix);
 
 
     // $allURLs['assets_read'] =   route('Assets.show',AssetsM::AssetURLSuffix(func_get_args()[0]));
