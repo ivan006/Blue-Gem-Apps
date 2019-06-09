@@ -90,15 +90,14 @@ class Assets extends Controller
       $SubAssetDeepRead = AssetsM::SubAssetDeepRead(func_get_args());
       // $func_get_args =func_get_args();
       // $VSiteHeader = AssetsM::deepRead(AssetsM::AssetURL(end($func_get_args)));
-      // $VSiteHeader = $VSiteHeader['header.html'];
-      $VSiteHeader ="";
+
 
       $allURLs = AssetsM::allURLs(func_get_args());
 
 
 
 
-      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'VSiteHeader', 'allURLs'));
+      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs'));
     }
 
 
