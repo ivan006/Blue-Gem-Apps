@@ -18,6 +18,7 @@ class AssetsM extends Model
       $allURLs['sub_assets_edit'] = route('Assets.edit',$AssetURLSuffix."/".$SubAssetURLSuffix);
       // $allURLs['sub_assets_update'] = route('Assets.update',$AssetURLSuffix."/".$SubAssetURLSuffix);
       $allURLs['sub_assets_destroy'] = route('Assets.destroy',$AssetURLSuffix."/".$SubAssetURLSuffix);
+      $allURLs['sub_assets_store'] = route('Assets.store',$AssetURLSuffix."/".$SubAssetURLSuffix);
       $allURLs['sub_assets_create'] = route('Assets.create');
       // $allURLs['sub_assets_index'] = route('Assets.index',$AssetURLSuffix."/".$SubAssetURLSuffix);
 
@@ -144,25 +145,58 @@ class AssetsM extends Model
     return $result;
   }
 
+  public static function rrmdir($dir) {
+    if (is_dir($dir)) {
+      $objects = scandir($dir);
+      foreach ($objects as $object) {
+        if ($object != "." && $object != "..") {
+          if (is_dir($dir."/".$object))
+          AssetsM::rrmdir($dir."/".$object);
+          else
+          unlink($dir."/".$object);
+        }
+      }
+      rmdir($dir);
+    }
+  }
 
-  public static function EPgCont($AssetURL,$EPgCont) {
+  public static function StoreSubAsset($SubAssetURL,$EPgCont) {
     // $result = array();
-    // $shallowList = scandir($AssetURL);
+    // $shallowList = scandir($SubAssetURL);
+    if (!empty($EPgCont)) {
+
+
+      AssetsM::rrmdir($SubAssetURL."smart");
+      // mkdir($SubAssetURL.array_keys($EPgCont)[0]);
+      $EPgCont2['smart'] = $EPgCont;
+      // dd($EPgCont2);
+      // mkdir($SubAssetURL."smart");
+      AssetsM::EPgCont($SubAssetURL,$EPgCont2);
+
+    }
+    // return $EPgCont;
+  }
+  public static function EPgCont($SubAssetURL,$EPgCont) {
+    // dd($SubAssetURL.array_keys($EPgCont)[0]);
+    // dd(array_keys($EPgCont)[0]);
+    // dd($EPgCont);
     foreach($EPgCont as $key => $value) {
-      $VPgContItemLoc = $AssetURL . DIRECTORY_SEPARATOR . $key;
+      $VPgContItemLoc = $SubAssetURL ."/". $key;
       if (!is_string($value)){
-        // mkdir($VPgContItemLoc);
+        // mkdir($SubAssetURL.array_keys($EPgCont)[0]);
+        mkdir($VPgContItemLoc);
 
         AssetsM::EPgCont($VPgContItemLoc, $value);
       } else {
         $content = $value;
 
-        $InflictedFile = fopen($VPgContItemLoc,"w");
-        fwrite($InflictedFile,$content);
-        fclose($InflictedFile);
+
+        file_put_contents($VPgContItemLoc,$value);
+
+
       }
     }
-    // return $EPgCont;
+
   }
 
 

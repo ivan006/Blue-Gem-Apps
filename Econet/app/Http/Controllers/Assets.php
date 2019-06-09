@@ -45,11 +45,8 @@ class Assets extends Controller
     {
       $arguments = func_get_args();
       array_shift($arguments);
-      array_shift($arguments);
       if (1==1) {
-        // this work work as func_get_args() only expected the url
         $SubAssetURL = AssetsM::SubAssetURL($arguments);
-        // this work work as func_get_args() only expected the url
 
 
         $filename =  $request->get('file');
@@ -65,9 +62,9 @@ class Assets extends Controller
       if (1==1) {
         $SubAssetDeepRead = AssetsM::SubAssetDeepRead($arguments);
 
-        $EPgCont =  json_decode($request->get('smart'));
+        $EPgCont =  json_decode($request->get('smart'), true);
 
-        AssetsM::EPgCont($SubAssetURL, $EPgCont);
+        AssetsM::StoreSubAsset($SubAssetURL, $EPgCont);
 
 
       }
@@ -140,7 +137,7 @@ class Assets extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
