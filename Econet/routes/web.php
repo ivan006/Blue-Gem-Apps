@@ -25,12 +25,28 @@ Route::group(['middleware' => 'ShortcodeMiddleware'], function() {
     return redirect( route('Assets.index'));
   });
 
-  Route::get(   '/Assets/index',                                           'Assets@index')->name('Assets.index');
-  Route::get(   '/Assets/create',                                    'Assets@create')->name('Assets.create');
-  Route::patch( '/Assets/update/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}', 'Assets@update')->name('Assets.update');
-  Route::delete('/Assets/destroy/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}','Assets@destroy')->name('Assets.destroy');
-  Route::get(   '/Assets/show/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@show')->name('Assets.show');
+  Route::get(   '/index/assets',                                           'Assets@index')->name('Assets.index');
+  Route::get(   '/create/asset',                                    'Assets@create')->name('Assets.create');
+  Route::patch( '/update/asset/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}', 'Assets@update')->name('Assets.update');
+  Route::delete('/destroy/asset/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}','Assets@destroy')->name('Assets.destroy');
+  Route::get(   '/show/asset/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@show')->name('Assets.show');
 });
-Route::post(   '/Assets/store/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@store')->name('Assets.store');
-Route::get(   '/Assets/edit/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@edit')->name('Assets.edit');
+Route::post(   '/store/Assets/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@store')->name('Assets.store');
+Route::get(   '/edit/Assets/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@edit')->name('Assets.edit');
 Route::get('/blogApi/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}', 'blogApi@show');
+
+// Route::group(['middleware' => 'ShortcodeMiddleware'], function() {
+//
+//   Route::get('/', function(){
+//     return redirect( route('Assets.index'));
+//   });
+//
+//   Route::get(   '/Assets/index',                                           'Assets@index')->name('Assets.index');
+//   Route::get(   '/Assets/create',                                    'Assets@create')->name('Assets.create');
+//   Route::patch( '/Assets/update/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}', 'Assets@update')->name('Assets.update');
+//   Route::delete('/Assets/destroy/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}','Assets@destroy')->name('Assets.destroy');
+//   Route::get(   '/Assets/show/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@show')->name('Assets.show');
+// });
+// Route::post(   '/Assets/store/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@store')->name('Assets.store');
+// Route::get(   '/Assets/edit/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@edit')->name('Assets.edit');
+// Route::get('/blogApi/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}', 'blogApi@show');

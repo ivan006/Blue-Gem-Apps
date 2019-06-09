@@ -122,7 +122,13 @@ class blogApi extends Controller
                 array_key_exists($c, $ivan1[$a][$b]) and
                 array_key_exists($d, $ivan1[$a][$b][$c])
               ) {
-                return response()->json($ivan1[$a][$b][$c][$d]);
+                if (is_array($ivan1[$a][$b][$c][$d])) {
+
+                  return response()->json($ivan1[$a][$b][$c][$d]);
+                } else {
+
+                  return $ivan1[$a][$b][$c][$d];
+                }
               } else {
                 return response()->json($error);
               }
@@ -132,7 +138,13 @@ class blogApi extends Controller
                 array_key_exists($b, $ivan1[$a]) and
                 array_key_exists($c, $ivan1[$a][$b])
               ) {
-                return response()->json($ivan1[$a][$b][$c]);
+                if (is_array($ivan1[$a][$b][$c])) {
+
+                  return response()->json($ivan1[$a][$b][$c]);
+                } else {
+
+                  return $ivan1[$a][$b][$c];
+                }
               } else {
                 return response()->json($error);
               }
@@ -141,7 +153,14 @@ class blogApi extends Controller
                 array_key_exists($a, $ivan1) and
                 array_key_exists($b, $ivan1[$a])
               ) {
-                return response()->json($ivan1[$a][$b]);
+                if (is_array($ivan1[$a][$b])) {
+
+                  return response()->json($ivan1[$a][$b]);
+                } else {
+
+                  return $ivan1[$a][$b];
+                }
+
               } else {
                 return response()->json($error);
               }
