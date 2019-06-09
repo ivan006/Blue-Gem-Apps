@@ -15,7 +15,14 @@ class SubAssets extends Controller
      */
     public function index()
     {
+      $allURLs = SubAssetsM::allURLs(func_get_args());
 
+      $AssetsList = AssetsM::AssetsList();
+
+
+      // echo Route::getCurrentRoute()->getPath();
+
+      return view('browse', compact('AssetsList', 'allURLs'));
     }
 
     /**
@@ -82,7 +89,7 @@ class SubAssets extends Controller
       array_shift($arguments);
 
       $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList(func_get_args());
-
+      // dd($SubAssetsDeepList);
       $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead(func_get_args());
       // $func_get_args =func_get_args();
       // $VSiteHeader = SubAssetsM::deepRead(AssetsM::AssetURL(end($func_get_args)));
@@ -106,12 +113,19 @@ class SubAssets extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(){
+      $arguments = func_get_args();
+
+      array_shift($arguments);
+      array_shift($arguments);
 
       $SubAssetsDeepList = SubAssetsM::SubAssetsDeepList(func_get_args());
 
       $SubAssetDeepRead = SubAssetsM::SubAssetDeepRead(func_get_args());
 
+
       $allURLs = SubAssetsM::allURLs(func_get_args());
+
+
 
 
       return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs'));

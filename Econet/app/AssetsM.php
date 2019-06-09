@@ -65,13 +65,13 @@ class AssetsM extends Model
     //   $VPgLoc .= "".$value."/";
     // }
 
-    return func_get_args()[0];
+    return func_get_args()[0][0];
   }
 
 
   public static function AssetURL() {
     // dd(func_get_args()[0]);
-    return AssetsM::siteURL().AssetsM::AssetURLSuffix(func_get_args()[0]['a']);
+    return AssetsM::siteURL().func_get_args()[0];
   }
   // public static function AssetURL($value) {
   //   return AssetsM::siteURL()."/".$value;

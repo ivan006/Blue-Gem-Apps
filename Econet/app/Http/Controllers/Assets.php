@@ -17,13 +17,7 @@ class Assets extends Controller
      */
     public function index()
     {
-      
-      $AssetsList = AssetsM::AssetsList();
 
-
-      // echo Route::getCurrentRoute()->getPath();
-
-      return view('browse', compact('AssetsList'));
     }
 
     /**
@@ -34,7 +28,7 @@ class Assets extends Controller
     public function create()
     {
         // return view('WriteAsset', compact('allURLs'));
-        return view('WriteAsset');
+        // return view('WriteAsset');
     }
 
     /**
@@ -56,9 +50,16 @@ class Assets extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    // public function show($id)
+    public function show()
     {
 
+        $AssetsList = AssetsM::AssetsList();
+
+
+        // echo Route::getCurrentRoute()->getPath();
+
+        return view('browse', compact('AssetsList'));
 
     }
 

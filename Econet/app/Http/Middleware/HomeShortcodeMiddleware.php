@@ -95,10 +95,11 @@ class HomeShortcodeMiddleware
 
             foreach ($matches[0] as $key => $value) {
                 $arguments = $request->route()->parameters();
+                $arguments = array_values($arguments);
 
-                $siteURL = AssetsM::AssetURL($arguments);
-                // dd($siteURL);
-                $VPgsLocs = SubAssetsM::deepList($siteURL,$siteURL);
+          
+                $VPgsLocs = SubAssetsM::SubAssetsDeepList($arguments);
+                // dd($VPgsLocs);
                 ob_start();
 
                   page_list($VPgsLocs,  $value,$preg_match_all);

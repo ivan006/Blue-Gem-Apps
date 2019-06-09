@@ -1,6 +1,5 @@
 
 @include('includes.menu_assets')
-@include('includes.menu_subassets')
 
 
 
