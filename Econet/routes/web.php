@@ -33,3 +33,4 @@ Route::group(['middleware' => 'ShortcodeMiddleware'], function() {
 });
 Route::post(   '/Assets/store/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@store')->name('Assets.store');
 Route::get(   '/Assets/edit/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}',   'Assets@edit')->name('Assets.edit');
+Route::get('/blogApi/{a?}/{b?}/{c?}/{d?}/{e?}/{f?}/{g?}', 'blogApi@show');

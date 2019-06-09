@@ -3,8 +3,6 @@
 
   <link rel="stylesheet" href="{{ URL::asset('js/FlexiJsonEditor/jsoneditor.css') }}"/>
 
-  <br>
-  <br>
 
 
   <h1>Rich Data</h1>

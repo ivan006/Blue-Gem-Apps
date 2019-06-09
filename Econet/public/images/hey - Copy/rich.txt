@@ -41,3 +41,4 @@
           [/page_list]
         </ul>
       </div>
+[r]hey/smart/1/surname.txt[/r]
