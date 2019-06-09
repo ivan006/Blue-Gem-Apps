@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\SubAssetsM;
 use App\AssetsM;
-// use Illuminate\Routing\Redirector;
-// use Illuminate\Routing\Facades\Route;
+
 
 class Assets extends Controller
 {
@@ -17,7 +15,14 @@ class Assets extends Controller
      */
     public function index()
     {
+      $allURLs = AssetsM::allURLs(func_get_args());
 
+      $AssetsList = AssetsM::AssetsList();
+
+
+      // echo Route::getCurrentRoute()->getPath();
+
+      return view('browse', compact('AssetsList', 'allURLs'));
     }
 
     /**
@@ -27,8 +32,7 @@ class Assets extends Controller
      */
     public function create()
     {
-        // return view('WriteAsset', compact('allURLs'));
-        // return view('WriteAsset');
+        //
     }
 
     /**
@@ -39,9 +43,38 @@ class Assets extends Controller
      */
     public function store(Request $request)
     {
+      $arguments = func_get_args();
+      array_shift($arguments);
+      array_shift($arguments);
+      if (1==1) {
+        // this work work as func_get_args() only expected the url
+        $SubAssetURL = AssetsM::SubAssetURL($arguments);
+        // this work work as func_get_args() only expected the url
 
-      AssetsM::store($request);
-      return redirect( route('show', $request->get('name')));
+
+        $filename =  $request->get('file');
+        $file =  $SubAssetURL.$filename;
+        // echo file_get_contents($file);
+
+        $contents =  $request->get('contents');
+        file_put_contents($file,$contents);
+      }
+
+
+
+      if (1==1) {
+        $SubAssetDeepRead = AssetsM::SubAssetDeepRead($arguments);
+
+        $EPgCont =  json_decode($request->get('smart'));
+
+        AssetsM::EPgCont($SubAssetURL, $EPgCont);
+
+
+      }
+
+      $allURLs = AssetsM::allURLs($arguments);
+
+      return redirect($allURLs['sub_assets_edit']);
     }
 
     /**
@@ -50,18 +83,28 @@ class Assets extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    public function show()
-    {
+    public function show(){
+      $arguments = func_get_args();
+      array_shift($arguments);
+      array_shift($arguments);
 
-        $AssetsList = AssetsM::AssetsList();
+      $SubAssetsDeepList = AssetsM::SubAssetsDeepList(func_get_args());
+      // dd($SubAssetsDeepList);
+      $SubAssetDeepRead = AssetsM::SubAssetDeepRead(func_get_args());
+      // $func_get_args =func_get_args();
+      // $VSiteHeader = AssetsM::deepRead(AssetsM::AssetURL(end($func_get_args)));
+      // $VSiteHeader = $VSiteHeader['header.html'];
+      $VSiteHeader ="";
+
+      $allURLs = AssetsM::allURLs(func_get_args());
 
 
-        // echo Route::getCurrentRoute()->getPath();
 
-        return view('browse', compact('AssetsList'));
 
+      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'VSiteHeader', 'allURLs'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -69,9 +112,23 @@ class Assets extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit(){
+      $arguments = func_get_args();
+
+      array_shift($arguments);
+      array_shift($arguments);
+
+      $SubAssetsDeepList = AssetsM::SubAssetsDeepList(func_get_args());
+
+      $SubAssetDeepRead = AssetsM::SubAssetDeepRead(func_get_args());
+
+
+      $allURLs = AssetsM::allURLs(func_get_args());
+
+
+
+
+      return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs'));
     }
 
     /**

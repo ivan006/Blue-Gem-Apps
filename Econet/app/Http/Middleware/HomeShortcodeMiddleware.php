@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\SubAssetsM;
 use App\AssetsM;
 
 class HomeShortcodeMiddleware
@@ -97,8 +96,8 @@ class HomeShortcodeMiddleware
                 $arguments = $request->route()->parameters();
                 $arguments = array_values($arguments);
 
-          
-                $VPgsLocs = SubAssetsM::SubAssetsDeepList($arguments);
+
+                $VPgsLocs = AssetsM::SubAssetsDeepList($arguments);
                 // dd($VPgsLocs);
                 ob_start();
 
