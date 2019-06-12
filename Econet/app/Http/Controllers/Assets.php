@@ -43,6 +43,7 @@ class Assets extends Controller
      */
     public function store(Request $request)
     {
+
       $arguments = func_get_args();
       array_shift($arguments);
       if (1==1) {
@@ -50,7 +51,7 @@ class Assets extends Controller
 
 
         $filename =  $request->get('file');
-        $file =  $SubAssetURL.$filename;
+        $file =  $SubAssetURL."/".$filename;
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
@@ -68,8 +69,13 @@ class Assets extends Controller
 
 
       }
+      if (null !== $request->file('zip_file')) {
+
+        echo AssetsM::upload($arguments, $request);
+      }
 
       $allURLs = AssetsM::allURLs($arguments);
+      // dd($allURLs['sub_assets_edit']);
 
       return redirect($allURLs['sub_assets_edit']);
     }
@@ -121,7 +127,7 @@ class Assets extends Controller
 
       $allURLs = AssetsM::allURLs(func_get_args());
 
-
+    
 
 
       return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs'));

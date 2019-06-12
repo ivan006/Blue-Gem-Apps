@@ -4,23 +4,46 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Http\Request;
 use App\AssetsM;
+
 
 class AssetsM extends Model
 {
 
+
+  public static function upload($arguments, $request) {
+
+    $AssetURLSuffix = AssetsM::AssetURLSuffix($arguments);
+    $SubAssetURLSuffix = AssetsM::SubAssetURLSuffix($arguments);
+    $AssetAndSubAssetURLSuffix = $AssetURLSuffix.$SubAssetURLSuffix;
+
+
+    $request->zip_file->storeAs($AssetAndSubAssetURLSuffix, $request->zip_file->getClientOriginalName());
+
+    $path = "Econet/storage/app/".$AssetAndSubAssetURLSuffix."/".$request->zip_file->getClientOriginalName();
+    // dd($path);
+    // $Path = public_path($AssetAndSubAssetURLSuffix);
+
+    \Zipper::make($path)->extractTo("Econet/".$AssetAndSubAssetURLSuffix);
+
+
+  }
+
   public static function allURLs() {
+
     if (!empty(func_get_args()[0])) {
 
       $AssetURLSuffix = AssetsM::AssetURLSuffix(func_get_args()[0]);
       $SubAssetURLSuffix = AssetsM::SubAssetURLSuffix(func_get_args()[0]);
-      $allURLs['sub_assets_read'] =   route('Assets.show',$AssetURLSuffix."/".$SubAssetURLSuffix);
-      $allURLs['sub_assets_edit'] = route('Assets.edit',$AssetURLSuffix."/".$SubAssetURLSuffix);
-      // $allURLs['sub_assets_update'] = route('Assets.update',$AssetURLSuffix."/".$SubAssetURLSuffix);
-      $allURLs['sub_assets_destroy'] = route('Assets.destroy',$AssetURLSuffix."/".$SubAssetURLSuffix);
-      $allURLs['sub_assets_store'] = route('Assets.store',$AssetURLSuffix."/".$SubAssetURLSuffix);
+      $allURLs['sub_assets_read'] =   route('Assets.show',$AssetURLSuffix.$SubAssetURLSuffix);
+      $allURLs['sub_assets_edit'] = route('Assets.edit',$AssetURLSuffix.$SubAssetURLSuffix);
+
+      // $allURLs['sub_assets_update'] = route('Assets.update',$AssetURLSuffix.$SubAssetURLSuffix);
+      $allURLs['sub_assets_destroy'] = route('Assets.destroy',$AssetURLSuffix.$SubAssetURLSuffix);
+      $allURLs['sub_assets_store'] = route('Assets.store',$AssetURLSuffix.$SubAssetURLSuffix);
       $allURLs['sub_assets_create'] = route('Assets.create');
-      // $allURLs['sub_assets_index'] = route('Assets.index',$AssetURLSuffix."/".$SubAssetURLSuffix);
+      // $allURLs['sub_assets_index'] = route('Assets.index',$AssetURLSuffix.$SubAssetURLSuffix);
 
 
       // $allURLs['assets_read'] =   route('Assets.show',AssetsM::AssetURLSuffix(func_get_args()[0]));
@@ -57,9 +80,11 @@ class AssetsM extends Model
     array_shift($arguments);
     $VPgLoc = '';
 
-    foreach ($arguments as $key => $value) {
-      $VPgLoc .= "".$value."/";
-    }
+
+      foreach ($arguments as $key => $value) {
+        $VPgLoc .= "/".$value;
+      }
+
 
     return $VPgLoc;
 
@@ -69,9 +94,20 @@ class AssetsM extends Model
 
 
   public static function SubAssetURL() {
-    // dd(func_get_args()[0]);
 
-    return AssetsM::siteURL().AssetsM::AssetURLSuffix(func_get_args()[0])."/".AssetsM::SubAssetURLSuffix(func_get_args()[0]);
+    // dd(func_get_args()[0]);
+    // echo AssetsM::siteURL().AssetsM::AssetURLSuffix(func_get_args()[0])."/".AssetsM::SubAssetURLSuffix(func_get_args()[0]);
+
+    $arguments = func_get_args()[0];
+    array_shift($arguments);
+    // var_dump($arguments);
+    if (!empty($arguments)) {
+
+      return  AssetsM::siteURL().AssetsM::AssetURLSuffix(func_get_args()[0]).AssetsM::SubAssetURLSuffix(func_get_args()[0]);
+    } else {
+      return  AssetsM::siteURL().AssetsM::AssetURLSuffix(func_get_args()[0]);
+
+    }
 
   }
 
@@ -159,17 +195,17 @@ class AssetsM extends Model
       rmdir($dir);
     }
   }
-
   public static function StoreSubAsset($SubAssetURL,$EPgCont) {
     // $result = array();
     // $shallowList = scandir($SubAssetURL);
     if (!empty($EPgCont)) {
 
 
-      AssetsM::rrmdir($SubAssetURL."smart");
+      // dd($SubAssetURL);
+      AssetsM::rrmdir($SubAssetURL."/smart");
       // mkdir($SubAssetURL.array_keys($EPgCont)[0]);
+
       $EPgCont2['smart'] = $EPgCont;
-      // dd($EPgCont2);
       // mkdir($SubAssetURL."smart");
       AssetsM::EPgCont($SubAssetURL,$EPgCont2);
 
@@ -266,7 +302,7 @@ class AssetsM extends Model
     //   return AssetsM::siteURL()."/".$value;
     // }
     public static function siteURL() {
-      return "../public/images/";
+      return "../storage/app/";
     }
 
     public static function store($request) {
