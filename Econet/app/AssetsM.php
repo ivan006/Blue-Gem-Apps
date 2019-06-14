@@ -18,9 +18,9 @@ class AssetsM extends Model
 
 
 
-  public static function AssetsList() {
-    $AssetURL = URLsM::siteURL();
-    $staticdir  = URLsM::siteURL();
+  public static function ShowTitles() {
+    $AssetURL = URLsM::BaseLocation();
+    $staticdir  = URLsM::BaseLocation();
     $result = array();
     $dataNameList = scandir($AssetURL);
     foreach ($dataNameList as $key => $value) {
@@ -31,7 +31,7 @@ class AssetsM extends Model
           $blackList = array(".","..","smart","rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
-            // $result[$value] = SubassetsM::deepList($dataLocation,$staticdir);
+            // $result[$value] = SubassetsM::ShowTitlesHelperRecursive($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
             $result[$value]["url"] = route('Assets.show', $url);
           } else {
@@ -44,22 +44,40 @@ class AssetsM extends Model
 
     return $result;
   }
-  public static function VPgContForAsset($a,$b) {
-    $result = array();
-    $VPgContItem = scandir($siteURL);
-    foreach ($VPgContItem as $key => $value) {
-      if (!in_array($value,array(".","..")))  {
-        $VPgContItemLoc = $siteURL . DIRECTORY_SEPARATOR . $value;
+  // public static function VPgContForAsset($a,$b) {
+  //   $result = array();
+  //   $VPgContItem = scandir($siteURL);
+  //   foreach ($VPgContItem as $key => $value) {
+  //     if (!in_array($value,array(".","..")))  {
+  //       $VPgContItemLoc = $siteURL . DIRECTORY_SEPARATOR . $value;
+  //
+  //       $result[$value] = file_get_contents($VPgContItemLoc);
+  //
+  //     }
+  //   }
+  //   return  $result;
+  // }
+  public static function ShowLocation() {
+    // dd(func_get_args()[0]);
+    return URLsM::BaseLocation().func_get_args()[0];
+  }
+  // public static function ShowLocation($value) {
+  //   return URLsM::BaseLocation()."/".$value;
+  // }
 
-        $result[$value] = file_get_contents($VPgContItemLoc);
 
-      }
-    }
-    return  $result;
+  public static function ShowID(){
+
+    // $VPgLoc = '';
+    // foreach (func_get_args()[0] as $key => $value) {
+    //   $VPgLoc .= "".$value."/";
+    // }
+
+    return func_get_args()[0][0];
   }
 
-  public static function store($request) {
-    mkdir(self::siteURL()."/".$request->get('name'));
+  public static function Store($request) {
+    mkdir(self::BaseLocation()."/".$request->get('name'));
   }
 
 

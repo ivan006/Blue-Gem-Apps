@@ -74,7 +74,7 @@ class ShortcodeMiddleware
               $arguments = array_values($arguments);
 
 
-              $VPgsLocs = SubassetsM::SubAssetsDeepList($arguments);
+              $VPgsLocs = SubassetsM::ShowTitles($arguments);
               // dd($VPgsLocs);
               ob_start();
 

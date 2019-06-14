@@ -20,8 +20,8 @@ class SubassetsM extends Model
 
 
 
-    $AssetURLSuffix = URLsM::AssetURLSuffix($arguments);
-    $SubAssetURLSuffix = URLsM::SubAssetURLSuffix($arguments);
+    $AssetURLSuffix = AssetsM::ShowID($arguments);
+    $SubAssetURLSuffix = SubassetsM::ShowID($arguments);
     $AssetAndSubAssetURLSuffix = $AssetURLSuffix.$SubAssetURLSuffix;
 
 
@@ -42,17 +42,34 @@ class SubassetsM extends Model
 
   }
 
-  public static function SubAssetDeepRead() {
-    return  SubassetsM::deepRead(URLsM::SubAssetURL(func_get_args()[0]));
+  public static function ShowContent() {
+    return  SubassetsM::ShowContentHelperRecursive(SubassetsM::ShowLocation(func_get_args()[0]));
   }
-  public static function deepRead($AssetURL) {
+  public static function ShowLocation() {
+
+    // dd(func_get_args()[0]);
+    // echo URLsM::BaseLocation().AssetsM::ShowID(func_get_args()[0])."/".SubassetsM::ShowID(func_get_args()[0]);
+
+    $arguments = func_get_args()[0];
+    array_shift($arguments);
+    // var_dump($arguments);
+    if (!empty($arguments)) {
+
+      return  URLsM::BaseLocation().AssetsM::ShowID(func_get_args()[0]).SubassetsM::ShowID(func_get_args()[0]);
+    } else {
+      return  URLsM::BaseLocation().AssetsM::ShowID(func_get_args()[0]);
+
+    }
+
+  }
+  public static function ShowContentHelperRecursive($AssetURL) {
     $result = array();
     $shallowList = scandir($AssetURL);
     foreach ($shallowList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
         $VPgContItemLoc = $AssetURL . DIRECTORY_SEPARATOR . $value;
         if (is_dir($VPgContItemLoc)){
-          $result[$value] = SubassetsM::deepRead($VPgContItemLoc);
+          $result[$value] = SubassetsM::ShowContentHelperRecursive($VPgContItemLoc);
         } else {
           $result[$value] = file_get_contents($VPgContItemLoc);
         }
@@ -60,29 +77,29 @@ class SubassetsM extends Model
     }
     return  $result;
   }
-  public static function SubAssetsDeepList() {
+  public static function ShowTitles() {
     // $arguments = func_get_args()[0];
     // array_shift($arguments);
 
 
-    $AssetURLSuffix = URLsM::AssetURLSuffix(func_get_args()[0]);
-    $AssetURL = URLsM::AssetURL($AssetURLSuffix);
-    $staticdir = URLsM::AssetURL($AssetURLSuffix);
+    $AssetURLSuffix = AssetsM::ShowID(func_get_args()[0]);
+    $AssetURL = AssetsM::ShowLocation($AssetURLSuffix);
+    $staticdir = AssetsM::ShowLocation($AssetURLSuffix);
     // dd($staticdir);
-    $result[$AssetURLSuffix] = SubassetsM::deepList($AssetURL,$staticdir,$AssetURLSuffix);
+    $result[$AssetURLSuffix] = SubassetsM::ShowTitlesHelperRecursive($AssetURL,$staticdir,$AssetURLSuffix);
     // dd($result);
 
     // $arguments = $request->route()->parameters();
     // // dd($arguments);
     // $AssetURLSuffix = $arguments['a'];
-    // $AssetURL = URLsM::AssetURL($AssetURLSuffix);
+    // $AssetURL = AssetsM::ShowLocation($AssetURLSuffix);
     // // dd($AssetURL);
-    // $VPgsLocs = SubassetsM::deepList($AssetURL,$AssetURL,$AssetURLSuffix);
+    // $VPgsLocs = SubassetsM::ShowTitlesHelperRecursive($AssetURL,$AssetURL,$AssetURLSuffix);
     // // dd($VPgsLocs);
 
     return $result;
   }
-  public static function deepList($AssetURL,$staticdir,$AssetURLSuffix) {
+  public static function ShowTitlesHelperRecursive($AssetURL,$staticdir,$AssetURLSuffix) {
     $result = array();
     // dd ($AssetURL);
     $dataNameList = scandir($AssetURL);
@@ -97,7 +114,7 @@ class SubassetsM extends Model
           $blackList = array(".","..","smart","rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
-            $result[$value] = SubassetsM::deepList($dataLocation,$staticdir,$AssetURLSuffix);
+            $result[$value] = SubassetsM::ShowTitlesHelperRecursive($dataLocation,$staticdir,$AssetURLSuffix);
             // $url = str_replace($staticdir."/", "", $dataLocation);
             // $result[$value]["url"] = route("Assets.show")."/".$AssetURLSuffix."/".$url;
           } else {
@@ -109,13 +126,30 @@ class SubassetsM extends Model
     }
     return $result;
   }
-  public static function rrmdir($dir) {
+  public static function ShowID(){
+
+    // $root= URLsM::BaseLocation();
+    $arguments = func_get_args()[0];
+    array_shift($arguments);
+    $VPgLoc = '';
+
+
+    foreach ($arguments as $key => $value) {
+      $VPgLoc .= "/".$value;
+    }
+
+
+    return $VPgLoc;
+
+  }
+
+  public static function StoreHelperDestroy($dir) {
     if (is_dir($dir)) {
       $objects = scandir($dir);
       foreach ($objects as $object) {
         if ($object != "." && $object != "..") {
           if (is_dir($dir."/".$object))
-          SubassetsM::rrmdir($dir."/".$object);
+          SubassetsM::StoreHelperDestroy($dir."/".$object);
           else
           unlink($dir."/".$object);
         }
@@ -123,24 +157,24 @@ class SubassetsM extends Model
       rmdir($dir);
     }
   }
-  public static function StoreSubAsset($SubAssetURL,$EPgCont) {
+  public static function Store($SubAssetURL,$EPgCont) {
     // $result = array();
     // $shallowList = scandir($SubAssetURL);
     if (!empty($EPgCont)) {
 
 
       // dd($SubAssetURL);
-      SubassetsM::rrmdir($SubAssetURL."/smart");
+      SubassetsM::StoreHelperDestroy($SubAssetURL."/smart");
       // mkdir($SubAssetURL.array_keys($EPgCont)[0]);
 
       $EPgCont2['smart'] = $EPgCont;
       // mkdir($SubAssetURL."smart");
-      SubassetsM::EPgCont($SubAssetURL,$EPgCont2);
+      SubassetsM::StoreHelperStore($SubAssetURL,$EPgCont2);
 
     }
     // return $EPgCont;
   }
-  public static function EPgCont($SubAssetURL,$EPgCont) {
+  public static function StoreHelperStore($SubAssetURL,$EPgCont) {
     // dd($SubAssetURL.array_keys($EPgCont)[0]);
     // dd(array_keys($EPgCont)[0]);
     // dd($EPgCont);
@@ -150,7 +184,7 @@ class SubassetsM extends Model
         // mkdir($SubAssetURL.array_keys($EPgCont)[0]);
         mkdir($VPgContItemLoc);
 
-        SubassetsM::EPgCont($VPgContItemLoc, $value);
+        SubassetsM::StoreHelperStore($VPgContItemLoc, $value);
       } else {
         $content = $value;
 

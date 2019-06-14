@@ -20,9 +20,9 @@ class Assets extends Controller
      */
     public function index()
     {
-      $allURLs = URLsM::allURLs(func_get_args());
+      $allURLs = URLsM::ShowAll(func_get_args());
 
-      $AssetsList = AssetsM::AssetsList();
+      $AssetsList = AssetsM::ShowTitles();
 
 
       // echo Route::getCurrentRoute()->getPath();
@@ -53,7 +53,7 @@ class Assets extends Controller
       $arguments = func_get_args();
       array_shift($arguments);
       if (1==1) {
-        $SubAssetURL = URLsM::SubAssetURL($arguments);
+        $SubAssetURL = SubassetsM::ShowLocation($arguments);
 
 
         $filename =  $request->get('file');
@@ -67,11 +67,11 @@ class Assets extends Controller
 
 
       if (1==1) {
-        $SubAssetDeepRead = SubassetsM::SubAssetDeepRead($arguments);
+        $SubAssetDeepRead = SubassetsM::ShowContent($arguments);
 
         $EPgCont =  json_decode($request->get('smart'), true);
 
-        SubassetsM::StoreSubAsset($SubAssetURL, $EPgCont);
+        SubassetsM::Store($SubAssetURL, $EPgCont);
 
 
       }
@@ -80,7 +80,7 @@ class Assets extends Controller
         echo SubassetsM::upload($arguments, $request);
       }
 
-      $allURLs = URLsM::allURLs($arguments);
+      $allURLs = URLsM::ShowAll($arguments);
       // dd($allURLs['sub_assets_edit']);
 
       return redirect($allURLs['sub_assets_edit']);
@@ -97,14 +97,14 @@ class Assets extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
-      $SubAssetsDeepList = SubassetsM::SubAssetsDeepList(func_get_args());
+      $SubAssetsDeepList = SubassetsM::ShowTitles(func_get_args());
       // dd($SubAssetsDeepList);
-      $SubAssetDeepRead = SubassetsM::SubAssetDeepRead(func_get_args());
+      $SubAssetDeepRead = SubassetsM::ShowContent(func_get_args());
       // $func_get_args =func_get_args();
-      // $VSiteHeader = SubassetsM::deepRead(URLsM::AssetURL(end($func_get_args)));
+      // $VSiteHeader = SubassetsM::ShowContentHelperRecursive(AssetsM::ShowLocation(end($func_get_args)));
 
 
-      $allURLs = URLsM::allURLs(func_get_args());
+      $allURLs = URLsM::ShowAll(func_get_args());
 
 
 
@@ -126,12 +126,12 @@ class Assets extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
-      $SubAssetsDeepList = SubassetsM::SubAssetsDeepList(func_get_args());
+      $SubAssetsDeepList = SubassetsM::ShowTitles(func_get_args());
 
-      $SubAssetDeepRead = SubassetsM::SubAssetDeepRead(func_get_args());
+      $SubAssetDeepRead = SubassetsM::ShowContent(func_get_args());
 
 
-      $allURLs = URLsM::allURLs(func_get_args());
+      $allURLs = URLsM::ShowAll(func_get_args());
 
 
 
