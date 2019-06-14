@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\AssetsM;
 
 
+
+
 class Assets extends Controller
 {
     /**
@@ -43,6 +45,7 @@ class Assets extends Controller
      */
     public function store(Request $request)
     {
+
 
       $arguments = func_get_args();
       array_shift($arguments);
@@ -127,7 +130,7 @@ class Assets extends Controller
 
       $allURLs = AssetsM::allURLs(func_get_args());
 
-    
+
 
 
       return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs'));

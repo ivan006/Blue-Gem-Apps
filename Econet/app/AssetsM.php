@@ -8,11 +8,14 @@ use Illuminate\Http\Request;
 use App\AssetsM;
 
 
+
 class AssetsM extends Model
 {
 
 
   public static function upload($arguments, $request) {
+
+
 
     $AssetURLSuffix = AssetsM::AssetURLSuffix($arguments);
     $SubAssetURLSuffix = AssetsM::SubAssetURLSuffix($arguments);
@@ -21,11 +24,17 @@ class AssetsM extends Model
 
     $request->zip_file->storeAs($AssetAndSubAssetURLSuffix, $request->zip_file->getClientOriginalName());
 
-    $path = "Econet/storage/app/".$AssetAndSubAssetURLSuffix."/".$request->zip_file->getClientOriginalName();
+    // $path = "Econet/storage/app/".$AssetAndSubAssetURLSuffix."/".$request->zip_file->getClientOriginalName();
+    // $path = "../storage/app/".$AssetAndSubAssetURLSuffix."/".$request->zip_file->getClientOriginalName();
+    $path = "../storage/app/".$AssetAndSubAssetURLSuffix."/".$request->zip_file->getClientOriginalName();
     // dd($path);
     // $Path = public_path($AssetAndSubAssetURLSuffix);
 
-    \Zipper::make($path)->extractTo("Econet/".$AssetAndSubAssetURLSuffix);
+
+    $zipper = new \Chumper\Zipper\Zipper;
+    $zipper->make($path)->extractTo("../storage/app/".$AssetAndSubAssetURLSuffix."/");
+    $zipper->close();
+    unlink("../storage/app/".$AssetAndSubAssetURLSuffix."/".$request->zip_file->getClientOriginalName());
 
 
   }
