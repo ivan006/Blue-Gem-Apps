@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\NetworkM;
 use App\AssetsM;
-use App\SubassetsM;
 use App\MetadataM;
-use App\URLsM;
+
 
 
 
@@ -20,9 +20,9 @@ class Assets extends Controller
      */
     public function index()
     {
-      $allURLs = URLsM::ShowAll(func_get_args());
+      $allURLs = AssetsM::ShowActions(func_get_args());
 
-      $AssetsList = AssetsM::ShowTitles();
+      $AssetsList = NetworkM::ShowAssets();
 
 
       // echo Route::getCurrentRoute()->getPath();
@@ -53,7 +53,7 @@ class Assets extends Controller
       $arguments = func_get_args();
       array_shift($arguments);
       if (1==1) {
-        $SubAssetURL = SubassetsM::ShowLocation($arguments);
+        $SubAssetURL = AssetsM::ShowLocation($arguments);
 
 
         $filename =  $request->get('file');
@@ -67,20 +67,20 @@ class Assets extends Controller
 
 
       if (1==1) {
-        $SubAssetDeepRead = SubassetsM::ShowContent($arguments);
+        $SubAssetDeepRead = AssetsM::ShowIndirectData($arguments);
 
         $EPgCont =  json_decode($request->get('smart'), true);
 
-        SubassetsM::Store($SubAssetURL, $EPgCont);
+        AssetsM::Store($SubAssetURL, $EPgCont);
 
 
       }
       if (null !== $request->file('zip_file')) {
 
-        echo SubassetsM::upload($arguments, $request);
+        echo AssetsM::upload($arguments, $request);
       }
 
-      $allURLs = URLsM::ShowAll($arguments);
+      $allURLs = AssetsM::ShowActions($arguments);
       // dd($allURLs['sub_assets_edit']);
 
       return redirect($allURLs['sub_assets_edit']);
@@ -97,14 +97,14 @@ class Assets extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
-      $SubAssetsDeepList = SubassetsM::ShowTitles(func_get_args());
+      $SubAssetsDeepList = AssetsM::ShowIndirectSubassets(func_get_args());
       // dd($SubAssetsDeepList);
-      $SubAssetDeepRead = SubassetsM::ShowContent(func_get_args());
+      $SubAssetDeepRead = AssetsM::ShowIndirectData(func_get_args());
       // $func_get_args =func_get_args();
-      // $VSiteHeader = SubassetsM::ShowContentHelperRecursive(AssetsM::ShowLocation(end($func_get_args)));
+      // $VSiteHeader = AssetsM::ShowIndirectDataHelper(NetworkM::ShowLocation(end($func_get_args)));
 
 
-      $allURLs = URLsM::ShowAll(func_get_args());
+      $allURLs = AssetsM::ShowActions(func_get_args());
 
 
 
@@ -126,12 +126,12 @@ class Assets extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
-      $SubAssetsDeepList = SubassetsM::ShowTitles(func_get_args());
+      $SubAssetsDeepList = AssetsM::ShowIndirectSubassets(func_get_args());
 
-      $SubAssetDeepRead = SubassetsM::ShowContent(func_get_args());
+      $SubAssetDeepRead = AssetsM::ShowIndirectData(func_get_args());
 
 
-      $allURLs = URLsM::ShowAll(func_get_args());
+      $allURLs = AssetsM::ShowActions(func_get_args());
 
 
 

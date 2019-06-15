@@ -3,10 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\NetworkM;
 use App\AssetsM;
-use App\SubassetsM;
 use App\MetadataM;
-use App\URLsM;
+
 
 class ShortcodeMiddleware
 {
@@ -74,7 +74,7 @@ class ShortcodeMiddleware
               $arguments = array_values($arguments);
 
 
-              $VPgsLocs = SubassetsM::ShowTitles($arguments);
+              $VPgsLocs = AssetsM::ShowIndirectSubassets($arguments);
               // dd($VPgsLocs);
               ob_start();
 
