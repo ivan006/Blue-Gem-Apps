@@ -19,13 +19,13 @@ class NetworkM extends Model
 
 
   public static function ShowAssets() {
-    $AssetURL = AssetsM::ShowBaseLocation();
+    $SubassetURL = AssetsM::ShowBaseLocation();
     $staticdir  = AssetsM::ShowBaseLocation();
     $result = array();
-    $dataNameList = scandir($AssetURL);
+    $dataNameList = scandir($SubassetURL);
     foreach ($dataNameList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
-        $dataLocation = $AssetURL . "/" . $value;
+        $dataLocation = $SubassetURL . "/" . $value;
         if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
           $subDataNameList = scandir($dataLocation);
           $blackList = array(".","..","smart","rich.txt");
@@ -66,23 +66,23 @@ class NetworkM extends Model
   // }
 
   // public static function AssetURLs() {
-  //   $AssetURLs['assets_read'] = "";
-  //   $AssetURLs['assets_create'] = "add";
-  //   $AssetURLs['sub_assets_read_suffix'] = "SubAssets";
+  //   $SubassetURLs['assets_read'] = "";
+  //   $SubassetURLs['assets_create'] = "add";
+  //   $SubassetURLs['sub_assets_read_suffix'] = "SubAssets";
   //
-  //   return $AssetURLs;
+  //   return $SubassetURLs;
   // }
 
 
-  public static function ShowID(){
-
-    // $VPgLoc = '';
-    // foreach (func_get_args()[0] as $key => $value) {
-    //   $VPgLoc .= "".$value."/";
-    // }
-
-    return func_get_args()[0][0];
-  }
+  // public static function ShowID(){
+  //
+  //   // $VPgLoc = '';
+  //   // foreach (func_get_args()[0] as $key => $value) {
+  //   //   $VPgLoc .= "".$value."/";
+  //   // }
+  //
+  //   return func_get_args()[0][0];
+  // }
 
   public static function Store($request) {
     mkdir(self::BaseLocation()."/".$request->get('name'));

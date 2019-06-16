@@ -19,12 +19,16 @@ class AssetsM extends Model
 
     // $root= AssetsM::ShowBaseLocation();
     $arguments = func_get_args()[0];
-    array_shift($arguments);
-    $VPgLoc = '';
+    // array_shift($arguments);
+    // $VPgLoc = '';
 
 
     foreach ($arguments as $key => $value) {
-      $VPgLoc .= "/".$value;
+      if (isset($VPgLoc)) {
+        $VPgLoc .= "/".$value;
+      } else {
+        $VPgLoc = $value;
+      }
     }
 
 
@@ -37,17 +41,17 @@ class AssetsM extends Model
   public static function ShowLocation() {
 
     // dd(func_get_args()[0]);
-    // echo AssetsM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0])."/".AssetsM::ShowID(func_get_args()[0]);
+    // echo AssetsM::ShowBaseLocation().AssetsM::ShowID(func_get_args()[0]);
 
     $arguments = func_get_args()[0];
-    array_shift($arguments);
+    // array_shift($arguments);
     // var_dump($arguments);
     if (!empty($arguments)) {
 
-      return  AssetsM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0]).AssetsM::ShowID(func_get_args()[0]);
+      return  AssetsM::ShowBaseLocation().AssetsM::ShowID(func_get_args()[0]);
     } else {
-      return  AssetsM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0]);
-
+      // return  AssetsM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0]);
+      return "now what";
     }
 
   }
@@ -55,22 +59,18 @@ class AssetsM extends Model
 
     if (!empty(func_get_args()[0])) {
 
-      $AssetURLSuffix = NetworkM::ShowID(func_get_args()[0]);
+
       $SubAssetURLSuffix = AssetsM::ShowID(func_get_args()[0]);
-      $allURLs['sub_assets_read'] =   route('Assets.show',$AssetURLSuffix.$SubAssetURLSuffix);
-      $allURLs['sub_assets_edit'] = route('Assets.edit',$AssetURLSuffix.$SubAssetURLSuffix);
+      $allURLs['sub_assets_read'] =   route('Assets.show',$SubAssetURLSuffix);
+      $allURLs['sub_assets_edit'] = route('Assets.edit',$SubAssetURLSuffix);
 
-      // $allURLs['sub_assets_update'] = route('Assets.update',$AssetURLSuffix.$SubAssetURLSuffix);
-      $allURLs['sub_assets_destroy'] = route('Assets.destroy',$AssetURLSuffix.$SubAssetURLSuffix);
-      $allURLs['sub_assets_store'] = route('Assets.store',$AssetURLSuffix.$SubAssetURLSuffix);
+      // $allURLs['sub_assets_update'] = route('Assets.update',$SubassetURLSuffix.$SubAssetURLSuffix);
+      $allURLs['sub_assets_destroy'] = route('Assets.destroy',$SubAssetURLSuffix);
+      $allURLs['sub_assets_store'] = route('Assets.store',$SubAssetURLSuffix);
       $allURLs['sub_assets_create'] = route('Assets.create');
-      // $allURLs['sub_assets_index'] = route('Assets.index',$AssetURLSuffix.$SubAssetURLSuffix);
+      // $allURLs['sub_assets_index'] = route('Assets.index',$SubassetURLSuffix.$SubAssetURLSuffix);
 
 
-      // $allURLs['assets_read'] =   route('Assets.show',NetworkM::ShowID(func_get_args()[0]));
-      // $allURLs['assets_edit'] = route('Assets.edit',NetworkM::ShowID(func_get_args()[0]));
-      // $allURLs['assets_update'] = route('Assets.update',NetworkM::ShowID(func_get_args()[0]));
-      // $allURLs['assets_destroy'] = route('Assets.destroy',NetworkM::ShowID(func_get_args()[0]));
 
       $allURLs['assets_create'] = route('Assets.create');
       $allURLs['assets_index'] = route('Assets.index');
@@ -88,12 +88,12 @@ class AssetsM extends Model
     return $allURLs;
   }
 
-  public static function ShowIndirectDataHelper($AssetURL) {
+  public static function ShowIndirectDataHelper($SubassetURL) {
     $result = array();
-    $shallowList = scandir($AssetURL);
+    $shallowList = scandir($SubassetURL);
     foreach ($shallowList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
-        $VPgContItemLoc = $AssetURL . DIRECTORY_SEPARATOR . $value;
+        $VPgContItemLoc = $SubassetURL . DIRECTORY_SEPARATOR . $value;
         if (is_dir($VPgContItemLoc)){
           $result[$value] = AssetsM::ShowIndirectDataHelper($VPgContItemLoc);
         } else {
@@ -109,46 +109,46 @@ class AssetsM extends Model
   public static function ShowIndirectSubassets() {
     // $arguments = func_get_args()[0];
     // array_shift($arguments);
+    // dd(func_get_args()[0]);
 
-
-    $AssetURLSuffix = NetworkM::ShowID(func_get_args()[0]);
-    $AssetURL = NetworkM::ShowLocation($AssetURLSuffix);
-    $staticdir = NetworkM::ShowLocation($AssetURLSuffix);
+    $SubassetURLSuffix = AssetsM::ShowID(func_get_args()[0]);
+    $SubassetURL = NetworkM::ShowLocation($SubassetURLSuffix);
+    $staticdir = NetworkM::ShowLocation($SubassetURLSuffix);
     // dd($staticdir);
-    $result[$AssetURLSuffix] = AssetsM::ShowIndirectSubassetsHelper($AssetURL,$staticdir,$AssetURLSuffix);
+    $result[$SubassetURLSuffix] = AssetsM::ShowIndirectSubassetsHelper($SubassetURL,$staticdir,$SubassetURLSuffix);
     // dd($result);
 
     // $arguments = $request->route()->parameters();
     // // dd($arguments);
-    // $AssetURLSuffix = $arguments['a'];
-    // $AssetURL = NetworkM::ShowLocation($AssetURLSuffix);
-    // // dd($AssetURL);
-    // $VPgsLocs = AssetsM::ShowIndirectSubassetsHelper($AssetURL,$AssetURL,$AssetURLSuffix);
+    // $SubassetURLSuffix = $arguments['a'];
+    // $SubassetURL = NetworkM::ShowLocation($SubassetURLSuffix);
+    // // dd($SubassetURL);
+    // $VPgsLocs = AssetsM::ShowIndirectSubassetsHelper($SubassetURL,$SubassetURL,$SubassetURLSuffix);
     // // dd($VPgsLocs);
 
     return $result;
   }
-  public static function ShowIndirectSubassetsHelper($AssetURL,$staticdir,$AssetURLSuffix) {
+  public static function ShowIndirectSubassetsHelper($SubassetURL,$staticdir,$SubassetURLSuffix) {
     $result = array();
-    // dd ($AssetURL);
-    $dataNameList = scandir($AssetURL);
+    // dd ($SubassetURL);
+    $dataNameList = scandir($SubassetURL);
 
-    $url = str_replace($staticdir, "", $AssetURL);
-    $result["url"] = route("Assets.show")."/".$AssetURLSuffix.$url;
+    $url = str_replace($staticdir, "", $SubassetURL);
+    $result["url"] = route("Assets.show")."/".$SubassetURLSuffix.$url;
     foreach ($dataNameList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
-        $dataLocation = $AssetURL . "/" . $value;
+        $dataLocation = $SubassetURL . "/" . $value;
         if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
           $subDataNameList = scandir($dataLocation);
           $blackList = array(".","..","smart","rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
-            $result[$value] = AssetsM::ShowIndirectSubassetsHelper($dataLocation,$staticdir,$AssetURLSuffix);
+            $result[$value] = AssetsM::ShowIndirectSubassetsHelper($dataLocation,$staticdir,$SubassetURLSuffix);
             // $url = str_replace($staticdir."/", "", $dataLocation);
-            // $result[$value]["url"] = route("Assets.show")."/".$AssetURLSuffix."/".$url;
+            // $result[$value]["url"] = route("Assets.show")."/".$SubassetURLSuffix."/".$url;
           } else {
             $url = str_replace($staticdir, "", $dataLocation);
-            $result[$value] = route("Assets.show")."/".$AssetURLSuffix.$url;
+            $result[$value] = route("Assets.show")."/".$SubassetURLSuffix.$url;
           }
         }
       }
@@ -161,9 +161,8 @@ class AssetsM extends Model
 
 
 
-    $AssetURLSuffix = NetworkM::ShowID($arguments);
     $SubAssetURLSuffix = AssetsM::ShowID($arguments);
-    $AssetAndSubAssetURLSuffix = $AssetURLSuffix.$SubAssetURLSuffix;
+    $AssetAndSubAssetURLSuffix = $SubAssetURLSuffix;
 
 
     $request->zip_file->storeAs($AssetAndSubAssetURLSuffix, $request->zip_file->getClientOriginalName());
