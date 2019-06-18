@@ -71,10 +71,13 @@ class ShortcodeMiddleware
 
             foreach ($matches[0] as $key => $value) {
               $arguments = $request->route()->parameters();
+
               $arguments = array_values($arguments);
+              $arguments2[0] = $arguments[0];
+              // dd($arguments);
 
 
-              $VPgsLocs = AssetsM::ShowIndirectSubassets($arguments);
+              $VPgsLocs = AssetsM::ShowIndirectSubassets($arguments2);
               // dd($VPgsLocs);
               ob_start();
 
@@ -127,12 +130,16 @@ class ShortcodeMiddleware
 
               $retrieval_path = url('/')."/blogApi/".$parameter;
 
-              $result = file_get_contents($retrieval_path);
 
 
-              if ($result !== "[]") {
-                // echo 123;
-                $result = json_decode($result);
+              if (file_exists($retrieval_path)) {
+
+                  $result = file_get_contents($retrieval_path);
+                  // code...
+                  // echo 123;
+                  // $result = json_decode($result);
+
+                
 
               } else {
                 $result = "error";

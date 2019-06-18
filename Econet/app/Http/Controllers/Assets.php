@@ -97,6 +97,7 @@ class Assets extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
+
       $SubAssetsDeepList = AssetsM::ShowIndirectSubassets(func_get_args());
       // dd($SubAssetsDeepList);
       $SubAssetDeepRead = AssetsM::ShowIndirectData(func_get_args());
@@ -106,10 +107,11 @@ class Assets extends Controller
 
       $allURLs = AssetsM::ShowActions(func_get_args());
 
+       $ShowBaseIDPlusBaseLocation = AssetsM::ShowBaseIDPlusBaseLocation(func_get_args());
 
 
 
-      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs'));
+      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs', 'ShowBaseIDPlusBaseLocation'));
     }
 
 

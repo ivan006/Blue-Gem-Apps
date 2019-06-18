@@ -1,7 +1,13 @@
 
 @include('includes.menu_assets')
 
+<?php
+if (file_exists($ShowBaseIDPlusBaseLocation."/header.php")) {
+  // code...
 
+  include($ShowBaseIDPlusBaseLocation."/header.php");
+}
+?>
 
 <link rel="stylesheet" href="{{ URL::asset('js/FlexiJsonEditor/jsoneditor.css') }}"/>
 

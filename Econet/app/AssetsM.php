@@ -19,6 +19,7 @@ class AssetsM extends Model
 
     // $root= AssetsM::ShowBaseLocation();
     $arguments = func_get_args()[0];
+    // var_dump($arguments);
     // array_shift($arguments);
     // $VPgLoc = '';
 
@@ -37,6 +38,14 @@ class AssetsM extends Model
   }
   public static function ShowBaseLocation() {
     return "../storage/app/";
+  }
+  public static function ShowBaseID() {
+      $arguments = func_get_args()[0][0];
+
+    return $arguments;
+  }
+  public static function ShowBaseIDPlusBaseLocation() {
+    return AssetsM::ShowBaseLocation().AssetsM::ShowBaseID(func_get_args()[0]);
   }
   public static function ShowLocation() {
 
