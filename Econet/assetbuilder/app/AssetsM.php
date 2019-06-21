@@ -37,7 +37,7 @@ class AssetsM extends Model
 
   }
   public static function ShowBaseLocation() {
-    return "../storage/app/";
+    return "../assetbuilder/storage/app/";
   }
   public static function ShowBaseID() {
       $arguments = func_get_args()[0][0];

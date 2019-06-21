@@ -20,7 +20,6 @@ define('LARAVEL_START', microtime(true));
 | loading any of our classes later on. It feels great to relax.
 |
 */
-echo 123;
 require __DIR__.'/../assetbuilder/vendor/autoload.php';
 
 /*
