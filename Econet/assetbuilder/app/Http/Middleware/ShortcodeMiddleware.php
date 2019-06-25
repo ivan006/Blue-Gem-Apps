@@ -89,19 +89,21 @@ class ShortcodeMiddleware
               $responceContent = str_replace($value, $result, $responceContent);
 
             }
-            // code...
-            // example
+            // code  example ..
             // <div class="g-multi-level-dropdown">
             //   <ul>
             //     [page_list]
             //     [twig]
             //     <li>
             //       <a href="[link]">
-            //         [name] +
+            //         [name]
             //       </a>
+            //       <span class="toggle">
+            //       <a href="#">+</a>
             //       <ul>
             //         [inner_twig]
             //       </ul>
+            //       </span>
             //     </li>
             //     [/twig]
             //     [leaf]
@@ -114,6 +116,7 @@ class ShortcodeMiddleware
             //     [/page_list]
             //   </ul>
             // </div>
+
           }
 
 
@@ -139,7 +142,7 @@ class ShortcodeMiddleware
                   // echo 123;
                   // $result = json_decode($result);
 
-                
+
 
               } else {
                 $result = "error";
