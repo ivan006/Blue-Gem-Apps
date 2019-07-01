@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\NetworkM;
-use App\AssetsM;
-use App\MetadataM;
+use App\PostM;
+use App\SmartDataM;
 
 
 class ShortcodeMiddleware
@@ -77,7 +77,7 @@ class ShortcodeMiddleware
               // dd($arguments);
 
 
-              $VPgsLocs = AssetsM::ShowIndirectSubassets($arguments2);
+              $VPgsLocs = PostM::ShowIndirectSubPost($arguments2);
               // dd($VPgsLocs);
               ob_start();
 

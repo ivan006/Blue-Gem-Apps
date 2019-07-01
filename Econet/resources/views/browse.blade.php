@@ -1,4 +1,4 @@
-@include('includes.menu_assets')
+@include('includes.menu_post')
 
 
 
@@ -59,7 +59,7 @@
       @endif
     <?php }?>
   <?php }?>
-  <?php ivan($AssetsList) ?>
+  <?php ivan($PostList) ?>
   </div>
 </div>
 

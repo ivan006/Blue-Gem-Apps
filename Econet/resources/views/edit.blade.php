@@ -1,8 +1,8 @@
 
 
 
-<form  id="form" enctype="multipart/form-data" name="form" class="" action="{{ $allURLs['sub_assets_store'] }}" method="post">
-  @include('includes.menu_assets')
+<form  id="form" enctype="multipart/form-data" name="form" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
+  @include('includes.menu_post')
 
   <link rel="stylesheet" href="{{ URL::asset('js/FlexiJsonEditor/jsoneditor.css') }}"/>
 
@@ -24,10 +24,10 @@
   <input style="display: none;" type="text"  name="file" value="<?php echo $rich; ?>"  placeholder="Enter title">
 
   <h1>Smart Data</h1>
-  <textarea id="theLord" type="text" name="smart" value="" class=""  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php if (isset($SubAssetDeepRead['smart'])) {
-    echo json_encode($SubAssetDeepRead['smart'], JSON_PRETTY_PRINT);
-  }?>
-</textarea>
+
+  <!-- <textarea id="theLord" type="text" name="smart" value="" class=""  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php if (isset($SubAssetDeepRead['smart'])) {
+    ///echo json_encode($SubAssetDeepRead['smart'], JSON_PRETTY_PRINT);
+  }?></textarea> -->
 
 
 

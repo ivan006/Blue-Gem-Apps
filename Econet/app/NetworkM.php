@@ -5,9 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Http\Request;
-use App\AssetsM;
-use App\SubassetsM;
-use App\MetadataM;
+use App\PostM;
+use App\SubPostM;
+use App\SmartDataM;
 
 
 
@@ -18,9 +18,9 @@ class NetworkM extends Model
 
 
 
-  public static function ShowAssets() {
-    $SubassetURL = AssetsM::ShowBaseLocation();
-    $staticdir  = AssetsM::ShowBaseLocation();
+  public static function ShowPost() {
+    $SubassetURL = PostM::ShowBaseLocation();
+    $staticdir  = PostM::ShowBaseLocation();
     $result = array();
     $dataNameList = scandir($SubassetURL);
     foreach ($dataNameList as $key => $value) {
@@ -31,12 +31,12 @@ class NetworkM extends Model
           $blackList = array(".","..","smart","rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
-            // $result[$value] = AssetsM::ShowIndirectSubassetsHelper($dataLocation,$staticdir);
+            // $result[$value] = PostM::ShowIndirectSubPostHelper($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = route('Assets.show', $url);
+            $result[$value]["url"] = route('Post.show', $url);
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = route('Assets.show', $url);
+            $result[$value] = route('Post.show', $url);
           }
         }
       }
@@ -59,16 +59,16 @@ class NetworkM extends Model
   // }
   public static function ShowLocation() {
     // dd(func_get_args()[0]);
-    return AssetsM::ShowBaseLocation().func_get_args()[0];
+    return PostM::ShowBaseLocation().func_get_args()[0];
   }
   // public static function ShowLocation($value) {
-  //   return AssetsM::ShowBaseLocation()."/".$value;
+  //   return PostM::ShowBaseLocation()."/".$value;
   // }
 
   // public static function AssetURLs() {
-  //   $SubassetURLs['assets_read'] = "";
-  //   $SubassetURLs['assets_create'] = "add";
-  //   $SubassetURLs['sub_assets_read_suffix'] = "SubAssets";
+  //   $SubassetURLs['post_read'] = "";
+  //   $SubassetURLs['post_create'] = "add";
+  //   $SubassetURLs['sub_post_read_suffix'] = "SubPost";
   //
   //   return $SubassetURLs;
   // }

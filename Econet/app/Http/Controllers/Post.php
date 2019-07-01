@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NetworkM;
-use App\AssetsM;
+use App\PostM;
 use App\MetadataM;
 
 
 
 
 
-class Assets extends Controller
+class Post extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,14 +20,14 @@ class Assets extends Controller
      */
     public function index()
     {
-      $allURLs = AssetsM::ShowActions(func_get_args());
+      $allURLs = PostM::ShowActions(func_get_args());
 
-      $AssetsList = NetworkM::ShowAssets();
+      $PostList = NetworkM::ShowPost();
 
 
       // echo Route::getCurrentRoute()->getPath();
 
-      return view('browse', compact('AssetsList', 'allURLs'));
+      return view('browse', compact('PostList', 'allURLs'));
     }
 
     /**
@@ -53,7 +53,7 @@ class Assets extends Controller
       $arguments = func_get_args();
       array_shift($arguments);
       if (1==1) {
-        $SubAssetURL = AssetsM::ShowLocation($arguments);
+        $SubAssetURL = PostM::ShowLocation($arguments);
 
 
         $filename =  $request->get('file');
@@ -67,23 +67,23 @@ class Assets extends Controller
 
 
       if (1==1) {
-        $SubAssetDeepRead = AssetsM::ShowIndirectData($arguments);
+        $SubAssetDeepRead = PostM::ShowIndirectData($arguments);
 
         $EPgCont =  json_decode($request->get('smart'), true);
 
-        AssetsM::Store($SubAssetURL, $EPgCont);
+        PostM::Store($SubAssetURL, $EPgCont);
 
 
       }
       if (null !== $request->file('zip_file')) {
 
-        echo AssetsM::upload($arguments, $request);
+        echo PostM::upload($arguments, $request);
       }
 
-      $allURLs = AssetsM::ShowActions($arguments);
-      // dd($allURLs['sub_assets_edit']);
+      $allURLs = PostM::ShowActions($arguments);
+      // dd($allURLs['sub_post_edit']);
 
-      return redirect($allURLs['sub_assets_edit']);
+      return redirect($allURLs['sub_post_edit']);
     }
 
     /**
@@ -98,20 +98,20 @@ class Assets extends Controller
       array_shift($arguments);
 
 
-      $SubAssetsDeepList = AssetsM::ShowIndirectSubassets(func_get_args());
-      // dd($SubAssetsDeepList);
-      $SubAssetDeepRead = AssetsM::ShowIndirectData(func_get_args());
+      $SubPostDeepList = PostM::ShowIndirectSubPost(func_get_args());
+      // dd($SubPostDeepList);
+      $SubAssetDeepRead = PostM::ShowIndirectData(func_get_args());
       // $func_get_args =func_get_args();
-      // $VSiteHeader = AssetsM::ShowIndirectDataHelper(NetworkM::ShowLocation(end($func_get_args)));
+      // $VSiteHeader = PostM::ShowIndirectDataHelper(NetworkM::ShowLocation(end($func_get_args)));
 
 
-      $allURLs = AssetsM::ShowActions(func_get_args());
+      $allURLs = PostM::ShowActions(func_get_args());
 
-       $ShowBaseIDPlusBaseLocation = AssetsM::ShowBaseIDPlusBaseLocation(func_get_args());
+       $ShowBaseIDPlusBaseLocation = PostM::ShowBaseIDPlusBaseLocation(func_get_args());
 
 
 
-      return view('view', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs', 'ShowBaseIDPlusBaseLocation'));
+      return view('view', compact('SubAssetDeepRead','SubPostDeepList', 'allURLs', 'ShowBaseIDPlusBaseLocation'));
     }
 
 
@@ -128,17 +128,17 @@ class Assets extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
-      $SubAssetsDeepList = AssetsM::ShowIndirectSubassets(func_get_args());
+      $SubPostDeepList = PostM::ShowIndirectSubPost(func_get_args());
 
-      $SubAssetDeepRead = AssetsM::ShowIndirectData(func_get_args());
-
-
-      $allURLs = AssetsM::ShowActions(func_get_args());
+      $SubAssetDeepRead = PostM::ShowIndirectData(func_get_args());
 
 
+      $allURLs = PostM::ShowActions(func_get_args());
 
 
-      return view('edit', compact('SubAssetDeepRead','SubAssetsDeepList', 'allURLs'));
+
+
+      return view('edit', compact('SubAssetDeepRead','SubPostDeepList', 'allURLs'));
     }
 
     /**
