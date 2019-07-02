@@ -53,11 +53,11 @@ class Post extends Controller
       $arguments = func_get_args();
       array_shift($arguments);
       if (1==1) {
-        $SubAssetURL = PostM::ShowLocation($arguments);
+        $ShowLocation = PostM::ShowLocation($arguments);
 
 
         $filename =  $request->get('file');
-        $file =  $SubAssetURL."/".$filename;
+        $file =  $ShowLocation."/".$filename;
         // echo file_get_contents($file);
 
         $contents =  $request->get('contents');
@@ -71,7 +71,7 @@ class Post extends Controller
 
         $EPgCont =  json_decode($request->get('smart'), true);
 
-        PostM::Store($SubAssetURL, $EPgCont);
+        PostM::Store($ShowLocation, $EPgCont);
 
 
       }
@@ -98,7 +98,7 @@ class Post extends Controller
       array_shift($arguments);
 
 
-      $SubPostDeepList = PostM::ShowIndirectSubPost(func_get_args());
+      // $SubPostDeepList = PostM::ShowIndirectSubPost(func_get_args());
       // dd($SubPostDeepList);
       $SubAssetDeepRead = PostM::ShowIndirectData(func_get_args());
       // $func_get_args =func_get_args();
@@ -111,7 +111,7 @@ class Post extends Controller
 
 
 
-      return view('view', compact('SubAssetDeepRead','SubPostDeepList', 'allURLs', 'ShowBaseIDPlusBaseLocation'));
+      return view('view', compact('SubAssetDeepRead', 'allURLs', 'ShowBaseIDPlusBaseLocation'));
     }
 
 
@@ -128,7 +128,7 @@ class Post extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
-      $SubPostDeepList = PostM::ShowIndirectSubPost(func_get_args());
+      // $SubPostDeepList = PostM::ShowIndirectSubPost(func_get_args());
 
       $SubAssetDeepRead = PostM::ShowIndirectData(func_get_args());
 
@@ -138,7 +138,7 @@ class Post extends Controller
 
 
 
-      return view('edit', compact('SubAssetDeepRead','SubPostDeepList', 'allURLs'));
+      return view('edit', compact('SubAssetDeepRead', 'allURLs'));
     }
 
     /**

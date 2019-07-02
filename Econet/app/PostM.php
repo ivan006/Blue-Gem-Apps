@@ -12,12 +12,11 @@ use App\SmartDataM;
 
 
 
-
 class PostM extends Model
 {
   public static function ShowID(){
 
-    // $root= PostM::ShowBaseLocation();
+    // $root= NetworkM::ShowBaseLocation();
     $arguments = func_get_args()[0];
     // var_dump($arguments);
     // array_shift($arguments);
@@ -36,49 +35,49 @@ class PostM extends Model
     return $VPgLoc;
 
   }
-  public static function ShowBaseLocation() {
-    return "storage/app/public/";
-  }
-  public static function ShowBaseID() {
-      $arguments = func_get_args()[0][0];
-
-    return $arguments;
-  }
-  public static function ShowBaseIDPlusBaseLocation() {
-    return PostM::ShowBaseLocation().PostM::ShowBaseID(func_get_args()[0]);
-  }
   public static function ShowLocation() {
 
     // dd(func_get_args()[0]);
-    // echo PostM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
+    // echo NetworkM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
 
     $arguments = func_get_args()[0];
     // array_shift($arguments);
     // var_dump($arguments);
     if (!empty($arguments)) {
 
-      return  PostM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
+      return  NetworkM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
     } else {
-      // return  PostM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0]);
+      // return  NetworkM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0]);
       return "now what";
     }
 
   }
 
+
+  public static function ShowBaseID() {
+      $arguments = func_get_args()[0][0];
+
+    return $arguments;
+  }
+  public static function ShowBaseIDPlusBaseLocation() {
+    return NetworkM::ShowBaseLocation().PostM::ShowBaseID(func_get_args()[0]);
+  }
+
+
   public static function ShowActions() {
 
     if (!empty(func_get_args()[0])) {
+      // dd(func_get_args());
 
+      $ShowID = PostM::ShowID(func_get_args()[0]);
+      $allURLs['sub_post_read'] =   route('Post.show',$ShowID);
+      $allURLs['sub_post_edit'] = route('Post.edit',$ShowID);
 
-      $SubAssetURLSuffix = PostM::ShowID(func_get_args()[0]);
-      $allURLs['sub_post_read'] =   route('Post.show',$SubAssetURLSuffix);
-      $allURLs['sub_post_edit'] = route('Post.edit',$SubAssetURLSuffix);
-
-      // $allURLs['sub_post_update'] = route('Post.update',$SubassetURLSuffix.$SubAssetURLSuffix);
-      $allURLs['sub_post_destroy'] = route('Post.destroy',$SubAssetURLSuffix);
-      $allURLs['sub_post_store'] = route('Post.store',$SubAssetURLSuffix);
+      // $allURLs['sub_post_update'] = route('Post.update',$ShowID.$ShowID);
+      $allURLs['sub_post_destroy'] = route('Post.destroy',$ShowID);
+      $allURLs['sub_post_store'] = route('Post.store',$ShowID);
       $allURLs['sub_post_create'] = route('Post.create');
-      // $allURLs['sub_post_index'] = route('Post.index',$SubassetURLSuffix.$SubAssetURLSuffix);
+      // $allURLs['sub_post_index'] = route('Post.index',$ShowID.$ShowID);
 
 
 
@@ -97,73 +96,68 @@ class PostM extends Model
     // dd($allURLs);
     return $allURLs;
   }
-
-  public static function ShowIndirectDataHelper($SubassetURL) {
-    $result = array();
-    $shallowList = scandir($SubassetURL);
-    foreach ($shallowList as $key => $value) {
-      if (!in_array($value,array(".","..")))  {
-        $VPgContItemLoc = $SubassetURL . DIRECTORY_SEPARATOR . $value;
-        if (is_dir($VPgContItemLoc)){
-          $result[$value] = PostM::ShowIndirectDataHelper($VPgContItemLoc);
-        } else {
-          $result[$value] = file_get_contents($VPgContItemLoc);
-        }
-      }
-    }
-    return  $result;
-  }
   public static function ShowIndirectData() {
-    return  PostM::ShowIndirectDataHelper(PostM::ShowLocation(func_get_args()[0]));
-  }
 
-  public static function ShowIndirectSubPost() {
-    // $arguments = func_get_args()[0];
-    // array_shift($arguments);
-    // dd(func_get_args()[0]);
-
-    $SubassetURLSuffix = PostM::ShowID(func_get_args()[0]);
-    $SubassetURL = NetworkM::ShowLocation($SubassetURLSuffix);
-    $staticdir = NetworkM::ShowLocation($SubassetURLSuffix);
-    // dd($staticdir);
-    $result[$SubassetURLSuffix] = PostM::ShowIndirectSubPostHelper($SubassetURL,$staticdir,$SubassetURLSuffix);
-    // dd($result);
-
-    // $arguments = $request->route()->parameters();
-    // // dd($arguments);
-    // $SubassetURLSuffix = $arguments['a'];
-    // $SubassetURL = NetworkM::ShowLocation($SubassetURLSuffix);
-    // // dd($SubassetURL);
-    // $VPgsLocs = PostM::ShowIndirectSubPostHelper($SubassetURL,$SubassetURL,$SubassetURLSuffix);
-    // // dd($VPgsLocs);
-
-    return $result;
-  }
-  public static function ShowIndirectSubPostHelper($SubassetURL,$staticdir,$SubassetURLSuffix) {
-    $result = array();
-    // dd ($SubassetURL);
-    $dataNameList = scandir($SubassetURL);
-
-    $url = str_replace($staticdir, "", $SubassetURL);
-    $result["url"] = route("Post.show")."/".$SubassetURLSuffix.$url;
-    foreach ($dataNameList as $key => $value) {
-      if (!in_array($value,array(".","..")))  {
-        $dataLocation = $SubassetURL . "/" . $value;
-        if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
-          $subDataNameList = scandir($dataLocation);
-          $blackList = array(".","..","smart","rich.txt");
-          $whiteList = array_diff_key($subDataNameList,$blackList);
-          if (!empty($whiteList)) {
-            $result[$value] = PostM::ShowIndirectSubPostHelper($dataLocation,$staticdir,$SubassetURLSuffix);
-            // $url = str_replace($staticdir."/", "", $dataLocation);
-            // $result[$value]["url"] = route("Post.show")."/".$SubassetURLSuffix."/".$url;
+    function ShowIndirectDataHelper($ShowLocation) {
+      $result = array();
+      $shallowList = scandir($ShowLocation);
+      foreach ($shallowList as $key => $value) {
+        if (!in_array($value,array(".","..")))  {
+          $VPgContItemLoc = $ShowLocation . DIRECTORY_SEPARATOR . $value;
+          if (is_dir($VPgContItemLoc)){
+            $result[$value] = ShowIndirectDataHelper($VPgContItemLoc);
           } else {
-            $url = str_replace($staticdir, "", $dataLocation);
-            $result[$value] = route("Post.show")."/".$SubassetURLSuffix.$url;
+            $result[$value] = file_get_contents($VPgContItemLoc);
           }
         }
       }
+      return  $result;
     }
+    return  ShowIndirectDataHelper(PostM::ShowLocation(func_get_args()[0]));
+  }
+
+  public static function ShowIndirectSubPost() {
+    function ShowIndirectSubPostHelper($ShowLocation,$staticdir,$ShowID) {
+      $result = array();
+      // dd ($ShowLocation);
+      $dataNameList = scandir($ShowLocation);
+
+      $url = str_replace($staticdir, "", $ShowLocation);
+      $result["url"] = route("Post.show")."/".$ShowID.$url;
+      foreach ($dataNameList as $key => $value) {
+        if (!in_array($value,array(".","..")))  {
+          $dataLocation = $ShowLocation . "/" . $value;
+          if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
+            $subDataNameList = scandir($dataLocation);
+            $blackList = array(".","..","smart","rich.txt");
+            $whiteList = array_diff_key($subDataNameList,$blackList);
+            if (!empty($whiteList)) {
+              $result[$value] = ShowIndirectSubPostHelper($dataLocation,$staticdir,$ShowID);
+              // $url = str_replace($staticdir."/", "", $dataLocation);
+              // $result[$value]["url"] = route("Post.show")."/".$ShowID."/".$url;
+            } else {
+              $url = str_replace($staticdir, "", $dataLocation);
+              $result[$value] = route("Post.show")."/".$ShowID.$url;
+            }
+          }
+        }
+      }
+      return $result;
+    }
+
+    // function x (){
+    //
+    //   echo 123333;
+    // }
+    // echo   x();
+
+    $ShowID = PostM::ShowID(func_get_args()[0]);
+    $ShowLocation = NetworkM::ShowLocation($ShowID);
+    $staticdir = NetworkM::ShowLocation($ShowID);
+
+    $result[$ShowID] = ShowIndirectSubPostHelper($ShowLocation,$staticdir,$ShowID);
+
+
     return $result;
   }
 
@@ -171,79 +165,77 @@ class PostM extends Model
 
 
 
-    $SubAssetURLSuffix = PostM::ShowID($arguments);
-    $AssetAndSubAssetURLSuffix = $SubAssetURLSuffix;
+    $ShowID = PostM::ShowID($arguments);
 
 
-
-    $request->zip_file->storeAs("public/".$AssetAndSubAssetURLSuffix."/smart", $request->zip_file->getClientOriginalName());
-    // $path = "Econet/".PostM::ShowBaseLocation().$AssetAndSubAssetURLSuffix."/".$request->zip_file->getClientOriginalName();
-    // $path = PostM::ShowBaseLocation().$AssetAndSubAssetURLSuffix."/".$request->zip_file->getClientOriginalName();
-    $path = PostM::ShowBaseLocation().$AssetAndSubAssetURLSuffix."/smart"."/".$request->zip_file->getClientOriginalName();
+    $request->zip_file->storeAs("public/".$ShowID."/smart", $request->zip_file->getClientOriginalName());
+    // $path = "Econet/".NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
+    // $path = NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
+    $path = NetworkM::ShowBaseLocation().$ShowID."/smart"."/".$request->zip_file->getClientOriginalName();
     // dd($path);
-    // $Path = public_path($AssetAndSubAssetURLSuffix);
+    // $Path = public_path($ShowID);
 
 
     $zipper = new \Chumper\Zipper\Zipper;
-    $zipper->make($path)->extractTo(PostM::ShowBaseLocation().$AssetAndSubAssetURLSuffix."/smart"."/");
+    $zipper->make($path)->extractTo(NetworkM::ShowBaseLocation().$ShowID."/smart"."/");
     $zipper->close();
-    unlink(PostM::ShowBaseLocation().$AssetAndSubAssetURLSuffix."/smart"."/".$request->zip_file->getClientOriginalName());
+    unlink(NetworkM::ShowBaseLocation().$ShowID."/smart"."/".$request->zip_file->getClientOriginalName());
 
 
   }
 
-  public static function StoreHelperDestroy($dir) {
-    if (is_dir($dir)) {
-      $objects = scandir($dir);
-      foreach ($objects as $object) {
-        if ($object != "." && $object != "..") {
-          if (is_dir($dir."/".$object))
-          PostM::StoreHelperDestroy($dir."/".$object);
-          else
-          unlink($dir."/".$object);
+  public static function Store($ShowLocation,$EPgCont) {
+    function StoreHelperDestroy($dir) {
+      if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+          if ($object != "." && $object != "..") {
+            if (is_dir($dir."/".$object))
+            StoreHelperDestroy($dir."/".$object);
+            else
+            unlink($dir."/".$object);
+          }
+        }
+        rmdir($dir);
+      }
+    }
+    function StoreHelperStore($ShowLocation,$EPgCont) {
+      // dd($ShowLocation.array_keys($EPgCont)[0]);
+      // dd(array_keys($EPgCont)[0]);
+      // dd($EPgCont);
+      foreach($EPgCont as $key => $value) {
+        $VPgContItemLoc = $ShowLocation ."/". $key;
+        if (!is_string($value)){
+          // mkdir($ShowLocation.array_keys($EPgCont)[0]);
+          mkdir($VPgContItemLoc);
+
+          StoreHelperStore($VPgContItemLoc, $value);
+        } else {
+          $content = $value;
+
+
+          file_put_contents($VPgContItemLoc,$value);
+
+
         }
       }
-      rmdir($dir);
+
     }
-  }
-  public static function Store($SubAssetURL,$EPgCont) {
     // $result = array();
-    // $shallowList = scandir($SubAssetURL);
+    // $shallowList = scandir($ShowLocation);
     if (!empty($EPgCont)) {
 
 
-      // dd($SubAssetURL);
-      PostM::StoreHelperDestroy($SubAssetURL."/smart");
-      // mkdir($SubAssetURL.array_keys($EPgCont)[0]);
+      // dd($ShowLocation);
+      StoreHelperDestroy($ShowLocation."/smart");
+      // mkdir($ShowLocation.array_keys($EPgCont)[0]);
 
       $EPgCont2['smart'] = $EPgCont;
-      // mkdir($SubAssetURL."smart");
-      PostM::StoreHelperStore($SubAssetURL,$EPgCont2);
+      // mkdir($ShowLocation."smart");
+      StoreHelperStore($ShowLocation,$EPgCont2);
 
     }
     // return $EPgCont;
-  }
-  public static function StoreHelperStore($SubAssetURL,$EPgCont) {
-    // dd($SubAssetURL.array_keys($EPgCont)[0]);
-    // dd(array_keys($EPgCont)[0]);
-    // dd($EPgCont);
-    foreach($EPgCont as $key => $value) {
-      $VPgContItemLoc = $SubAssetURL ."/". $key;
-      if (!is_string($value)){
-        // mkdir($SubAssetURL.array_keys($EPgCont)[0]);
-        mkdir($VPgContItemLoc);
-
-        PostM::StoreHelperStore($VPgContItemLoc, $value);
-      } else {
-        $content = $value;
-
-
-        file_put_contents($VPgContItemLoc,$value);
-
-
-      }
-    }
-
   }
 
 

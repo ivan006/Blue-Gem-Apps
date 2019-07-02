@@ -77,6 +77,7 @@ class ShortcodeMiddleware
               // dd($arguments);
 
 
+          
               $VPgsLocs = PostM::ShowIndirectSubPost($arguments2);
               // dd($VPgsLocs);
               ob_start();

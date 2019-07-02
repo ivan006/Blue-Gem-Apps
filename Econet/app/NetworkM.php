@@ -17,15 +17,17 @@ class NetworkM extends Model
 {
 
 
-
+  public static function ShowBaseLocation() {
+    return "storage/app/public/";
+  }
   public static function ShowPost() {
-    $SubassetURL = PostM::ShowBaseLocation();
-    $staticdir  = PostM::ShowBaseLocation();
+    $ShowBaseLocation = NetworkM::ShowBaseLocation();
+    $staticdir  = NetworkM::ShowBaseLocation();
     $result = array();
-    $dataNameList = scandir($SubassetURL);
+    $dataNameList = scandir($ShowBaseLocation);
     foreach ($dataNameList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
-        $dataLocation = $SubassetURL . "/" . $value;
+        $dataLocation = $ShowBaseLocation . "/" . $value;
         if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
           $subDataNameList = scandir($dataLocation);
           $blackList = array(".","..","smart","rich.txt");
@@ -59,18 +61,18 @@ class NetworkM extends Model
   // }
   public static function ShowLocation() {
     // dd(func_get_args()[0]);
-    return PostM::ShowBaseLocation().func_get_args()[0];
+    return NetworkM::ShowBaseLocation().func_get_args()[0];
   }
   // public static function ShowLocation($value) {
-  //   return PostM::ShowBaseLocation()."/".$value;
+  //   return NetworkM::ShowBaseLocation()."/".$value;
   // }
 
   // public static function AssetURLs() {
-  //   $SubassetURLs['post_read'] = "";
-  //   $SubassetURLs['post_create'] = "add";
-  //   $SubassetURLs['sub_post_read_suffix'] = "SubPost";
+  //   $ShowBaseLocations['post_read'] = "";
+  //   $ShowBaseLocations['post_create'] = "add";
+  //   $ShowBaseLocations['sub_post_read_suffix'] = "SubPost";
   //
-  //   return $SubassetURLs;
+  //   return $ShowBaseLocations;
   // }
 
 
