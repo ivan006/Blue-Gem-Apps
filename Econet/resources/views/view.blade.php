@@ -17,8 +17,8 @@ if (file_exists($ShowBaseIDPlusBaseLocation."/header.php")) {
 
   <?php
 
-  if (isset($SubAssetDeepRead["rich.txt"])) {
-    echo $SubAssetDeepRead["rich.txt"];
+  if (!empty($ShowRichData )) {
+    echo $ShowRichData ;
   }
 
   ?>

@@ -51,9 +51,9 @@ class NetworkM extends Model
   //   $VPgContItem = scandir($siteURL);
   //   foreach ($VPgContItem as $key => $value) {
   //     if (!in_array($value,array(".","..")))  {
-  //       $VPgContItemLoc = $siteURL . DIRECTORY_SEPARATOR . $value;
+  //       $DataLocation = $siteURL . DIRECTORY_SEPARATOR . $value;
   //
-  //       $result[$value] = file_get_contents($VPgContItemLoc);
+  //       $result[$value] = file_get_contents($DataLocation);
   //
   //     }
   //   }

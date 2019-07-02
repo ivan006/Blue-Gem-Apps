@@ -77,7 +77,7 @@ class Post extends Controller
       }
       if (null !== $request->file('zip_file')) {
 
-        echo PostM::upload($arguments, $request);
+        PostM::upload($arguments, $request);
       }
 
       $allURLs = PostM::ShowActions($arguments);
@@ -108,10 +108,10 @@ class Post extends Controller
       $allURLs = PostM::ShowActions(func_get_args());
 
        $ShowBaseIDPlusBaseLocation = PostM::ShowBaseIDPlusBaseLocation(func_get_args());
+       $ShowRichData = PostM::ShowRichData(func_get_args());
 
 
-
-      return view('view', compact('SubAssetDeepRead', 'allURLs', 'ShowBaseIDPlusBaseLocation'));
+      return view('view', compact('SubAssetDeepRead', 'allURLs', 'ShowBaseIDPlusBaseLocation', 'ShowRichData'));
     }
 
 

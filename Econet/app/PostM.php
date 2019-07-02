@@ -12,8 +12,19 @@ use App\SmartDataM;
 
 
 
+
 class PostM extends Model
 {
+//   howBaseIDPlusBaseLocation  and ShowBaseID(
+// 	      needed for header call
+//
+//
+//  ShowID(
+// 	      needed to make action link in subposts list
+// 	      and to use with "storeAs" function
+//
+//
+//
   public static function ShowID(){
 
     // $root= NetworkM::ShowBaseLocation();
@@ -52,18 +63,6 @@ class PostM extends Model
     }
 
   }
-
-
-  public static function ShowBaseID() {
-      $arguments = func_get_args()[0][0];
-
-    return $arguments;
-  }
-  public static function ShowBaseIDPlusBaseLocation() {
-    return NetworkM::ShowBaseLocation().PostM::ShowBaseID(func_get_args()[0]);
-  }
-
-
   public static function ShowActions() {
 
     if (!empty(func_get_args()[0])) {
@@ -96,27 +95,8 @@ class PostM extends Model
     // dd($allURLs);
     return $allURLs;
   }
-  public static function ShowIndirectData() {
-
-    function ShowIndirectDataHelper($ShowLocation) {
-      $result = array();
-      $shallowList = scandir($ShowLocation);
-      foreach ($shallowList as $key => $value) {
-        if (!in_array($value,array(".","..")))  {
-          $VPgContItemLoc = $ShowLocation . DIRECTORY_SEPARATOR . $value;
-          if (is_dir($VPgContItemLoc)){
-            $result[$value] = ShowIndirectDataHelper($VPgContItemLoc);
-          } else {
-            $result[$value] = file_get_contents($VPgContItemLoc);
-          }
-        }
-      }
-      return  $result;
-    }
-    return  ShowIndirectDataHelper(PostM::ShowLocation(func_get_args()[0]));
-  }
-
   public static function ShowIndirectSubPost() {
+
     function ShowIndirectSubPostHelper($ShowLocation,$staticdir,$ShowID) {
       $result = array();
       // dd ($ShowLocation);
@@ -145,11 +125,6 @@ class PostM extends Model
       return $result;
     }
 
-    // function x (){
-    //
-    //   echo 123333;
-    // }
-    // echo   x();
 
     $ShowID = PostM::ShowID(func_get_args()[0]);
     $ShowLocation = NetworkM::ShowLocation($ShowID);
@@ -159,6 +134,44 @@ class PostM extends Model
 
 
     return $result;
+  }
+
+
+  public static function ShowBaseID() {
+      $arguments = func_get_args()[0][0];
+
+    return $arguments;
+  }
+  public static function ShowBaseIDPlusBaseLocation() {
+    return NetworkM::ShowBaseLocation().PostM::ShowBaseID(func_get_args()[0]);
+  }
+
+
+  public static function ShowIndirectData() {
+
+    function ShowIndirectDataHelper($ShowLocation) {
+      $result = array();
+      $shallowList = scandir($ShowLocation);
+      foreach ($shallowList as $key => $value) {
+        if (!in_array($value,array(".","..")))  {
+          $DataLocation = $ShowLocation . "/" . $value;
+          if (is_dir($DataLocation)){
+            $result[$value] = ShowIndirectDataHelper($DataLocation);
+          } else {
+            $result[$value] = file_get_contents($DataLocation);
+          }
+        }
+      }
+      return  $result;
+    }
+
+    return  ShowIndirectDataHelper(PostM::ShowLocation(func_get_args()[0]));
+  }
+  public static function ShowRichData(){
+    $stuff = PostM::ShowLocation(func_get_args()[0])."/"."rich.txt";
+    if (file_exists($stuff)) {
+      return  file_get_contents($stuff);;
+    }
   }
 
   public static function upload($arguments, $request) {
@@ -204,17 +217,17 @@ class PostM extends Model
       // dd(array_keys($EPgCont)[0]);
       // dd($EPgCont);
       foreach($EPgCont as $key => $value) {
-        $VPgContItemLoc = $ShowLocation ."/". $key;
+        $DataLocation = $ShowLocation ."/". $key;
         if (!is_string($value)){
           // mkdir($ShowLocation.array_keys($EPgCont)[0]);
-          mkdir($VPgContItemLoc);
+          mkdir($DataLocation);
 
-          StoreHelperStore($VPgContItemLoc, $value);
+          StoreHelperStore($DataLocation, $value);
         } else {
           $content = $value;
 
 
-          file_put_contents($VPgContItemLoc,$value);
+          file_put_contents($DataLocation,$value);
 
 
         }
