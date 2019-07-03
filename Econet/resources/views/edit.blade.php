@@ -13,21 +13,20 @@
 
   {{csrf_field()}}
   <textarea  onkeyup="saveData()" class="" name="contents"  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php
-  $rich = 'rich.txt';
-  if (isset($SubAssetDeepRead[$rich])) {
-    echo $SubAssetDeepRead[$rich];
+
+  if (!empty($ShowRichData )) {
+    echo $ShowRichData ;
   }
   ?></textarea>
   <label>Please Select Zip File</label>
   <input type="file" name="zip_file" />
   <br />
-  <input style="display: none;" type="text"  name="file" value="<?php echo $rich; ?>"  placeholder="Enter title">
 
   <h1>Smart Data</h1>
-
-  <!-- <textarea id="theLord" type="text" name="smart" value="" class=""  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php if (isset($SubAssetDeepRead['smart'])) {
-    ///echo json_encode($SubAssetDeepRead['smart'], JSON_PRETTY_PRINT);
-  }?></textarea> -->
+<?php //dd($ShowSmartData); ?>
+  <textarea id="theLord" type="text" name="smart" value="" class=""  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php if (isset($ShowSmartData)) {
+    echo json_encode($ShowSmartData, JSON_PRETTY_PRINT);
+  }?></textarea>
 
 
 
@@ -44,7 +43,7 @@
 
 
 <?php
-if (!empty($SubAssetDeepRead['smart'])) {
+if (!empty($ShowSmartData)) {
   function list1($smartData){
 
     foreach($smartData as $key => $value2){
@@ -76,7 +75,7 @@ if (!empty($SubAssetDeepRead['smart'])) {
 
   <div class="g-multi-level-dropdownd">
     <ul>
-      <?php list1($SubAssetDeepRead['smart']);?>
+      <?php list1($ShowSmartData);?>
 
     </ul>
   </div>

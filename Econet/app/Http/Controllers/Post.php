@@ -49,36 +49,12 @@ class Post extends Controller
     public function store(Request $request)
     {
 
-
       $arguments = func_get_args();
       array_shift($arguments);
-      if (1==1) {
-        $ShowLocation = PostM::ShowLocation($arguments);
-
-
-        $filename =  $request->get('file');
-        $file =  $ShowLocation."/".$filename;
-        // echo file_get_contents($file);
-
-        $contents =  $request->get('contents');
-        file_put_contents($file,$contents);
-      }
+      PostM::Store($arguments, $request);
 
 
 
-      if (1==1) {
-        $SubAssetDeepRead = PostM::ShowIndirectData($arguments);
-
-        $EPgCont =  json_decode($request->get('smart'), true);
-
-        PostM::Store($ShowLocation, $EPgCont);
-
-
-      }
-      if (null !== $request->file('zip_file')) {
-
-        PostM::upload($arguments, $request);
-      }
 
       $allURLs = PostM::ShowActions($arguments);
       // dd($allURLs['sub_post_edit']);
@@ -98,11 +74,11 @@ class Post extends Controller
       array_shift($arguments);
 
 
-      // $SubPostDeepList = PostM::ShowIndirectSubPost(func_get_args());
+      // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
       // dd($SubPostDeepList);
-      $SubAssetDeepRead = PostM::ShowIndirectData(func_get_args());
+      // $ShowSmartData = PostM::ShowSmartData(func_get_args());
       // $func_get_args =func_get_args();
-      // $VSiteHeader = PostM::ShowIndirectDataHelper(NetworkM::ShowLocation(end($func_get_args)));
+      // $VSiteHeader = PostM::ShowSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
 
 
       $allURLs = PostM::ShowActions(func_get_args());
@@ -111,7 +87,7 @@ class Post extends Controller
        $ShowRichData = PostM::ShowRichData(func_get_args());
 
 
-      return view('view', compact('SubAssetDeepRead', 'allURLs', 'ShowBaseIDPlusBaseLocation', 'ShowRichData'));
+      return view('view', compact('allURLs', 'ShowBaseIDPlusBaseLocation', 'ShowRichData'));
     }
 
 
@@ -128,17 +104,17 @@ class Post extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
-      // $SubPostDeepList = PostM::ShowIndirectSubPost(func_get_args());
+      // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
 
-      $SubAssetDeepRead = PostM::ShowIndirectData(func_get_args());
+      $ShowSmartData = PostM::ShowSmartData(func_get_args());
 
 
       $allURLs = PostM::ShowActions(func_get_args());
 
+      $ShowRichData = PostM::ShowRichData(func_get_args());
 
 
-
-      return view('edit', compact('SubAssetDeepRead', 'allURLs'));
+      return view('edit', compact('ShowSmartData', 'allURLs', 'ShowRichData'));
     }
 
     /**

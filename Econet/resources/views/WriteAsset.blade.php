@@ -26,9 +26,9 @@
 
 <script type="text/javascript">
 <?php
-if (isset($SubAssetDeepRead['smart'])) {
+if (isset($ShowSmartData['smart'])) {
   $ivan3 = array();
-  $ivan3["smart"] = $SubAssetDeepRead['smart'];
+  $ivan3["smart"] = $ShowSmartData['smart'];
   $ivan_json =  json_encode($ivan3);
 } else {
   $ivan_json =  null;

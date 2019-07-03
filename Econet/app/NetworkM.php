@@ -33,7 +33,7 @@ class NetworkM extends Model
           $blackList = array(".","..","smart","rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
-            // $result[$value] = PostM::ShowIndirectSubPostHelper($dataLocation,$staticdir);
+            // $result[$value] = PostM::ShowSubPostHelper($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
             $result[$value]["url"] = route('Post.show', $url);
           } else {
