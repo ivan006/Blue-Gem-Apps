@@ -4,7 +4,6 @@ $nth_degree = array(
   2,
   3,
   4,
-  5,
 
 );
 
@@ -15,51 +14,47 @@ function createArray($nth_degree){
   }
   return $fractal;
 }
-ob_start();
-?>
-
-<g  width="50%" height="50%" style="transform: scaleY(0.5) scaleX(0.5);">
 
 
-<?php
-$fractal1 = ob_get_contents();
-ob_end_clean();
 
 
-ob_start();
-?>
-
- </g>
-
-<?php
-$fractal2 = ob_get_contents();
-ob_end_clean();
-
-ob_start();
-?>
+function overlay_patern1($key){
+  ob_start();
+  ?><g style="transform: scaleY(0.5) scaleX(0.5); rotate(<?php $key ?>0deg);"><?php
+  return ob_get_contents();
+  ob_end_clean();
+}
 
 
-   <rect width="100%" height="100%" />
 
-<?php
-$fractalinner = ob_get_contents();
-ob_end_clean();
 
-function showArray($fractal, $fractalinner, $fractal1, $fractal2){
+function overlay_patern2(){
+  ob_start();
+  ?></g><?php
+  return ob_get_contents();
+  ob_end_clean();
+}
+
+
+
+function shape($key){
+  ob_start();
+  ?><rect width="100%" height="100%" /><?php
+  return ob_get_contents();
+  ob_end_clean();
+}
+
+function showArray($fractal){
 
   foreach($fractal as $key => $value2){
 
-
-
     if (is_array($value2)) {
-
-      echo $fractalinner;
-      echo $fractal1;
-      showArray($value2, $fractalinner, $fractal1, $fractal2);
-      echo $fractal2;
+      // echo $key;
+      return shape($key).overlay_patern1($key).showArray($value2).overlay_patern2();
 
     } else {
-      echo $fractalinner;
+      // echo $key;
+      return overlay_patern1($key).shape($key).overlay_patern2();
     }
 
 
@@ -67,16 +62,19 @@ function showArray($fractal, $fractalinner, $fractal1, $fractal2){
 }
 
 ?>
+<style media="screen">
+  .tr-sc-y-p5 {
+    transform: scaleY(0.5);
+  }
+  .tr-sc-x-p5 {
+    transform: scaleX(0.5);
+  }
+</style>
+<?php
+// echo "<pre>";
+// var_dump(createArray($nth_degree));
+// echo "</pre>";
+  ?>
 <svg width="400" height="110"  fill="rgba(0,0,0,0)" stroke="green" stroke-width="5">
-<?php
-
-echo $fractalinner;
-echo $fractal1;
-
-showArray(createArray($nth_degree),$fractalinner, $fractal1, $fractal2);
-echo $fractal2;
-?>
+  <?php showArray(createArray($nth_degree));?>
 </svg>
-<?php
-
- ?>
