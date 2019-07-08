@@ -1,26 +1,47 @@
 <?php
-$nth_degree = array(
+// $nth_degree = array(
+//   1,
+//   2,
+//   3,
+//   4,
+//
+// );
+
+// $depth  = 5;
+// function createArray($nth_degree){
+//
+//   foreach($nth_degree as $key => $value2){
+//     $fractal[$key ] = $nth_degree;
+//   }
+//   return $fractal;
+// }
+//
+// function createArray2($nth_degree2, $nth_degree){
+//   foreach ($nth_degree2 as $key => $value) {
+//     createArray(createArray($nth_degree));
+//   }
+// }
+// $createArray2 = createArray2(5, $nth_degree);
+
+
+$createArray = array(
   1,
   2,
   3,
   4,
 
 );
+$createArray[0] = $createArray ;
 
-function createArray($nth_degree){
-
-  foreach($nth_degree as $key => $value2){
-    $fractal[$key ] = $nth_degree;
-  }
-  return $fractal;
-}
-
-
+$createArray[0] = array_merge($createArray,$createArray);
+$createArray[0] = array_merge($createArray,$createArray);
+$createArray[0] = array_merge($createArray,$createArray);
+$createArray[0] = array_merge($createArray,$createArray);
 
 
 function overlay_patern1($key){
   ob_start();
-  ?><g style="transform: scaleY(0.5) scaleX(0.5); rotate(<?php $key ?>0deg);"><?php
+  ?><g style="transform: scaleY(0.5) scaleX(0.5) rotate(<?php echo $key ?>0deg);"><?php
   return ob_get_contents();
   ob_end_clean();
 }
@@ -50,31 +71,22 @@ function showArray($fractal){
 
     if (is_array($value2)) {
       // echo $key;
-      return shape($key).overlay_patern1($key).showArray($value2).overlay_patern2();
+      echo shape($key).overlay_patern1($key).showArray($value2).overlay_patern2();
 
     } else {
       // echo $key;
-      return overlay_patern1($key).shape($key).overlay_patern2();
+      echo overlay_patern1($key).shape($key).overlay_patern2();
     }
 
 
   }
 }
 
-?>
-<style media="screen">
-  .tr-sc-y-p5 {
-    transform: scaleY(0.5);
-  }
-  .tr-sc-x-p5 {
-    transform: scaleX(0.5);
-  }
-</style>
-<?php
+
 // echo "<pre>";
 // var_dump(createArray($nth_degree));
 // echo "</pre>";
   ?>
 <svg width="400" height="110"  fill="rgba(0,0,0,0)" stroke="green" stroke-width="5">
-  <?php showArray(createArray($nth_degree));?>
+  <?php showArray($createArray);?>
 </svg>
