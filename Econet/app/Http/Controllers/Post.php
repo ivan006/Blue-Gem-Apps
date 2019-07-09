@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\NetworkM;
 use App\PostM;
 use App\MetadataM;
+use App\RichDataM;
+
+use App\SmartDataItemM;
+use App\SmartDataGroupM;
 
 
 
@@ -76,18 +80,18 @@ class Post extends Controller
 
       // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
       // dd($SubPostDeepList);
-      // $ShowSmartData = PostM::ShowSmartData(func_get_args());
+      // $ShowAllSmartData = PostM::ShowAllSmartData(func_get_args());
       // $func_get_args =func_get_args();
-      // $VSiteHeader = PostM::ShowSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
+      // $VSiteHeader = PostM::ShowAllSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
 
 
       $allURLs = PostM::ShowActions(func_get_args());
 
        $ShowBaseIDPlusBaseLocation = PostM::ShowBaseIDPlusBaseLocation(func_get_args());
-       $ShowRichData = PostM::ShowRichData(func_get_args());
+       $RichDataShow = RichDataM::Show(func_get_args());
 
 
-      return view('view', compact('allURLs', 'ShowBaseIDPlusBaseLocation', 'ShowRichData'));
+      return view('view', compact('allURLs', 'ShowBaseIDPlusBaseLocation', 'RichDataShow'));
     }
 
 
@@ -106,15 +110,15 @@ class Post extends Controller
 
       // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
 
-      $ShowSmartData = PostM::ShowSmartData(func_get_args());
+      $ShowAllSmartData = PostM::ShowAllSmartData(func_get_args());
 
 
       $allURLs = PostM::ShowActions(func_get_args());
 
-      $ShowRichData = PostM::ShowRichData(func_get_args());
+      $RichDataShow = RichDataM::Show(func_get_args());
 
 
-      return view('edit', compact('ShowSmartData', 'allURLs', 'ShowRichData'));
+      return view('edit', compact('ShowAllSmartData', 'allURLs', 'RichDataShow'));
     }
 
     /**

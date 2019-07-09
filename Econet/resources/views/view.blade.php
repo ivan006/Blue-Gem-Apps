@@ -17,8 +17,8 @@ if (file_exists($ShowBaseIDPlusBaseLocation."/header.php")) {
 
   <?php
 
-  if (!empty($ShowRichData )) {
-    echo $ShowRichData ;
+  if (!empty($RichDataShow )) {
+    echo $RichDataShow ;
   }
 
   ?>

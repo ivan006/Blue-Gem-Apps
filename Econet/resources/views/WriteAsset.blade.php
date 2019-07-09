@@ -26,9 +26,9 @@
 
 <script type="text/javascript">
 <?php
-if (isset($ShowSmartData['smart'])) {
+if (isset($ShowAllSmartData['smart'])) {
   $ivan3 = array();
-  $ivan3["smart"] = $ShowSmartData['smart'];
+  $ivan3["smart"] = $ShowAllSmartData['smart'];
   $ivan_json =  json_encode($ivan3);
 } else {
   $ivan_json =  null;

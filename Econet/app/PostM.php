@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\NetworkM;
 use App\PostM;
-use App\SmartDataM;
+use App\SmartDataItemM;
+use App\SmartDataGroupM;
 
 
 
@@ -145,16 +146,18 @@ class PostM extends Model
     return $result;
   }
 
-  public static function ShowSmartData() {
-    if(!function_exists('App\ShowSmartDataHelper')){
-      function ShowSmartDataHelper($ShowLocation) {
+  public static function Show() {
+  }
+  public static function ShowAllSmartData() {
+    if(!function_exists('App\ShowAllSmartDataHelper')){
+      function ShowAllSmartDataHelper($ShowLocation) {
         $result = array();
         $shallowList = scandir($ShowLocation);
         foreach ($shallowList as $key => $value) {
           if (!in_array($value,array(".","..")))  {
             $DataLocation = $ShowLocation . "/" . $value;
             if (is_dir($DataLocation)){
-              $result[$value] = ShowSmartDataHelper($DataLocation);
+              $result[$value] = ShowAllSmartDataHelper($DataLocation);
             } else {
               $result[$value] = file_get_contents($DataLocation);
             }
@@ -166,16 +169,9 @@ class PostM extends Model
     $ShowLocation = PostM::ShowLocation(func_get_args()[0])."/smart";
 
     if (is_dir($ShowLocation)) {
-      return  ShowSmartDataHelper($ShowLocation);
+      return  ShowAllSmartDataHelper($ShowLocation);
     }
   }
-  public static function ShowRichData(){
-    $stuff = PostM::ShowLocation(func_get_args()[0])."/"."rich.txt";
-    if (file_exists($stuff)) {
-      return  file_get_contents($stuff);;
-    }
-  }
-
 
   public static function Store($arguments, $request) {
 
@@ -192,6 +188,7 @@ class PostM extends Model
 
     }
     function StoreSmartDataFromFile($arguments, $request) {
+
 
 
 
@@ -214,61 +211,6 @@ class PostM extends Model
 
     }
 
-    function StoreSmartData($ShowLocation,$EPgCont) {
-      function StoreHelperDestroy($dir) {
-        if (is_dir($dir)) {
-          $objects = scandir($dir);
-          foreach ($objects as $object) {
-            if ($object != "." && $object != "..") {
-              if (is_dir($dir."/".$object))
-              StoreHelperDestroy($dir."/".$object);
-              else
-              unlink($dir."/".$object);
-            }
-          }
-          rmdir($dir);
-        }
-      }
-      function StoreHelperStore($ShowLocation,$EPgCont) {
-        // dd($ShowLocation.array_keys($EPgCont)[0]);
-        // dd(array_keys($EPgCont)[0]);
-        // dd($EPgCont);
-
-        foreach($EPgCont as $key => $value) {
-          $DataLocation = $ShowLocation ."/". $key;
-          if (!is_string($value)){
-            // mkdir($ShowLocation.array_keys($EPgCont)[0]);
-            mkdir($DataLocation);
-
-            StoreHelperStore($DataLocation, $value);
-          } else {
-            $content = $value;
-
-
-            file_put_contents($DataLocation,$value);
-
-
-          }
-        }
-
-      }
-      // $result = array();
-      // $shallowList = scandir($ShowLocation);
-      if (!empty($EPgCont)) {
-
-
-        // dd($ShowLocation);
-        StoreHelperDestroy($ShowLocation."/smart");
-        // mkdir($ShowLocation.array_keys($EPgCont)[0]);
-
-        $EPgCont2['smart'] = $EPgCont;
-        // mkdir($ShowLocation."smart");
-        StoreHelperStore($ShowLocation,$EPgCont2);
-
-      }
-      // return $EPgCont;
-    }
-
 
 
     if (null !== $request->file('zip_file')) {
@@ -277,7 +219,7 @@ class PostM extends Model
 
     $ShowLocation = PostM::ShowLocation($arguments);
     $EPgCont =  json_decode($request->get('smart'), true);
-    StoreSmartData($ShowLocation, $EPgCont);
+    SmartDataGroupM::Store($ShowLocation, $EPgCont);
 
 
     StoreRichData($ShowLocation, $request);
