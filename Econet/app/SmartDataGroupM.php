@@ -64,6 +64,7 @@ class SmartDataGroupM extends Model
       // dd($ShowLocation.array_keys($EPgCont)[0]);
       // dd(array_keys($EPgCont)[0]);
       // dd($EPgCont);
+      // kk
 
       foreach($EPgCont as $key => $value) {
         $DataLocation = $ShowLocation ."/". $key;
