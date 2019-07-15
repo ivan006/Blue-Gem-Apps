@@ -19,7 +19,7 @@ class NetworkM extends Model
 
   public static function ShowBaseLocation() {
     // return "storage/app/public/";
-    return base_path()."storage/app/public/";
+    return base_path()."/storage/app/public/";
   }
   public static function ShowWebDoc() {
     $ShowBaseLocation = NetworkM::ShowBaseLocation();

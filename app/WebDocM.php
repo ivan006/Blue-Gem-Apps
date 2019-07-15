@@ -175,58 +175,46 @@ class WebDocM extends Model
 
   public static function Store($arguments, $request) {
 
-    function StoreRichData($ShowLocation, $request){
-
-
-      $filename =  "rich.txt";
-      $file =  $ShowLocation."/".$filename;
-      // echo file_get_contents($file);
-
-      $contents =  $request->get('contents');
-      file_put_contents($file,$contents);
-
-
-    }
-    function StoreSmartDataFromFile($arguments, $request) {
-
-
-
-
-      $ShowID = WebDocM::ShowID($arguments);
-
-
-      $request->zip_file->storeAs("public/".$ShowID."/smart", $request->zip_file->getClientOriginalName());
-      // $path = "Econet/".NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
-      // $path = NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
-      $path = NetworkM::ShowBaseLocation().$ShowID."/smart"."/".$request->zip_file->getClientOriginalName();
-      // dd($path);
-      // $Path = public_path($ShowID);
-
-
-      $zipper = new \Chumper\Zipper\Zipper;
-      $zipper->make($path)->extractTo(NetworkM::ShowBaseLocation().$ShowID."/smart"."/");
-      $zipper->close();
-      unlink(NetworkM::ShowBaseLocation().$ShowID."/smart"."/".$request->zip_file->getClientOriginalName());
-
-
-    }
-
-
-
-    if (null !== $request->file('zip_file')) {
-      StoreSmartDataFromFile($arguments, $request);
-    }
-
     $ShowLocation = WebDocM::ShowLocation($arguments);
-    $EPgCont =  json_decode($request->get('smart'), true);
-    SmartDataArrayM::Store($ShowLocation, $EPgCont);
+    if (!empty($request->get('RichText')) ) {
+      function StoreSmartDataFromFile($arguments, $request) {
+        $ShowID = WebDocM::ShowID($arguments);
+
+        $request->zip_file->storeAs("public/".$ShowID."/smart", $request->zip_file->getClientOriginalName());
+        // $path = "Econet/".NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
+        // $path = NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
+        $path = NetworkM::ShowBaseLocation().$ShowID."/smart"."/".$request->zip_file->getClientOriginalName();
+        // dd($path);
+        // $Path = public_path($ShowID);
+
+        $zipper = new \Chumper\Zipper\Zipper;
+        $zipper->make($path)->extractTo(NetworkM::ShowBaseLocation().$ShowID."/smart"."/");
+        $zipper->close();
+        unlink(NetworkM::ShowBaseLocation().$ShowID."/smart"."/".$request->zip_file->getClientOriginalName());
+      }
+      if (null !== $request->file('zip_file')) {
+        StoreSmartDataFromFile($arguments, $request);
+      }
+
+      function StoreRichData($ShowLocation, $request){
+
+        $filename =  "rich.txt";
+        $file =  $ShowLocation."/".$filename;
+        // echo file_get_contents($file);
+
+        $contents =  $request->get('contents');
+        file_put_contents($file,$contents);
+
+      }
+
+      StoreRichData($ShowLocation, $request);
+    } else {
+      $SmartDataArray =  json_decode($request->get('smart'), true);
+      SmartDataArrayM::Store($ShowLocation, $SmartDataArray);
 
 
-    StoreRichData($ShowLocation, $request);
+      SmartDataItemM::Store($ShowLocation, $request);
 
-
+    }
   }
-
-
-
 }

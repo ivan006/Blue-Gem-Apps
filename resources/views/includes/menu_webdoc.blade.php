@@ -2,7 +2,6 @@
   Network
   <a href="{{ route('WebDoc.index') }}">Show</a>
   WebDoc
-  <a href="javascript:{}" onclick="document.getElementById('form').submit(); return false;">Store</a>
   <a href="{{ $allURLs['sub_webdoc_create'] }}"><del>Create</del></a>
   <a href="{{ $allURLs['sub_webdoc_read'] }}">Show</a>
   <a href="{{ $allURLs['sub_webdoc_destroy'] }}"><del>Destroy</del></a>

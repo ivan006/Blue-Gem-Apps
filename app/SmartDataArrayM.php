@@ -45,7 +45,7 @@ class SmartDataArrayM extends Model
     return $allURLs;
   }
 
-  public static function Store($ShowLocation,$EPgCont) {
+  public static function Store($ShowLocation,$SmartDataArray) {
     function StoreHelperDestroy($dir) {
       if (is_dir($dir)) {
         $objects = scandir($dir);
@@ -60,16 +60,16 @@ class SmartDataArrayM extends Model
         rmdir($dir);
       }
     }
-    function StoreHelperStore($ShowLocation,$EPgCont) {
-      // dd($ShowLocation.array_keys($EPgCont)[0]);
-      // dd(array_keys($EPgCont)[0]);
-      // dd($EPgCont);
+    function StoreHelperStore($ShowLocation,$SmartDataArray) {
+      // dd($ShowLocation.array_keys($SmartDataArray)[0]);
+      // dd(array_keys($SmartDataArray)[0]);
+      // dd($SmartDataArray);
       // kk
 
-      foreach($EPgCont as $key => $value) {
+      foreach($SmartDataArray as $key => $value) {
         $DataLocation = $ShowLocation ."/". $key;
         if (!is_string($value)){
-          // mkdir($ShowLocation.array_keys($EPgCont)[0]);
+          // mkdir($ShowLocation.array_keys($SmartDataArray)[0]);
           mkdir($DataLocation);
 
           StoreHelperStore($DataLocation, $value);
@@ -86,19 +86,19 @@ class SmartDataArrayM extends Model
     }
     // $result = array();
     // $shallowList = scandir($ShowLocation);
-    if (!empty($EPgCont)) {
+    if (!empty($SmartDataArray)) {
 
 
       // dd($ShowLocation);
       StoreHelperDestroy($ShowLocation."/smart");
-      // mkdir($ShowLocation.array_keys($EPgCont)[0]);
+      // mkdir($ShowLocation.array_keys($SmartDataArray)[0]);
 
-      $EPgCont2['smart'] = $EPgCont;
+      $SmartDataArray2['smart'] = $SmartDataArray;
       // mkdir($ShowLocation."smart");
-      StoreHelperStore($ShowLocation,$EPgCont2);
+      StoreHelperStore($ShowLocation,$SmartDataArray2);
 
     }
-    // return $EPgCont;
+    // return $SmartDataArray;
   }
 
 

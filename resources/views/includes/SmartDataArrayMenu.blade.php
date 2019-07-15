@@ -4,8 +4,11 @@
     <span style="display: none;"><?php echo $SmartDataArrayName ?></span>
 
 
-    <a href="javascript:{}" onclick="document.getElementById('<?php echo 111 ?>').submit(); return false;">Store</a>
-    <a href="http://econet.test/destroy/asset/Company%20XYZ/b"><del>Destroy</del></a>
+    <!-- <button type="submit" name="<?php echo $SmartDataArrayName ?>" value="Store">Store</button>
+    <button type="submit" name="<?php echo $SmartDataArrayName ?>" value="Destroy"><del>Destroy</del></button></del> -->
+
+    <button type="submit" name="Store" value="<?php echo $SmartDataArrayName ?>">Store</button>
+    <button type="submit" name="Destroy" value="<?php echo $SmartDataArrayName ?>"><del>Destroy</del></button></del>
 
   </div>
 <?php } ?>

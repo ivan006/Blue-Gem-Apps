@@ -63,6 +63,7 @@ class WebDoc extends Controller
       $allURLs = WebDocM::ShowActions($arguments);
       // dd($allURLs['sub_webdoc_edit']);
 
+
       return redirect($allURLs['sub_webdoc_edit']);
     }
 

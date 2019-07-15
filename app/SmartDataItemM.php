@@ -45,5 +45,19 @@ class SmartDataItemM extends Model
     // return $allURLs;
   }
 
+  public static function Store($ShowLocation, $request) {
+
+    dd($request);
+    // dd(rawurldecode($request->get('Store')));
+
+    // $thing =rawurlencode("/sddddddddd/1/surname.txt");
+    // $thing =rawurldecode($thing);
+    // $thing =rawurldecode("%2Fsddddddddd%2F1%2Fsurname_txt%2FSmartDataArrayName");
+    // $thing =rawurlencode($request->get('Store')."/SmartDataArrayName");
+    // dd($thing);
+    // dd($request->get($thing));
+  }
+
+
 
 }
