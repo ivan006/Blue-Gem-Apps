@@ -1,4 +1,4 @@
-@include('includes.menu_post')
+@include('includes.menu_webdoc')
 
 
 
@@ -59,7 +59,7 @@
       @endif
     <?php }?>
   <?php }?>
-  <?php ivan($PostList) ?>
+  <?php ivan($WebDocList) ?>
   </div>
 </div>
 

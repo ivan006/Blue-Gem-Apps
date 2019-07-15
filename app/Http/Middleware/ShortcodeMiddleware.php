@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\NetworkM;
-use App\PostM;
+use App\WebDocM;
 use App\SmartDataM;
 
 
@@ -78,7 +78,7 @@ class ShortcodeMiddleware
 
 
 
-              $VPgsLocs = PostM::ShowSubPost($arguments2);
+              $VPgsLocs = WebDocM::ShowSubWebDoc($arguments2);
               // dd($VPgsLocs);
               ob_start();
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Http\Request;
 use App\NetworkM;
-use App\PostM;
+use App\WebDocM;
 use App\SmartDataM;
 
 
@@ -19,25 +19,25 @@ class SmartDataItemM extends Model
     // if (!empty(func_get_args()[0])) {
     //
     //
-    //   $ShowID = PostM::ShowID(func_get_args()[0]);
-    //   $allURLs['sub_post_read'] =   route('Post.show',$ShowID);
-    //   $allURLs['sub_post_edit'] = route('Post.edit',$ShowID);
+    //   $ShowID = WebDocM::ShowID(func_get_args()[0]);
+    //   $allURLs['sub_webdoc_read'] =   route('WebDoc.show',$ShowID);
+    //   $allURLs['sub_webdoc_edit'] = route('WebDoc.edit',$ShowID);
     //
     //
-    //   $allURLs['sub_post_destroy'] = route('Post.destroy',$ShowID);
-    //   $allURLs['sub_post_store'] = route('Post.store',$ShowID);
-    //   $allURLs['sub_post_create'] = route('Post.create');
+    //   $allURLs['sub_webdoc_destroy'] = route('WebDoc.destroy',$ShowID);
+    //   $allURLs['sub_webdoc_store'] = route('WebDoc.store',$ShowID);
+    //   $allURLs['sub_webdoc_create'] = route('WebDoc.create');
     //
     //
     //
-    //   $allURLs['post_create'] = route('Post.create');
-    //   $allURLs['post_index'] = route('Post.index');
+    //   $allURLs['webdoc_create'] = route('WebDoc.create');
+    //   $allURLs['webdoc_index'] = route('WebDoc.index');
     // } else {
-    //   $allURLs['sub_post_read'] =   " ";
-    //   $allURLs['sub_post_edit'] = " ";
+    //   $allURLs['sub_webdoc_read'] =   " ";
+    //   $allURLs['sub_webdoc_edit'] = " ";
     //
-    //   $allURLs['sub_post_destroy'] =  " ";
-    //   $allURLs['sub_post_create'] =  " ";
+    //   $allURLs['sub_webdoc_destroy'] =  " ";
+    //   $allURLs['sub_webdoc_create'] =  " ";
     //
     //
     // }

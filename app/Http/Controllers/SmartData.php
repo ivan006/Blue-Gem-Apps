@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NetworkM;
-use App\PostM;
+use App\WebDocM;
 use App\MetadataM;
 
 
