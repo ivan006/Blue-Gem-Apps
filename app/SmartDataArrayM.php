@@ -11,7 +11,7 @@ use App\SmartDataM;
 
 
 
-class SmartDataGroupM extends Model
+class SmartDataArrayM extends Model
 {
 
   public static function ShowActions() {

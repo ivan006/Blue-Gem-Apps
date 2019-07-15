@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\NetworkM;
 use App\WebDocM;
 use App\SmartDataItemM;
-use App\SmartDataGroupM;
+use App\SmartDataArrayM;
 
 
 
@@ -219,7 +219,7 @@ class WebDocM extends Model
 
     $ShowLocation = WebDocM::ShowLocation($arguments);
     $EPgCont =  json_decode($request->get('smart'), true);
-    SmartDataGroupM::Store($ShowLocation, $EPgCont);
+    SmartDataArrayM::Store($ShowLocation, $EPgCont);
 
 
     StoreRichData($ShowLocation, $request);

@@ -9,7 +9,7 @@ use App\MetadataM;
 use App\RichDataM;
 
 use App\SmartDataItemM;
-use App\SmartDataGroupM;
+use App\SmartDataArrayM;
 
 
 
