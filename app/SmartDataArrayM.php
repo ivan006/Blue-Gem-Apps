@@ -15,7 +15,7 @@ class SmartDataArrayM extends Model
 {
 
   public static function ShowActions() {
-    //
+
     // if (!empty(func_get_args()[0])) {
     //
     //
@@ -41,8 +41,8 @@ class SmartDataArrayM extends Model
     //
     //
     // }
-    //
-    // return $allURLs;
+
+    return $allURLs;
   }
 
   public static function Store($ShowLocation,$EPgCont) {
