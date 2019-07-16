@@ -30,25 +30,69 @@
   <?php //dd($ShowAllSmartData); ?>
   <?php
   if (!empty($ShowAllSmartData)) {
-    function list1($smartData, $SmartDataName){
+    function list1($smartData, $SmartDataLocationChild, $SmartDataLocation){
       foreach($smartData as $key => $value2){
         if (is_array($value2)) {
           ?>
           <li>
-            <?php $SmartDataName = $SmartDataName.'/'.$key  ?>
-            <span><?php echo SmartDataItemMenu(base64_encode($SmartDataName)); ?></span>
-            <input type="text" name="<?php echo base64_encode($SmartDataName.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
+            <?php $SmartDataLocationChild = $SmartDataLocation.'/'.$key  ?>
+            <?php
+            if (1==1) {
+              // code...
+
+              ob_start();
+              ?>
+              <span><?php echo SmartDataArrayMenu($SmartDataLocationChild); ?></span>
+              <input type="text" name="<?php echo $SmartDataLocationChild.'/SmartDataName' ?>" value="<?php echo $key ?>"><br>
+              <?php
+              $string1 = ob_get_contents();
+              ob_end_clean();
+
+              ob_start();
+              ?>
+              <span><?php echo SmartDataArrayMenu(base64_encode($SmartDataLocationChild)); ?></span>
+              <input type="text" name="<?php echo base64_encode($SmartDataLocationChild.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
+              <?php
+              $string2 = ob_get_contents();
+              ob_end_clean();
+
+              // echo $string1;
+              echo $string2;
+            }
+            ?>
             <ul>
-              <?php list1($value2, $SmartDataName); ?>
+              <?php list1($value2, $SmartDataLocationChild, $SmartDataLocationChild); ?>
             </ul>
           </li>
         <?php  } elseif ($key !== "url") {?>
           <li>
-            <?php $SmartDataName = $SmartDataName.'/'.$key  ?>
+            <?php $SmartDataLocationChild = $SmartDataLocation.'/'.$key  ?>
+            <?php
+            if (1==1) {
+              // code...
 
-            <span><?php echo SmartDataArrayMenu(base64_encode($SmartDataName)); ?></span>
-            <input type="text" name="<?php echo base64_encode($SmartDataName.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
-            <textarea name="<?php echo base64_encode($SmartDataName.'/SmartDataContent') ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
+              ob_start();
+              ?>
+              <span><?php echo SmartDataItemMenu($SmartDataLocationChild); ?></span>
+              <input type="text" name="<?php echo $SmartDataLocationChild.'/SmartDataName' ?>" value="<?php echo $key ?>"><br>
+              <textarea name="<?php echo $SmartDataLocationChild.'/SmartDataContent' ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
+              <?php
+              $string1 = ob_get_contents();
+              ob_end_clean();
+
+              ob_start();
+              ?>
+              <span><?php echo SmartDataItemMenu(base64_encode($SmartDataLocationChild)); ?></span>
+              <input type="text" name="<?php echo base64_encode($SmartDataLocationChild.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
+              <textarea name="<?php echo base64_encode($SmartDataLocationChild.'/SmartDataContent') ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
+              <?php
+              $string2 = ob_get_contents();
+              ob_end_clean();
+
+              // echo $string1;
+              echo $string2;
+            }
+            ?>
           </li>
           <?php
         }
@@ -57,14 +101,14 @@
     ?>
     <div class="g-multi-level-dropdownd">
       <ul>
-        <?php list1($ShowAllSmartData, null);?>
+        <?php list1($ShowAllSmartData, null, null);?>
       </ul>
     </div>
     <?php
   }
   ?>
   <textarea id="theLord" type="text" name="smart" value="" class=""  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php if (isset($ShowAllSmartData)) { echo json_encode($ShowAllSmartData, JSON_PRETTY_PRINT); }?></textarea>
-
+  <input type="submit" name="SmartDataArray" value="Store"><br>
 </form>
 
 <br>

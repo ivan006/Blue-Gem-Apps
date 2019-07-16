@@ -7,13 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\NetworkM;
 use App\WebDocM;
-use App\SmartDataM;
+use App\SmartDataItemM;
+use App\SmartDataArrayM;
 
 
 
 class SmartDataArrayM extends Model
 {
 
+
+  public static function ShowBaseLocation() {
+    return "smart";
+  }
   public static function ShowActions() {
 
     // if (!empty(func_get_args()[0])) {
@@ -90,11 +95,11 @@ class SmartDataArrayM extends Model
 
 
       // dd($ShowLocation);
-      StoreHelperDestroy($ShowLocation."/smart");
+      StoreHelperDestroy($ShowLocation."/".SmartDataArrayM::ShowBaseLocation());
       // mkdir($ShowLocation.array_keys($SmartDataArray)[0]);
 
       $SmartDataArray2['smart'] = $SmartDataArray;
-      // mkdir($ShowLocation."smart");
+      // mkdir($ShowLocation.SmartDataArrayM::ShowBaseLocation());
       StoreHelperStore($ShowLocation,$SmartDataArray2);
 
     }

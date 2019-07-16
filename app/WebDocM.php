@@ -116,9 +116,9 @@ class WebDocM extends Model
         foreach ($dataNameList as $key => $value) {
           if (!in_array($value,array(".","..")))  {
             $dataLocation = $ShowLocation . "/" . $value;
-            if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
+            if (is_dir($dataLocation) and basename($dataLocation) !== SmartDataArrayM::ShowBaseLocation()){
               $subDataNameList = scandir($dataLocation);
-              $blackList = array(".","..","smart","rich.txt");
+              $blackList = array(".","..",SmartDataArrayM::ShowBaseLocation(),"rich.txt");
               $whiteList = array_diff_key($subDataNameList,$blackList);
               if (!empty($whiteList)) {
                 $result[$value] = ShowSubWebDocHelper($dataLocation,$staticdir,$ShowID);
@@ -166,7 +166,7 @@ class WebDocM extends Model
         return  $result;
       }
     }
-    $ShowLocation = WebDocM::ShowLocation(func_get_args()[0])."/smart";
+    $ShowLocation = WebDocM::ShowLocation(func_get_args()[0])."/".SmartDataArrayM::ShowBaseLocation();
 
     if (is_dir($ShowLocation)) {
       return  ShowAllSmartDataHelper($ShowLocation);
@@ -180,17 +180,17 @@ class WebDocM extends Model
       function StoreSmartDataFromFile($arguments, $request) {
         $ShowID = WebDocM::ShowID($arguments);
 
-        $request->zip_file->storeAs("public/".$ShowID."/smart", $request->zip_file->getClientOriginalName());
+        $request->zip_file->storeAs("public/".$ShowID."/".SmartDataArrayM::ShowBaseLocation(), $request->zip_file->getClientOriginalName());
         // $path = "Econet/".NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
         // $path = NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
-        $path = NetworkM::ShowBaseLocation().$ShowID."/smart"."/".$request->zip_file->getClientOriginalName();
+        $path = NetworkM::ShowBaseLocation().$ShowID."/".SmartDataArrayM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName();
         // dd($path);
         // $Path = public_path($ShowID);
 
         $zipper = new \Chumper\Zipper\Zipper;
-        $zipper->make($path)->extractTo(NetworkM::ShowBaseLocation().$ShowID."/smart"."/");
+        $zipper->make($path)->extractTo(NetworkM::ShowBaseLocation().$ShowID."/".SmartDataArrayM::ShowBaseLocation()."/");
         $zipper->close();
-        unlink(NetworkM::ShowBaseLocation().$ShowID."/smart"."/".$request->zip_file->getClientOriginalName());
+        unlink(NetworkM::ShowBaseLocation().$ShowID."/".SmartDataArrayM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName());
       }
       if (null !== $request->file('zip_file')) {
         StoreSmartDataFromFile($arguments, $request);
@@ -208,12 +208,14 @@ class WebDocM extends Model
       }
 
       StoreRichData($ShowLocation, $request);
-    } else {
+    } elseif (!empty($request->get('SmartDataArray')) ) {
+      // code...
       $SmartDataArray =  json_decode($request->get('smart'), true);
       SmartDataArrayM::Store($ShowLocation, $SmartDataArray);
-
-
+    } else {
       SmartDataItemM::Store($ShowLocation, $request);
+
+
 
     }
   }

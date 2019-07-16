@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use App\NetworkM;
 use App\WebDocM;
-use App\SmartDataM;
+use App\SmartDataItemM;
+use App\SmartDataArrayM;
 
 
 class ShortcodeMiddleware

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\WebDocM;
 use App\SubWebDocM;
-use App\SmartDataM;
+use App\SmartDataItemM;
+use App\SmartDataArrayM;
 
 
 
@@ -29,9 +30,9 @@ class NetworkM extends Model
     foreach ($dataNameList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
         $dataLocation = $ShowBaseLocation . "/" . $value;
-        if (is_dir($dataLocation) and basename($dataLocation) !== "smart"){
+        if (is_dir($dataLocation) and basename($dataLocation) !== SmartDataArrayM::ShowBaseLocation()){
           $subDataNameList = scandir($dataLocation);
-          $blackList = array(".","..","smart","rich.txt");
+          $blackList = array(".","..",SmartDataArrayM::ShowBaseLocation(),"rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
             // $result[$value] = WebDocM::ShowSubWebDocHelper($dataLocation,$staticdir);

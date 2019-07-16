@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\NetworkM;
 use App\WebDocM;
-use App\SmartDataM;
+use App\SmartDataItemM;
+use App\SmartDataArrayM;
 
 
 
@@ -61,11 +62,16 @@ class SmartDataItemM extends Model
     $SmartDataNewContent = SmartDataAttribute("/SmartDataContent",$request);
     // dd($SmartDataNewContent);
 
-    $SmartDataLocation =$ShowLocation.$SmartDataRelativeLocation;
-    $SmartDataLocationNew = $ShowLocation.$SmartDataRelativeLocationNew;
-    // dd($thing);
+    $SmartDataBaseLocation = $ShowLocation."/".SmartDataArrayM::ShowBaseLocation();
+    $SmartDataLocation = $SmartDataBaseLocation.$SmartDataRelativeLocation;
+    $SmartDataLocationNew = $SmartDataBaseLocation.$SmartDataRelativeLocationNew;
+    // dd($SmartDataLocationNew);
+    // if (!is_dir('upload/promotions/' . $month)) {
+    //   // dir doesn't exist, make it
+    //   mkdir('upload/promotions/' . $month);
+    // }
     unlink($SmartDataLocation);
-    file_put_contents($SmartDataRelativeLocationNew,$SmartDataNewContent);
+    file_put_contents($SmartDataLocationNew,$SmartDataNewContent);
 
   }
 
