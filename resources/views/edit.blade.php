@@ -30,24 +30,25 @@
   <?php //dd($ShowAllSmartData); ?>
   <?php
   if (!empty($ShowAllSmartData)) {
-    function list1($smartData, $SmartDataArrayName){
+    function list1($smartData, $SmartDataName){
       foreach($smartData as $key => $value2){
         if (is_array($value2)) {
           ?>
           <li>
-            <?php $SmartDataArrayName = $SmartDataArrayName.'/'.$key  ?>
-            <?php echo SmartDataItemMenu($SmartDataArrayName); ?>
-            <input type="text" name="<?php echo $SmartDataArrayName.'/SmartDataArrayName' ?>" value="<?php echo $key ?>"><br>
+            <?php $SmartDataName = $SmartDataName.'/'.$key  ?>
+            <span><?php echo SmartDataItemMenu(base64_encode($SmartDataName)); ?></span>
+            <input type="text" name="<?php echo base64_encode($SmartDataName.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
             <ul>
-              <?php list1($value2, $SmartDataArrayName); ?>
+              <?php list1($value2, $SmartDataName); ?>
             </ul>
           </li>
         <?php  } elseif ($key !== "url") {?>
           <li>
-            <?php $SmartDataArrayName = $SmartDataArrayName.'/'.$key  ?>
-            <?php echo SmartDataArrayMenu($SmartDataArrayName); ?>
-            <input type="text" name="<?php echo $SmartDataArrayName.'/SmartDataArrayName' ?>" value="<?php echo $key ?>"><br>
-            <textarea name="<?php echo $SmartDataArrayName.'/SmartDataArrayContent' ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
+            <?php $SmartDataName = $SmartDataName.'/'.$key  ?>
+
+            <span><?php echo SmartDataArrayMenu(base64_encode($SmartDataName)); ?></span>
+            <input type="text" name="<?php echo base64_encode($SmartDataName.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
+            <textarea name="<?php echo base64_encode($SmartDataName.'/SmartDataContent') ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
           </li>
           <?php
         }

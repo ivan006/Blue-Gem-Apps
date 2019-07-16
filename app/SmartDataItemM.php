@@ -47,15 +47,26 @@ class SmartDataItemM extends Model
 
   public static function Store($ShowLocation, $request) {
 
-    dd($request);
-    // dd(rawurldecode($request->get('Store')));
+    function SmartDataAttribute($AttributeTypeCode, $request){
+      $SmartDataRelativeLocationEncoded = $request->get('Store');
+      $SmartDataAttributeFieldDecoded = base64_decode($SmartDataRelativeLocationEncoded).$AttributeTypeCode;
+      $SmartDataAttributeField = base64_encode($SmartDataAttributeFieldDecoded);
+      return $SmartDataAttributeValue = $request->get($SmartDataAttributeField);
+    }
 
-    // $thing =rawurlencode("/sddddddddd/1/surname.txt");
-    // $thing =rawurldecode($thing);
-    // $thing =rawurldecode("%2Fsddddddddd%2F1%2Fsurname_txt%2FSmartDataArrayName");
-    // $thing =rawurlencode($request->get('Store')."/SmartDataArrayName");
+    $SmartDataRelativeLocation = base64_decode($request->get('Store'));
+    // dd($SmartDataRelativeLocation);
+    $SmartDataRelativeLocationNew = SmartDataAttribute("/SmartDataName",$request);
+    // dd($SmartDataRelativeLocationNew);
+    $SmartDataNewContent = SmartDataAttribute("/SmartDataContent",$request);
+    // dd($SmartDataNewContent);
+
+    $SmartDataLocation =$ShowLocation.$SmartDataRelativeLocation;
+    $SmartDataLocationNew = $ShowLocation.$SmartDataRelativeLocationNew;
     // dd($thing);
-    // dd($request->get($thing));
+    unlink($SmartDataLocation);
+    file_put_contents($SmartDataRelativeLocationNew,$SmartDataNewContent);
+
   }
 
 

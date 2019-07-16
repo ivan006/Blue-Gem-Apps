@@ -67,17 +67,17 @@ class SmartDataArrayM extends Model
       // kk
 
       foreach($SmartDataArray as $key => $value) {
-        $DataLocation = $ShowLocation ."/". $key;
+        $SmartDataArrayLocation = $ShowLocation ."/". $key;
         if (!is_string($value)){
           // mkdir($ShowLocation.array_keys($SmartDataArray)[0]);
-          mkdir($DataLocation);
+          mkdir($SmartDataArrayLocation);
 
-          StoreHelperStore($DataLocation, $value);
+          StoreHelperStore($SmartDataArrayLocation, $value);
         } else {
           $content = $value;
 
 
-          file_put_contents($DataLocation,$value);
+          file_put_contents($SmartDataArrayLocation,$value);
 
 
         }
