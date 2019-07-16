@@ -14,7 +14,7 @@
   <!-- surname 1: [r]Education/Destiny Code/smart/surname.txt[/r]<br>  surname 2: [r]Education/Graft Your Garden/smart/surname.txt[/r]<br>      -->
 
   {{csrf_field()}}
-  <textarea  onkeyup="saveData()" class="" name="contents"  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 200px;"><?php
+  <textarea  onkeyup="saveData()" class="" name="contents"  style="background-color: rgb(200,200,200); padding: 1em; width: 100%; height: 100px;"><?php
   if (!empty($RichDataShow )) {
     echo $RichDataShow ;
   }
@@ -30,28 +30,30 @@
   <?php //dd($ShowAllSmartData); ?>
   <?php
   if (!empty($ShowAllSmartData)) {
-    function list1($smartData, $SmartDataLocationChild, $SmartDataLocation){
+    function list1($smartData, $SmartDataLocation, $SmartDataLocationParent){
       foreach($smartData as $key => $value2){
         if (is_array($value2)) {
           ?>
           <li>
-            <?php $SmartDataLocationChild = $SmartDataLocation.'/'.$key  ?>
+            <?php $SmartDataLocation = $SmartDataLocationParent.'/'.$key  ?>
             <?php
             if (1==1) {
               // code...
 
               ob_start();
               ?>
-              <span><?php echo SmartDataArrayMenu($SmartDataLocationChild); ?></span>
-              <input type="text" name="<?php echo $SmartDataLocationChild.'/SmartDataName' ?>" value="<?php echo $key ?>"><br>
+              <span><?php echo SmartDataArrayMenu($SmartDataLocation); ?></span>
+              <input type="text" name="<?php echo $SmartDataLocation.'/SmartDataName' ?>" value="<?php echo $key ?>"><br>
+              <input type="text" style="display:none;" name="<?php echo $SmartDataLocation.'/SmartDataLocationParent' ?>" value="<?php echo $SmartDataLocationParent ?>"><br>
               <?php
               $string1 = ob_get_contents();
               ob_end_clean();
 
               ob_start();
               ?>
-              <span><?php echo SmartDataArrayMenu(base64_encode($SmartDataLocationChild)); ?></span>
-              <input type="text" name="<?php echo base64_encode($SmartDataLocationChild.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
+              <span><?php echo SmartDataArrayMenu(base64_encode($SmartDataLocation)); ?></span>
+              <input type="text" name="<?php echo base64_encode($SmartDataLocation.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
+              <input type="text" style="display:none;" name="<?php echo base64_encode($SmartDataLocation.'/SmartDataLocationParent') ?>" value="<?php echo $SmartDataLocationParent ?>"><br>
               <?php
               $string2 = ob_get_contents();
               ob_end_clean();
@@ -61,30 +63,32 @@
             }
             ?>
             <ul>
-              <?php list1($value2, $SmartDataLocationChild, $SmartDataLocationChild); ?>
+              <?php list1($value2, $SmartDataLocation, $SmartDataLocation); ?>
             </ul>
           </li>
         <?php  } elseif ($key !== "url") {?>
           <li>
-            <?php $SmartDataLocationChild = $SmartDataLocation.'/'.$key  ?>
+            <?php $SmartDataLocation = $SmartDataLocationParent.'/'.$key  ?>
             <?php
             if (1==1) {
               // code...
 
               ob_start();
               ?>
-              <span><?php echo SmartDataItemMenu($SmartDataLocationChild); ?></span>
-              <input type="text" name="<?php echo $SmartDataLocationChild.'/SmartDataName' ?>" value="<?php echo $key ?>"><br>
-              <textarea name="<?php echo $SmartDataLocationChild.'/SmartDataContent' ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
+              <span><?php echo SmartDataItemMenu($SmartDataLocation); ?></span>
+              <input type="text" name="<?php echo $SmartDataLocation.'/SmartDataName' ?>" value="<?php echo $key ?>"><br>
+              <input type="text" style="display:none;" name="<?php echo $SmartDataLocation.'/SmartDataLocation' ?>" value="<?php echo $SmartDataLocationParent ?>"><br>
+              <textarea name="<?php echo $SmartDataLocation.'/SmartDataContent' ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
               <?php
               $string1 = ob_get_contents();
               ob_end_clean();
 
               ob_start();
               ?>
-              <span><?php echo SmartDataItemMenu(base64_encode($SmartDataLocationChild)); ?></span>
-              <input type="text" name="<?php echo base64_encode($SmartDataLocationChild.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
-              <textarea name="<?php echo base64_encode($SmartDataLocationChild.'/SmartDataContent') ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
+              <span><?php echo SmartDataItemMenu(base64_encode($SmartDataLocation)); ?></span>
+              <input type="text" name="<?php echo base64_encode($SmartDataLocation.'/SmartDataName') ?>" value="<?php echo $key ?>"><br>
+              <input type="text" style="display:none;" name="<?php echo base64_encode($SmartDataLocation.'/SmartDataLocation') ?>" value="<?php echo $SmartDataLocationParent ?>"><br>
+              <textarea name="<?php echo base64_encode($SmartDataLocation.'/SmartDataContent') ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
               <?php
               $string2 = ob_get_contents();
               ob_end_clean();

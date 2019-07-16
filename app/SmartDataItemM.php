@@ -56,22 +56,22 @@ class SmartDataItemM extends Model
     }
 
     $SmartDataRelativeLocation = base64_decode($request->get('Store'));
-    // dd($SmartDataRelativeLocation);
     $SmartDataRelativeLocationNew = SmartDataAttribute("/SmartDataName",$request);
-    // dd($SmartDataRelativeLocationNew);
     $SmartDataNewContent = SmartDataAttribute("/SmartDataContent",$request);
-    // dd($SmartDataNewContent);
+    $SmartDataLocationParent = SmartDataAttribute("/SmartDataLocation",$request);
 
     $SmartDataBaseLocation = $ShowLocation."/".SmartDataArrayM::ShowBaseLocation();
     $SmartDataLocation = $SmartDataBaseLocation.$SmartDataRelativeLocation;
-    $SmartDataLocationNew = $SmartDataBaseLocation.$SmartDataRelativeLocationNew;
+    $SmartDataLocationNew = $SmartDataBaseLocation.$SmartDataLocationParent."/".$SmartDataRelativeLocationNew;
+    // dd($SmartDataLocationNew);
+
     // dd($SmartDataLocationNew);
     // if (!is_dir('upload/promotions/' . $month)) {
     //   // dir doesn't exist, make it
     //   mkdir('upload/promotions/' . $month);
     // }
     unlink($SmartDataLocation);
-    file_put_contents($SmartDataLocation,$SmartDataLocationNew);
+    file_put_contents($SmartDataLocationNew,$SmartDataNewContent);
     // file_put_contents($SmartDataLocationNew,$SmartDataNewContent);
 
   }
