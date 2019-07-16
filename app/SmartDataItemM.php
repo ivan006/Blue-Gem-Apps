@@ -71,7 +71,8 @@ class SmartDataItemM extends Model
     //   mkdir('upload/promotions/' . $month);
     // }
     unlink($SmartDataLocation);
-    file_put_contents($SmartDataLocationNew,$SmartDataNewContent);
+    file_put_contents($SmartDataLocation,$SmartDataLocationNew);
+    // file_put_contents($SmartDataLocationNew,$SmartDataNewContent);
 
   }
 
