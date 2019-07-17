@@ -81,9 +81,9 @@ class Post extends Controller
 
       // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
       // dd($SubPostDeepList);
-      // $ShowAllSmartData = PostM::ShowAllSmartData(func_get_args());
+      // $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData(func_get_args());
       // $func_get_args =func_get_args();
-      // $VSiteHeader = PostM::ShowAllSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
+      // $VSiteHeader = PostM::ShowAllDeepSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
 
 
       $allURLs = PostM::ShowActions(func_get_args());
@@ -111,7 +111,8 @@ class Post extends Controller
 
       // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
 
-      $ShowAllSmartData = PostM::ShowAllSmartData(func_get_args());
+      $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData(func_get_args());
+      $ShowAllShallowSmartData = PostM::ShowAllShallowSmartData(func_get_args());
 
 
       $allURLs = PostM::ShowActions(func_get_args());
@@ -119,7 +120,7 @@ class Post extends Controller
       $RichDataShow = RichDataM::Show(func_get_args());
 
 
-      return view('edit', compact('ShowAllSmartData', 'allURLs', 'RichDataShow'));
+      return view('edit', compact('ShowAllDeepSmartData', 'allURLs', 'RichDataShow', 'ShowAllShallowSmartData'));
     }
 
     /**

@@ -148,16 +148,16 @@ class PostM extends Model
 
   public static function Show() {
   }
-  public static function ShowAllSmartData() {
-    if(!function_exists('App\ShowAllSmartDataHelper')){
-      function ShowAllSmartDataHelper($ShowLocation) {
+  public static function ShowAllDeepSmartData() {
+    if(!function_exists('App\ShowAllDeepSmartDataHelper')){
+      function ShowAllDeepSmartDataHelper($ShowLocation) {
         $result = array();
         $shallowList = scandir($ShowLocation);
         foreach ($shallowList as $key => $value) {
           if (!in_array($value,array(".","..")))  {
             $DataLocation = $ShowLocation . "/" . $value;
             if (is_dir($DataLocation)){
-              $result[$value] = ShowAllSmartDataHelper($DataLocation);
+              $result[$value] = ShowAllDeepSmartDataHelper($DataLocation);
             } else {
               $result[$value] = file_get_contents($DataLocation);
             }
@@ -169,8 +169,25 @@ class PostM extends Model
     $ShowLocation = PostM::ShowLocation(func_get_args()[0])."/".SmartDataArrayM::ShowBaseLocation();
 
     if (is_dir($ShowLocation)) {
-      return  ShowAllSmartDataHelper($ShowLocation);
+      return  ShowAllDeepSmartDataHelper($ShowLocation);
     }
+  }
+  public static function ShowAllShallowSmartData() {
+
+    // if (is_dir($ShowLocation)) {
+
+      $result = array();
+      $ShowLocation = PostM::ShowLocation(func_get_args()[0])."/";
+      $shallowList = scandir($ShowLocation);
+      foreach ($shallowList as $key => $value) {
+        $DataLocation = $ShowLocation . "/" . $value;
+        if (!in_array($value,array(".","..", "rich.txt") ) &&   !is_dir($DataLocation))  {
+          $result[$value] = file_get_contents($DataLocation);
+        }
+      }
+      return  $result;
+
+    // }
   }
 
   public static function Store($arguments, $request) {

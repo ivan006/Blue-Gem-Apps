@@ -1,4 +1,4 @@
-<?php function SmartDataItemMenu($SmartDataArrayName){ ?>
+<?php function DeepSmartDataItemMenu($SmartDataArrayName){ ?>
   <div class="" style="  z-index: 1;position: relative;">
     Smart Data Item
 

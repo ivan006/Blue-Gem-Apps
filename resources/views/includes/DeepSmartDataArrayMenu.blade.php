@@ -1,4 +1,4 @@
-<?php function SmartDataArrayMenu($SmartDataArrayName){ ?>
+<?php function DeepSmartDataArrayMenu($SmartDataArrayName){ ?>
   <div class="" style="  z-index: 1;position: relative;">
     Smart Data Array
     <span style="display: none;"><?php echo $SmartDataArrayName ?></span>
