@@ -113,14 +113,22 @@ class Post extends Controller
 
       $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData(func_get_args());
       $ShowAllShallowSmartData = PostM::ShowAllShallowSmartData(func_get_args());
-
+      $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
+      $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
 
       $allURLs = PostM::ShowActions(func_get_args());
 
       $RichDataShow = RichDataM::Show(func_get_args());
 
 
-      return view('edit', compact('ShowAllDeepSmartData', 'allURLs', 'RichDataShow', 'ShowAllShallowSmartData'));
+      return view('edit', compact(
+        'ShowAllDeepSmartData',
+        'allURLs',
+        'RichDataShow',
+        'ShowAllShallowSmartData', 
+        'SmartDataItemM_ShowActions',
+        'SmartDataItemM_ShowAttributeTypes'
+      ));
     }
 
     /**

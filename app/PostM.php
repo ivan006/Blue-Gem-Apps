@@ -191,9 +191,9 @@ class PostM extends Model
   }
 
   public static function Store($arguments, $request) {
-
+    $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
     $ShowLocation = PostM::ShowLocation($arguments);
-    if (!empty($request->get('RichText')) ) {
+    if (!empty($request->get($SmartDataItemM_ShowActions['RichDataStore'])) ) {
       function StoreSmartDataFromFile($arguments, $request) {
         $ShowID = PostM::ShowID($arguments);
 
@@ -225,11 +225,13 @@ class PostM extends Model
       }
 
       StoreRichData($ShowLocation, $request);
-    } elseif (!empty($request->get('SmartDataArray')) ) {
+    } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStoreFromSingleField'])) ) {
       // code...
       $SmartDataArray =  json_decode($request->get('smart'), true);
-      SmartDataArrayM::Store($ShowLocation, $SmartDataArray);
-    } else {
+      SmartDataArrayM::StoreFromSingleField($ShowLocation, $SmartDataArray);
+    } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']))) {
+      SmartDataArrayM::Store();
+    } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataItemStore']))) {
       SmartDataItemM::Store($ShowLocation, $request);
 
 
