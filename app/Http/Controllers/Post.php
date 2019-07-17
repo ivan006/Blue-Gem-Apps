@@ -81,7 +81,7 @@ class Post extends Controller
 
       // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
       // dd($SubPostDeepList);
-      // $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData(func_get_args());
+      // $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData(func_get_args()[0]);
       // $func_get_args =func_get_args();
       // $VSiteHeader = PostM::ShowAllDeepSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
 
@@ -110,8 +110,11 @@ class Post extends Controller
       array_shift($arguments);
 
       // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
-
-      $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData(func_get_args());
+      // dd(func_get_args()[0]);
+      $ShowID = PostM::ShowID(func_get_args());
+      $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData($ShowID);
+      // $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData("hey - Copy/smart/smartdataarray");
+      // dd ($ShowAllDeepSmartData);
       $ShowAllShallowSmartData = PostM::ShowAllShallowSmartData(func_get_args());
       $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
       $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
@@ -125,7 +128,7 @@ class Post extends Controller
         'ShowAllDeepSmartData',
         'allURLs',
         'RichDataShow',
-        'ShowAllShallowSmartData', 
+        'ShowAllShallowSmartData',
         'SmartDataItemM_ShowActions',
         'SmartDataItemM_ShowAttributeTypes'
       ));

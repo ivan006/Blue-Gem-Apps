@@ -39,17 +39,18 @@ class PostM extends Model
 
   }
   // needed to make  link in subPosts list and to use with "storeAs" function end
-  public static function ShowLocation() {
+  public static function ShowLocation($ShowID) {
 
     // dd(func_get_args()[0]);
     // echo NetworkM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
 
-    $arguments = func_get_args()[0];
+
+
     // array_shift($arguments);
     // var_dump($arguments);
-    if (!empty($arguments)) {
+    if (!empty($ShowID)) {
 
-      return  NetworkM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
+      return  NetworkM::ShowBaseLocation().$ShowID;
     } else {
       // return  NetworkM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0]);
       return "now what";
@@ -148,7 +149,7 @@ class PostM extends Model
 
   public static function Show() {
   }
-  public static function ShowAllDeepSmartData() {
+  public static function ShowAllDeepSmartData($ShowID) {
     if(!function_exists('App\ShowAllDeepSmartDataHelper')){
       function ShowAllDeepSmartDataHelper($ShowLocation) {
         $result = array();
@@ -166,8 +167,9 @@ class PostM extends Model
         return  $result;
       }
     }
-    $ShowLocation = PostM::ShowLocation(func_get_args()[0])."/".SmartDataArrayM::ShowBaseLocation();
 
+    $ShowLocation = PostM::ShowLocation($ShowID)."/".SmartDataArrayM::ShowBaseLocation();
+    // dd($ShowLocation);
     if (is_dir($ShowLocation)) {
       return  ShowAllDeepSmartDataHelper($ShowLocation);
     }
@@ -177,11 +179,14 @@ class PostM extends Model
     // if (is_dir($ShowLocation)) {
 
       $result = array();
-      $ShowLocation = PostM::ShowLocation(func_get_args()[0])."/";
+      $ShowID = PostM::ShowID(func_get_args()[0]);
+      $ShowLocation = PostM::ShowLocation($ShowID)."/";
       $shallowList = scandir($ShowLocation);
+      // dd($shallowList);
       foreach ($shallowList as $key => $value) {
-        $DataLocation = $ShowLocation . "/" . $value;
+        $DataLocation = $ShowLocation . $value;
         if (!in_array($value,array(".","..", "rich.txt") ) &&   !is_dir($DataLocation))  {
+          // dd($DataLocation);
           $result[$value] = file_get_contents($DataLocation);
         }
       }
@@ -192,7 +197,9 @@ class PostM extends Model
 
   public static function Store($arguments, $request) {
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
-    $ShowLocation = PostM::ShowLocation($arguments);
+    $ShowID = PostM::ShowID($arguments);
+
+    $ShowLocation = PostM::ShowLocation($ShowID);
     if (!empty($request->get($SmartDataItemM_ShowActions['RichDataStore'])) ) {
       function StoreSmartDataFromFile($arguments, $request) {
         $ShowID = PostM::ShowID($arguments);
@@ -230,7 +237,7 @@ class PostM extends Model
       $SmartDataArray =  json_decode($request->get('smart'), true);
       SmartDataArrayM::StoreFromSingleField($ShowLocation, $SmartDataArray);
     } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']))) {
-      SmartDataArrayM::Store();
+      SmartDataArrayM::Store($ShowLocation, $request, $ShowID);
     } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataItemStore']))) {
       SmartDataItemM::Store($ShowLocation, $request);
 

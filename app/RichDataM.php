@@ -16,7 +16,8 @@ class RichDataM extends Model
 {
 
   public static function Show(){
-    $stuff = PostM::ShowLocation(func_get_args()[0])."/"."rich.txt";
+    $ShowID = PostM::ShowID(func_get_args()[0]);
+    $stuff = PostM::ShowLocation($ShowID)."/"."rich.txt";
     if (file_exists($stuff)) {
       return  file_get_contents($stuff);;
     }

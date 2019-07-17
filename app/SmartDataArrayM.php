@@ -49,9 +49,49 @@ class SmartDataArrayM extends Model
 
     return $allURLs;
   }
+  public static function Show($ShowDataID, $ShowID) {
+    if(!function_exists('App\ShowAllDeepSmartDataHelper')){
+      function ShowHelper($ShowLocation) {
+        $result = array();
+        $shallowList = scandir($ShowLocation);
+        foreach ($shallowList as $key => $value) {
+          if (!in_array($value,array(".","..")))  {
+            $DataLocation = $ShowLocation . "/" . $value;
+            if (is_dir($DataLocation)){
+              $result[$value] = ShowAllDeepSmartDataHelper($DataLocation);
+            } else {
+              $result[$value] = file_get_contents($DataLocation);
+            }
+          }
+        }
+        return  $result;
+      }
+    }
 
-  public static function Store() {
-    dd(1111122);
+    $ShowLocation = PostM::ShowLocation($ShowID)."/".$ShowDataID;
+    // dd($ShowLocation);
+    if (is_dir($ShowLocation)) {
+      return  ShowHelper($ShowLocation);
+    }
+  }
+
+  public static function Store($ShowLocation, $request, $ShowID) {
+
+    // dd($ShowLocation);
+    $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
+    $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']));
+    // dd($request);
+
+
+    $SmartDataBaseLocation = SmartDataArrayM::ShowBaseLocation();
+    // $ShowDataID = $ShowID."/".$SmartDataBaseLocation.$SmartDataRelativeLocation;
+    $ShowDataID = $SmartDataBaseLocation.$SmartDataRelativeLocation;
+    // dd($ShowDataID);
+
+
+    $ShowAllDeepSmartData = SmartDataArrayM::Show($ShowDataID, $ShowID);
+    dd($ShowAllDeepSmartData);
+
     // function StoreHelperDestroy($dir) {
     //   if (is_dir($dir)) {
     //     $objects = scandir($dir);
