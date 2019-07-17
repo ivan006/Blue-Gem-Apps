@@ -5,8 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Http\Request;
-use App\WebDocM;
-use App\SubWebDocM;
+use App\PostM;
+use App\SubPostM;
 use App\SmartDataItemM;
 use App\SmartDataArrayM;
 
@@ -22,7 +22,7 @@ class NetworkM extends Model
     // return "storage/app/public/";
     return base_path()."/storage/app/public/";
   }
-  public static function ShowWebDoc() {
+  public static function ShowPost() {
     $ShowBaseLocation = NetworkM::ShowBaseLocation();
     $staticdir  = NetworkM::ShowBaseLocation();
     $result = array();
@@ -35,12 +35,12 @@ class NetworkM extends Model
           $blackList = array(".","..",SmartDataArrayM::ShowBaseLocation(),"rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
-            // $result[$value] = WebDocM::ShowSubWebDocHelper($dataLocation,$staticdir);
+            // $result[$value] = PostM::ShowSubPostHelper($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = route('WebDoc.show', $url);
+            $result[$value]["url"] = route('Post.show', $url);
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = route('WebDoc.show', $url);
+            $result[$value] = route('Post.show', $url);
           }
         }
       }
@@ -70,9 +70,9 @@ class NetworkM extends Model
   // }
 
   // public static function AssetURLs() {
-  //   $ShowBaseLocations['webdoc_read'] = "";
-  //   $ShowBaseLocations['webdoc_create'] = "add";
-  //   $ShowBaseLocations['sub_webdoc_read_suffix'] = "SubWebDoc";
+  //   $ShowBaseLocations['post_read'] = "";
+  //   $ShowBaseLocations['post_create'] = "add";
+  //   $ShowBaseLocations['sub_post_read_suffix'] = "SubPost";
   //
   //   return $ShowBaseLocations;
   // }

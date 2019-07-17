@@ -1,5 +1,5 @@
 
-@include('includes.menu_webdoc')
+@include('includes.menu_post')
 
 <?php
 if (file_exists($ShowBaseIDPlusBaseLocation."/header.php")) {

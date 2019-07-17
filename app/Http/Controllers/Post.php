@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NetworkM;
-use App\WebDocM;
+use App\PostM;
 use App\MetadataM;
 use App\RichDataM;
 
@@ -15,7 +15,7 @@ use App\SmartDataArrayM;
 
 
 
-class WebDoc extends Controller
+class Post extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,14 +24,14 @@ class WebDoc extends Controller
      */
     public function index()
     {
-      $allURLs = WebDocM::ShowActions(func_get_args());
+      $allURLs = PostM::ShowActions(func_get_args());
 
-      $WebDocList = NetworkM::ShowWebDoc();
+      $PostList = NetworkM::ShowPost();
 
 
       // echo Route::getCurrentRoute()->getPath();
 
-      return view('browse', compact('WebDocList', 'allURLs'));
+      return view('browse', compact('PostList', 'allURLs'));
     }
 
     /**
@@ -55,16 +55,16 @@ class WebDoc extends Controller
 
       $arguments = func_get_args();
       array_shift($arguments);
-      WebDocM::Store($arguments, $request);
+      PostM::Store($arguments, $request);
 
 
 
 
-      $allURLs = WebDocM::ShowActions($arguments);
-      // dd($allURLs['sub_webdoc_edit']);
+      $allURLs = PostM::ShowActions($arguments);
+      // dd($allURLs['sub_post_edit']);
 
 
-      return redirect($allURLs['sub_webdoc_edit']);
+      return redirect($allURLs['sub_post_edit']);
     }
 
     /**
@@ -79,16 +79,16 @@ class WebDoc extends Controller
       array_shift($arguments);
 
 
-      // $SubWebDocDeepList = WebDocM::ShowSubWebDoc(func_get_args());
-      // dd($SubWebDocDeepList);
-      // $ShowAllSmartData = WebDocM::ShowAllSmartData(func_get_args());
+      // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
+      // dd($SubPostDeepList);
+      // $ShowAllSmartData = PostM::ShowAllSmartData(func_get_args());
       // $func_get_args =func_get_args();
-      // $VSiteHeader = WebDocM::ShowAllSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
+      // $VSiteHeader = PostM::ShowAllSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
 
 
-      $allURLs = WebDocM::ShowActions(func_get_args());
+      $allURLs = PostM::ShowActions(func_get_args());
 
-       $ShowBaseIDPlusBaseLocation = WebDocM::ShowBaseIDPlusBaseLocation(func_get_args());
+       $ShowBaseIDPlusBaseLocation = PostM::ShowBaseIDPlusBaseLocation(func_get_args());
        $RichDataShow = RichDataM::Show(func_get_args());
 
 
@@ -109,12 +109,12 @@ class WebDoc extends Controller
       array_shift($arguments);
       array_shift($arguments);
 
-      // $SubWebDocDeepList = WebDocM::ShowSubWebDoc(func_get_args());
+      // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
 
-      $ShowAllSmartData = WebDocM::ShowAllSmartData(func_get_args());
+      $ShowAllSmartData = PostM::ShowAllSmartData(func_get_args());
 
 
-      $allURLs = WebDocM::ShowActions(func_get_args());
+      $allURLs = PostM::ShowActions(func_get_args());
 
       $RichDataShow = RichDataM::Show(func_get_args());
 

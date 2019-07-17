@@ -1,4 +1,4 @@
-@include('includes.menu_webdoc')
+@include('includes.menu_post')
 
 
 <br>

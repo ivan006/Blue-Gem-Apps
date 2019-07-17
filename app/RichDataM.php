@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Http\Request;
 use App\NetworkM;
-use App\WebDocM;
+use App\PostM;
 use App\SmartDataItemM;
 use App\SmartDataArrayM;
 
@@ -16,7 +16,7 @@ class RichDataM extends Model
 {
 
   public static function Show(){
-    $stuff = WebDocM::ShowLocation(func_get_args()[0])."/"."rich.txt";
+    $stuff = PostM::ShowLocation(func_get_args()[0])."/"."rich.txt";
     if (file_exists($stuff)) {
       return  file_get_contents($stuff);;
     }

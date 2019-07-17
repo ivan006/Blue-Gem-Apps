@@ -1,9 +1,0 @@
-<div class="" style="  z-index: 1;position: relative;">
-  Network
-  <a href="{{ route('WebDoc.index') }}">Show</a>
-  WebDoc
-  <a href="{{ $allURLs['sub_webdoc_create'] }}"><del>Create</del></a>
-  <a href="{{ $allURLs['sub_webdoc_read'] }}">Show</a>
-  <a href="{{ $allURLs['sub_webdoc_destroy'] }}"><del>Destroy</del></a>
-  <a href="{{ $allURLs['sub_webdoc_edit'] }}">Edit</a>
-</div>

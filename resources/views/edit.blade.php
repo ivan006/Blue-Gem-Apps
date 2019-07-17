@@ -1,8 +1,8 @@
 
 
 
-<form  id="form" enctype="multipart/form-data" name="form" class="" action="{{ $allURLs['sub_webdoc_store'] }}" method="post">
-  @include('includes.menu_webdoc')
+<form  id="form" enctype="multipart/form-data" name="form" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
+  @include('includes.menu_post')
   @include('includes.SmartDataArrayMenu')
   @include('includes.SmartDataItemMenu')
 

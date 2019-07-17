@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Http\Request;
 use App\NetworkM;
-use App\WebDocM;
+use App\PostM;
 use App\SmartDataItemM;
 use App\SmartDataArrayM;
 
 
 
-class WebDocM extends Model
+class PostM extends Model
 {
 
 
-  // needed to make  link in subWebDocs list and to use with "storeAs" function start
+  // needed to make  link in subPosts list and to use with "storeAs" function start
   public static function ShowID(){
 
     // $root= NetworkM::ShowBaseLocation();
@@ -38,18 +38,18 @@ class WebDocM extends Model
     return $VPgLoc;
 
   }
-  // needed to make  link in subWebDocs list and to use with "storeAs" function end
+  // needed to make  link in subPosts list and to use with "storeAs" function end
   public static function ShowLocation() {
 
     // dd(func_get_args()[0]);
-    // echo NetworkM::ShowBaseLocation().WebDocM::ShowID(func_get_args()[0]);
+    // echo NetworkM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
 
     $arguments = func_get_args()[0];
     // array_shift($arguments);
     // var_dump($arguments);
     if (!empty($arguments)) {
 
-      return  NetworkM::ShowBaseLocation().WebDocM::ShowID(func_get_args()[0]);
+      return  NetworkM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
     } else {
       // return  NetworkM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0]);
       return "now what";
@@ -64,7 +64,7 @@ class WebDocM extends Model
     return $arguments;
   }
   public static function ShowBaseIDPlusBaseLocation() {
-    return NetworkM::ShowBaseLocation().WebDocM::ShowBaseID(func_get_args()[0]);
+    return NetworkM::ShowBaseLocation().PostM::ShowBaseID(func_get_args()[0]);
   }
   // needed for header call end
 
@@ -73,26 +73,26 @@ class WebDocM extends Model
     if (!empty(func_get_args()[0])) {
       // dd(func_get_args());
 
-      $ShowID = WebDocM::ShowID(func_get_args()[0]);
-      $allURLs['sub_webdoc_read'] =   route('WebDoc.show',$ShowID);
-      $allURLs['sub_webdoc_edit'] = route('WebDoc.edit',$ShowID);
+      $ShowID = PostM::ShowID(func_get_args()[0]);
+      $allURLs['sub_post_read'] =   route('Post.show',$ShowID);
+      $allURLs['sub_post_edit'] = route('Post.edit',$ShowID);
 
-      // $allURLs['sub_webdoc_update'] = route('WebDoc.update',$ShowID.$ShowID);
-      $allURLs['sub_webdoc_destroy'] = route('WebDoc.destroy',$ShowID);
-      $allURLs['sub_webdoc_store'] = route('WebDoc.store',$ShowID);
-      $allURLs['sub_webdoc_create'] = route('WebDoc.create');
-      // $allURLs['sub_webdoc_index'] = route('WebDoc.index',$ShowID.$ShowID);
+      // $allURLs['sub_post_update'] = route('Post.update',$ShowID.$ShowID);
+      $allURLs['sub_post_destroy'] = route('Post.destroy',$ShowID);
+      $allURLs['sub_post_store'] = route('Post.store',$ShowID);
+      $allURLs['sub_post_create'] = route('Post.create');
+      // $allURLs['sub_post_index'] = route('Post.index',$ShowID.$ShowID);
 
 
 
-      $allURLs['webdoc_create'] = route('WebDoc.create');
-      $allURLs['webdoc_index'] = route('WebDoc.index');
+      $allURLs['post_create'] = route('Post.create');
+      $allURLs['post_index'] = route('Post.index');
     } else {
-      $allURLs['sub_webdoc_read'] =   " ";
-      $allURLs['sub_webdoc_edit'] = " ";
+      $allURLs['sub_post_read'] =   " ";
+      $allURLs['sub_post_edit'] = " ";
 
-      $allURLs['sub_webdoc_destroy'] =  " ";
-      $allURLs['sub_webdoc_create'] =  " ";
+      $allURLs['sub_post_destroy'] =  " ";
+      $allURLs['sub_post_create'] =  " ";
 
 
     }
@@ -100,19 +100,19 @@ class WebDocM extends Model
     // dd($allURLs);
     return $allURLs;
   }
-  public static function ShowSubWebDoc() {
+  public static function ShowSubPost() {
 
 
 
-    if(!function_exists('App\ShowSubWebDocHelper')){
+    if(!function_exists('App\ShowSubPostHelper')){
 
-      function ShowSubWebDocHelper($ShowLocation,$staticdir,$ShowID) {
+      function ShowSubPostHelper($ShowLocation,$staticdir,$ShowID) {
         $result = array();
         // dd ($ShowLocation);
         $dataNameList = scandir($ShowLocation);
 
         $url = str_replace($staticdir, "", $ShowLocation);
-        $result["url"] = route("WebDoc.show")."/".$ShowID.$url;
+        $result["url"] = route("Post.show")."/".$ShowID.$url;
         foreach ($dataNameList as $key => $value) {
           if (!in_array($value,array(".","..")))  {
             $dataLocation = $ShowLocation . "/" . $value;
@@ -121,12 +121,12 @@ class WebDocM extends Model
               $blackList = array(".","..",SmartDataArrayM::ShowBaseLocation(),"rich.txt");
               $whiteList = array_diff_key($subDataNameList,$blackList);
               if (!empty($whiteList)) {
-                $result[$value] = ShowSubWebDocHelper($dataLocation,$staticdir,$ShowID);
+                $result[$value] = ShowSubPostHelper($dataLocation,$staticdir,$ShowID);
                 // $url = str_replace($staticdir."/", "", $dataLocation);
-                // $result[$value]["url"] = route("WebDoc.show")."/".$ShowID."/".$url;
+                // $result[$value]["url"] = route("Post.show")."/".$ShowID."/".$url;
               } else {
                 $url = str_replace($staticdir, "", $dataLocation);
-                $result[$value] = route("WebDoc.show")."/".$ShowID.$url;
+                $result[$value] = route("Post.show")."/".$ShowID.$url;
               }
             }
           }
@@ -136,11 +136,11 @@ class WebDocM extends Model
     }
 
 
-    $ShowID = WebDocM::ShowID(func_get_args()[0]);
+    $ShowID = PostM::ShowID(func_get_args()[0]);
     $ShowLocation = NetworkM::ShowLocation($ShowID);
     $staticdir = NetworkM::ShowLocation($ShowID);
 
-    $result[$ShowID] = ShowSubWebDocHelper($ShowLocation,$staticdir,$ShowID);
+    $result[$ShowID] = ShowSubPostHelper($ShowLocation,$staticdir,$ShowID);
 
 
     return $result;
@@ -166,7 +166,7 @@ class WebDocM extends Model
         return  $result;
       }
     }
-    $ShowLocation = WebDocM::ShowLocation(func_get_args()[0])."/".SmartDataArrayM::ShowBaseLocation();
+    $ShowLocation = PostM::ShowLocation(func_get_args()[0])."/".SmartDataArrayM::ShowBaseLocation();
 
     if (is_dir($ShowLocation)) {
       return  ShowAllSmartDataHelper($ShowLocation);
@@ -175,10 +175,10 @@ class WebDocM extends Model
 
   public static function Store($arguments, $request) {
 
-    $ShowLocation = WebDocM::ShowLocation($arguments);
+    $ShowLocation = PostM::ShowLocation($arguments);
     if (!empty($request->get('RichText')) ) {
       function StoreSmartDataFromFile($arguments, $request) {
-        $ShowID = WebDocM::ShowID($arguments);
+        $ShowID = PostM::ShowID($arguments);
 
         $request->zip_file->storeAs("public/".$ShowID."/".SmartDataArrayM::ShowBaseLocation(), $request->zip_file->getClientOriginalName());
         // $path = "Econet/".NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
