@@ -150,29 +150,9 @@ class PostM extends Model
   public static function Show() {
   }
   public static function ShowAllDeepSmartData($ShowID) {
-    if(!function_exists('App\ShowAllDeepSmartDataHelper')){
-      function ShowAllDeepSmartDataHelper($ShowLocation) {
-        $result = array();
-        $shallowList = scandir($ShowLocation);
-        foreach ($shallowList as $key => $value) {
-          if (!in_array($value,array(".","..")))  {
-            $DataLocation = $ShowLocation . "/" . $value;
-            if (is_dir($DataLocation)){
-              $result[$value] = ShowAllDeepSmartDataHelper($DataLocation);
-            } else {
-              $result[$value] = file_get_contents($DataLocation);
-            }
-          }
-        }
-        return  $result;
-      }
-    }
+    
+    return $ShowAllDeepSmartData = SmartDataArrayM::Show("smart", $ShowID);
 
-    $ShowLocation = PostM::ShowLocation($ShowID)."/".SmartDataArrayM::ShowBaseLocation();
-    // dd($ShowLocation);
-    if (is_dir($ShowLocation)) {
-      return  ShowAllDeepSmartDataHelper($ShowLocation);
-    }
   }
   public static function ShowAllShallowSmartData() {
 

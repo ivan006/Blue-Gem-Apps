@@ -58,7 +58,7 @@ class SmartDataArrayM extends Model
           if (!in_array($value,array(".","..")))  {
             $DataLocation = $ShowLocation . "/" . $value;
             if (is_dir($DataLocation)){
-              $result[$value] = ShowAllDeepSmartDataHelper($DataLocation);
+              $result[$value] = ShowHelper($DataLocation);
             } else {
               $result[$value] = file_get_contents($DataLocation);
             }
@@ -90,7 +90,7 @@ class SmartDataArrayM extends Model
 
 
     $ShowAllDeepSmartData = SmartDataArrayM::Show($ShowDataID, $ShowID);
-    dd($ShowAllDeepSmartData);
+    // dd($ShowAllDeepSmartData);
 
     // function StoreHelperDestroy($dir) {
     //   if (is_dir($dir)) {
