@@ -15,59 +15,6 @@
   <h1>Data</h1>
   <div class="">
 
-    <h2>Shallow Smart Data</h2>
-    <div class="">
-      <div class="g-multi-level-dropdownd">
-        <ul>
-          <?php
-
-          if (!empty($ShowAllShallowSmartData)) {
-
-            foreach($ShowAllShallowSmartData as $key => $value2){ ?>
-              <li>
-                <?php $SmartDataLocation = '$SmartDataLocationParent'.'/'.$key  ?>
-                <?php
-                if (1==1) {
-                  // code...
-
-                  ob_start();
-                  ?>
-                  <span><?php echo ShallowSmartDataMenu($SmartDataLocation,$SmartDataItemM_ShowActions); ?></span>
-                  <input type="text" name="<?php echo $SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>" value="<?php echo $key ?>"><br>
-                  <input type="text" style="display:none;" name="<?php echo $SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataLocation'] ?>" value="<?php echo '$SmartDataLocationParent' ?>"><br>
-                  <textarea name="<?php echo $SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
-                  <?php
-                  $string1 = ob_get_contents();
-                  ob_end_clean();
-
-                  ob_start();
-                  ?>
-                  <span><?php echo ShallowSmartDataMenu(base64_encode($SmartDataLocation),$SmartDataItemM_ShowActions); ?></span>
-                  <input type="text" name="<?php echo base64_encode($SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataName']) ?>" value="<?php echo $key ?>"><br>
-                  <input type="text" style="display:none;" name="<?php echo base64_encode($SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataLocation']) ?>" value="<?php echo '$SmartDataLocationParent' ?>"><br>
-                  <textarea name="<?php echo base64_encode($SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataContent']) ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
-                  <?php
-                  $string2 = ob_get_contents();
-                  ob_end_clean();
-
-                  // echo $string1;
-                  echo $string2;
-                }
-                ?>
-              </li>
-              <?php
-            }
-
-          }
-          ?>
-
-        </ul>
-
-
-      </div>
-
-
-    </div>
     <h2>Deep Smart Data</h2>
     <div class="">
 
@@ -159,6 +106,59 @@
         <?php
       }
       ?>
+    </div>
+    <h2>Shallow Smart Data</h2>
+    <div class="">
+      <div class="g-multi-level-dropdownd">
+        <ul>
+          <?php
+
+          if (!empty($ShowAllShallowSmartData)) {
+
+            foreach($ShowAllShallowSmartData as $key => $value2){ ?>
+              <li>
+                <?php $SmartDataLocation = '$SmartDataLocationParent'.'/'.$key  ?>
+                <?php
+                if (1==1) {
+                  // code...
+
+                  ob_start();
+                  ?>
+                  <span><?php echo ShallowSmartDataMenu($SmartDataLocation,$SmartDataItemM_ShowActions); ?></span>
+                  <input type="text" name="<?php echo $SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>" value="<?php echo $key ?>"><br>
+                  <input type="text" style="display:none;" name="<?php echo $SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataLocation'] ?>" value="<?php echo '$SmartDataLocationParent' ?>"><br>
+                  <textarea name="<?php echo $SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
+                  <?php
+                  $string1 = ob_get_contents();
+                  ob_end_clean();
+
+                  ob_start();
+                  ?>
+                  <span><?php echo ShallowSmartDataMenu(base64_encode($SmartDataLocation),$SmartDataItemM_ShowActions); ?></span>
+                  <input type="text" name="<?php echo base64_encode($SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataName']) ?>" value="<?php echo $key ?>"><br>
+                  <input type="text" style="display:none;" name="<?php echo base64_encode($SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataLocation']) ?>" value="<?php echo '$SmartDataLocationParent' ?>"><br>
+                  <textarea name="<?php echo base64_encode($SmartDataLocation."/".$SmartDataItemM_ShowAttributeTypes['/SmartDataContent']) ?>" rows="8" cols="80"><?php echo $value2; ?></textarea>
+                  <?php
+                  $string2 = ob_get_contents();
+                  ob_end_clean();
+
+                  // echo $string1;
+                  echo $string2;
+                }
+                ?>
+              </li>
+              <?php
+            }
+
+          }
+          ?>
+
+        </ul>
+
+
+      </div>
+
+
     </div>
     <h2>All Content</h2>
     <div class="">

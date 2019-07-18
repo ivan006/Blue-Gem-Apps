@@ -77,64 +77,62 @@ class SmartDataArrayM extends Model
 
   public static function Store($ShowLocation, $request, $ShowID) {
 
-    // dd($ShowLocation);
+    function StoreHelperDestroy($dir) {
+      if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+          if ($object != "." && $object != "..") {
+            if (is_dir($dir."/".$object))
+            StoreHelperDestroy($dir."/".$object);
+            else
+            unlink($dir."/".$object);
+          }
+        }
+        rmdir($dir);
+      }
+    }
+    function StoreHelperStore($ShowDataLocation,$ShowAllDeepSmartData) {
+      if (!file_exists($ShowDataLocation)) {
+        mkdir($ShowDataLocation);
+      }
+      // dd ($ShowDataLocation);
+      foreach($ShowAllDeepSmartData as $key => $value) {
+        $SmartDataArrayLocation = $ShowDataLocation ."/". $key;
+        if (!is_string($value)){
+          if (!file_exists($SmartDataArrayLocation)) {
+            mkdir($SmartDataArrayLocation);
+          }
+          StoreHelperStore($SmartDataArrayLocation, $value);
+        } else {
+          $content = $value;
+
+          file_put_contents($SmartDataArrayLocation,$value);
+
+
+        }
+      }
+
+    }
+
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
     $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']));
-    // dd($request);
-
-
     $SmartDataBaseLocation = SmartDataArrayM::ShowBaseLocation();
-    // $ShowDataID = $ShowID."/".$SmartDataBaseLocation.$SmartDataRelativeLocation;
     $ShowDataID = $SmartDataBaseLocation.$SmartDataRelativeLocation;
-    // dd($ShowDataID);
-
 
     $ShowAllDeepSmartData = SmartDataArrayM::Show($ShowDataID, $ShowID);
     // dd($ShowAllDeepSmartData);
 
-    // function StoreHelperDestroy($dir) {
-    //   if (is_dir($dir)) {
-    //     $objects = scandir($dir);
-    //     foreach ($objects as $object) {
-    //       if ($object != "." && $object != "..") {
-    //         if (is_dir($dir."/".$object))
-    //         StoreHelperDestroy($dir."/".$object);
-    //         else
-    //         unlink($dir."/".$object);
-    //       }
-    //     }
-    //     rmdir($dir);
-    //   }
-    // }
-    // function StoreHelperStore($ShowLocation,$SmartDataArray) {
-    //
-    //   foreach($SmartDataArray as $key => $value) {
-    //     $SmartDataArrayLocation = $ShowLocation ."/". $key;
-    //     if (!is_string($value)){
-    //
-    //       mkdir($SmartDataArrayLocation);
-    //
-    //       StoreHelperStore($SmartDataArrayLocation, $value);
-    //     } else {
-    //       $content = $value;
-    //
-    //
-    //       file_put_contents($SmartDataArrayLocation,$value);
-    //
-    //
-    //     }
-    //   }
-    //
-    // }
-    //
-    // if (!empty($SmartDataArray)) {
-    //
-    //   StoreHelperDestroy($ShowLocation."/".SmartDataArrayM::ShowBaseLocation());
-    //
-    //   $SmartDataArray2['smart'] = $SmartDataArray;
-    //
-    //   StoreHelperStore($ShowLocation,$SmartDataArray2);
-    //
+    $ShowDataLocation = $ShowLocation."/".$ShowDataID;
+    // dd($ShowDataLocation);
+
+    // if (!empty($ShowDataLocation)) {
+      // $SmartDataArray2['smart'] = $SmartDataArray;
+      StoreHelperDestroy($ShowDataLocation);
+
+      $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
+      $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
+      StoreHelperStore($ShowDataLocation,$ShowAllDeepSmartData, $SmartDataItemM_ShowAttributeTypes, $SmartDataItemM_ShowActions);
+
     // }
 
   }
@@ -163,6 +161,7 @@ class SmartDataArrayM extends Model
         $SmartDataArrayLocation = $ShowLocation ."/". $key;
         if (!is_string($value)){
           // mkdir($ShowLocation.array_keys($SmartDataArray)[0]);
+          dd ($SmartDataArrayLocation);
           mkdir($SmartDataArrayLocation);
 
           StoreHelperStore($SmartDataArrayLocation, $value);
@@ -181,12 +180,13 @@ class SmartDataArrayM extends Model
     // $shallowList = scandir($ShowLocation);
     if (!empty($SmartDataArray)) {
 
-
+      $SmartDataArray2['smart'] = $SmartDataArray;
+      // dd($SmartDataArray2);
       // dd($ShowLocation);
       StoreHelperDestroy($ShowLocation."/".SmartDataArrayM::ShowBaseLocation());
       // mkdir($ShowLocation.array_keys($SmartDataArray)[0]);
 
-      $SmartDataArray2['smart'] = $SmartDataArray;
+
       // mkdir($ShowLocation.SmartDataArrayM::ShowBaseLocation());
       StoreHelperStore($ShowLocation,$SmartDataArray2);
 

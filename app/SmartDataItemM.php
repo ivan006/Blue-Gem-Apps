@@ -34,34 +34,37 @@ class SmartDataItemM extends Model
   }
 
   public static function Store($ShowLocation, $request) {
-    $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
-    $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
-    function SmartDataAttribute($AttributeTypeCode, $request, $SmartDataItemM_ShowActions){
-      $SmartDataRelativeLocationEncoded = $request->get($SmartDataItemM_ShowActions['DeepSmartDataItemStore']);
-      $SmartDataAttributeFieldDecoded = base64_decode($SmartDataRelativeLocationEncoded)."/".$AttributeTypeCode;
-      $SmartDataAttributeField = base64_encode($SmartDataAttributeFieldDecoded);
-      return $SmartDataAttributeValue = $request->get($SmartDataAttributeField);
+    function SmartDataFieldNames($request, $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes){
+      $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions['DeepSmartDataItemStore']));
+
+      $SmartDataFieldNames["Name"] = base64_encode($SmartDataRelativeLocation."/".$SmartDataItemM_ShowAttributeTypes["/SmartDataName"]);
+      $SmartDataFieldNames["Content"] = base64_encode($SmartDataRelativeLocation."/".$SmartDataItemM_ShowAttributeTypes["/SmartDataContent"]);
+      $SmartDataFieldNames["Location"] = base64_encode($SmartDataRelativeLocation."/".$SmartDataItemM_ShowAttributeTypes["/SmartDataLocation"]);
+      return $SmartDataFieldNames;
+
+    }
+    function SmartDataFieldValue($SmartDataFieldNames, $request){
+      $SmartDataFieldValue['RelativeLocationNew'] = $request->get($SmartDataFieldNames["Name"]);
+      $SmartDataFieldValue['Content'] = $request->get($SmartDataFieldNames["Content"]);
+      $SmartDataFieldValue['LocationParent'] = $request->get($SmartDataFieldNames["Location"]);
+      return $SmartDataFieldValue;
     }
 
-    $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions['DeepSmartDataItemStore']));
-    $SmartDataRelativeLocationNew = SmartDataAttribute($SmartDataItemM_ShowAttributeTypes['/SmartDataName'],$request, $SmartDataItemM_ShowActions);
+    $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
+    $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
 
-    $SmartDataNewContent = SmartDataAttribute($SmartDataItemM_ShowAttributeTypes['/SmartDataContent'],$request, $SmartDataItemM_ShowActions);
-    $SmartDataLocationParent = SmartDataAttribute($SmartDataItemM_ShowAttributeTypes['/SmartDataLocation'],$request, $SmartDataItemM_ShowActions);
+    $SmartDataFieldNames =SmartDataFieldNames($request, $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes);
+    $SmartDataFieldValue =SmartDataFieldValue($SmartDataFieldNames, $request);
 
     $SmartDataBaseLocation = $ShowLocation."/".SmartDataArrayM::ShowBaseLocation();
-    $SmartDataLocation = $SmartDataBaseLocation.$SmartDataRelativeLocation;
-    $SmartDataLocationNew = $SmartDataBaseLocation.$SmartDataLocationParent."/".$SmartDataRelativeLocationNew;
+    $SmartDataLocationNew = $SmartDataBaseLocation.$SmartDataFieldValue['LocationParent']."/".$SmartDataFieldValue['RelativeLocationNew'];
 
-    // dd($SmartDataLocationNew);
-    // if (!is_dir('upload/promotions/' . $month)) {
-    //   // dir doesn't exist, make it
-    //   mkdir('upload/promotions/' . $month);
-    // }
-    // dd($SmartDataLocationNew);
+    $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions['DeepSmartDataItemStore']));
+    $SmartDataLocation = $SmartDataBaseLocation.$SmartDataRelativeLocation;
+
     unlink($SmartDataLocation);
-    file_put_contents($SmartDataLocationNew,$SmartDataNewContent);
-    // file_put_contents($SmartDataLocationNew,$SmartDataNewContent);
+    file_put_contents($SmartDataLocationNew,$SmartDataFieldValue['Content']);
+    // file_put_contents($SmartDataLocationNew,$SmartDataFieldValue['Content']);
 
   }
 
