@@ -113,7 +113,7 @@ class SmartDataArrayM extends Model
       }
 
     }
-
+    dd($request);
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
     $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']));
     $SmartDataBaseLocation = SmartDataArrayM::ShowBaseLocation();
