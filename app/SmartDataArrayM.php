@@ -98,6 +98,11 @@ class SmartDataArrayM extends Model
       // dd ($ShowDataLocation);
       foreach($ShowAllDeepSmartData as $key => $value) {
         $SmartDataArrayLocation = $ShowDataLocation ."/". $key;
+
+        $hrhrhrhr[1]=$SmartDataArrayLocation;
+        $hrhrhrhr[2]=$ShowDataLocation;
+        $hrhrhrhr[3]=$key;
+        dd($hrhrhrhr);
         if (!is_string($value)){
           if (!file_exists($SmartDataArrayLocation)) {
             mkdir($SmartDataArrayLocation);
@@ -113,7 +118,7 @@ class SmartDataArrayM extends Model
       }
 
     }
-    dd($request);
+    // dd($request);
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
     $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']));
     $SmartDataBaseLocation = SmartDataArrayM::ShowBaseLocation();
