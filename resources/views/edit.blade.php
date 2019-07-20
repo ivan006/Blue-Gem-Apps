@@ -23,16 +23,17 @@
       <?php
       if (!empty($ShowAllDeepSmartData)) {
         function list1($SmartDataArrayShowBaseLocation,$smartData, $SmartDataLocation, $SmartDataLocationParent, $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes){
-        $SmartDataArrayShowBaseLocationEncoded = g_base64_encode($SmartDataArrayShowBaseLocation);
+          $SmartDataArrayShowBaseLocationEncoded = g_base64_encode($SmartDataArrayShowBaseLocation);
           foreach($smartData as $key => $value2){
+            $SmartDataLocation = $SmartDataLocationParent.'['.g_base64_encode($key).']';
+            $SmartDataID = "SmartDataItemShowFieldValues[".$SmartDataArrayShowBaseLocationEncoded."]".$SmartDataLocation;
             if (is_array($value2)) {
               ?>
               <li>
-                <?php $SmartDataLocation = $SmartDataLocationParent.'['.g_base64_encode($key).']'  ?>
 
-                  <span><?php echo DeepSmartDataArrayMenu($SmartDataArrayShowBaseLocation,$SmartDataLocation, $SmartDataItemM_ShowActions); ?></span>
-                  <input type="text" name="SmartDataItemShowFieldValues[<?php echo $SmartDataArrayShowBaseLocationEncoded?>]<?php echo $SmartDataLocation?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
-                  <input type="text" style="display:none;" name="SmartDataItemShowFieldValues[<?php echo $SmartDataArrayShowBaseLocationEncoded?>]<?php echo $SmartDataLocation?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataLocationParent'] ?>]" value="<?php echo $SmartDataArrayShowBaseLocationEncoded.$SmartDataLocationParent ?>"><br>
+                  <span><?php echo DeepSmartDataArrayMenu($SmartDataID,$SmartDataItemM_ShowActions); ?></span>
+                  <input type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
+                  <input type="text" style="display:none;" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataLocationParent'] ?>]" value="<?php echo $SmartDataArrayShowBaseLocationEncoded.$SmartDataLocationParent ?>"><br>
 
                 <ul>
                   <?php list1($SmartDataArrayShowBaseLocationEncoded,$value2, $SmartDataLocation, $SmartDataLocation, $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes); ?>
@@ -40,12 +41,12 @@
               </li>
             <?php  } elseif ($key !== "url") {?>
               <li>
-                <?php $SmartDataLocation = $SmartDataLocationParent.'['.g_base64_encode($key).']'  ?>
 
-                  <span><?php echo DeepSmartDataItemMenu($SmartDataArrayShowBaseLocation,$SmartDataLocation, $SmartDataItemM_ShowActions); ?></span>
-                  <input type="text" name="SmartDataItemShowFieldValues[<?php echo $SmartDataArrayShowBaseLocationEncoded?>]<?php echo $SmartDataLocation?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
-                  <input type="text" style="display:none;" name="SmartDataItemShowFieldValues[<?php echo $SmartDataArrayShowBaseLocationEncoded?>]<?php echo $SmartDataLocation?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataLocation'] ?>]" value="<?php echo $SmartDataArrayShowBaseLocationEncoded.$SmartDataLocationParent ?>"><br>
-                  <textarea name="SmartDataItemShowFieldValues[<?php echo $SmartDataArrayShowBaseLocationEncoded?>]<?php echo $SmartDataLocation?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" cols="80"><?php echo $value2; ?></textarea>
+
+                  <span><?php echo DeepSmartDataItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?></span>
+                  <input type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
+                  <input type="text" style="display:none;" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataLocation'] ?>]" value="<?php echo $SmartDataArrayShowBaseLocationEncoded.$SmartDataLocationParent ?>"><br>
+                  <textarea name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" cols="80"><?php echo $value2; ?></textarea>
 
               </li>
               <?php
@@ -57,6 +58,9 @@
           <ul>
             <li>Deep Smart Data
               <ul>
+                <?php
+                // dd($ShowAllDeepSmartData);
+                ?>
                 <?php list1($SmartDataArrayShowBaseLocation,$ShowAllDeepSmartData, null, null, $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes);?>
               </ul>
             </li>

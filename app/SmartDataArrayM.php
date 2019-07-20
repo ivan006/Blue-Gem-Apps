@@ -71,7 +71,9 @@ class SmartDataArrayM extends Model
     $ShowLocation = PostM::ShowLocation($ShowID)."/".$ShowDataID;
     // dd($ShowLocation);
     if (is_dir($ShowLocation)) {
-      return  ShowHelper($ShowLocation);
+      // $Show[$ShowDataID] =   ShowHelper($ShowLocation);
+      $Show =   ShowHelper($ShowLocation);
+      return $Show;
     }
   }
 

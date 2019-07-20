@@ -148,10 +148,12 @@ class PostM extends Model
   }
 
   public static function Show() {
+    // g
   }
+
   public static function ShowAllDeepSmartData($ShowID) {
-    
-    return $ShowAllDeepSmartData = SmartDataArrayM::Show("smart", $ShowID);
+    $SmartDataArrayShowBaseLocation = SmartDataArrayM::ShowBaseLocation();
+    return $ShowAllDeepSmartData = SmartDataArrayM::Show($SmartDataArrayShowBaseLocation, $ShowID);
 
   }
   public static function ShowAllShallowSmartData() {
@@ -176,6 +178,7 @@ class PostM extends Model
   }
 
   public static function Store($arguments, $request) {
+    dd($request);
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
     $ShowID = PostM::ShowID($arguments);
 
