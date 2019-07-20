@@ -46,9 +46,10 @@ class SmartDataItemM extends Model
   public static function StoreFieldValue($ShowLocation, $request, $SmartDataRelativeLocation) {
     $ShowFieldValues = SmartDataItemM::ShowFieldValues($request,$SmartDataRelativeLocation);
 
-    $SmartDataBaseLocation = $ShowLocation."/".SmartDataArrayM::ShowBaseLocation();
-    $SmartDataLocation = $SmartDataBaseLocation.$SmartDataRelativeLocation;
-    $SmartDataLocationNew = $SmartDataBaseLocation.$ShowFieldValues["SmartDataLocation"]."/".$ShowFieldValues["SmartDataName"];
+    // $ShowLocation = $ShowLocation."/".SmartDataArrayM::ShowBaseLocation();
+    $ShowLocation = $ShowLocation;
+    $SmartDataLocation = $ShowLocation.$SmartDataRelativeLocation;
+    $SmartDataLocationNew = $ShowLocation.$ShowFieldValues["SmartDataLocation"]."/".$ShowFieldValues["SmartDataName"];
     if (file_exists($SmartDataLocation)) {
       unlink($SmartDataLocation);
     }
@@ -59,7 +60,7 @@ class SmartDataItemM extends Model
 
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
     $SmartDataRelativeLocation = base64_decode($request->get($SmartDataItemM_ShowActions["DeepSmartDataItemStore"]));
-    dd($SmartDataRelativeLocation);
+    // dd($SmartDataRelativeLocation);
     SmartDataItemM::StoreFieldValue($ShowLocation, $request, $SmartDataRelativeLocation);
   }
 
