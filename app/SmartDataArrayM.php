@@ -91,25 +91,25 @@ class SmartDataArrayM extends Model
         rmdir($dir);
       }
     }
-    function StoreHelperStore($ShowDataLocation,$ShowAllDeepSmartData) {
+    function StoreHelperStore($ShowLocation,$SmartDataSubArrayLocation,$ShowDataID,$ShowAllDeepSmartData) {
+
+      $ShowDataLocation = $ShowLocation."/".$ShowDataID;
+
+      // $ShowLocation,$ShowDataID
       if (!file_exists($ShowDataLocation)) {
         mkdir($ShowDataLocation);
       }
       // dd ($ShowDataLocation);
       foreach($ShowAllDeepSmartData as $key => $value) {
         $SmartDataArrayLocation = $ShowDataLocation ."/". $key;
-
-        $hrhrhrhr[1]=$SmartDataArrayLocation;
-        $hrhrhrhr[2]=$ShowDataLocation;
-        $hrhrhrhr[3]=$key;
-        dd($hrhrhrhr);
         if (!is_string($value)){
           if (!file_exists($SmartDataArrayLocation)) {
             mkdir($SmartDataArrayLocation);
           }
-          StoreHelperStore($SmartDataArrayLocation, $value);
+          StoreHelperStore($ShowDataLocation,$ShowDataID."/". $key, $key, $value);
         } else {
           $content = $value;
+          // dd("/". $SmartDataSubArrayLocation."/". $key);
 
           file_put_contents($SmartDataArrayLocation,$value);
 
@@ -136,7 +136,7 @@ class SmartDataArrayM extends Model
 
       $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
       $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
-      StoreHelperStore($ShowDataLocation,$ShowAllDeepSmartData, $SmartDataItemM_ShowAttributeTypes, $SmartDataItemM_ShowActions);
+      StoreHelperStore($ShowLocation, null,$ShowDataID,$ShowAllDeepSmartData);
 
     // }
 
