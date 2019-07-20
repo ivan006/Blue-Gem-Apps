@@ -122,7 +122,7 @@ class Post extends Controller
       $allURLs = PostM::ShowActions(func_get_args());
 
       $RichDataShow = RichDataM::Show(func_get_args());
-      $SmartDataArrayShowBaseLocation = "/".SmartDataArrayM::ShowBaseLocation();
+      $SmartDataArrayShowBaseLocation = SmartDataArrayM::ShowBaseLocation();
 
       return view('edit', compact(
         'ShowAllDeepSmartData',

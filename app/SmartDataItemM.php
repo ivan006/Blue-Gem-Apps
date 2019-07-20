@@ -56,6 +56,7 @@ class SmartDataItemM extends Model
     file_put_contents($SmartDataLocationNew,$ShowFieldValues["SmartDataContent"]);
     // file_put_contents($SmartDataLocationNew,$ShowFieldValues["SmartDataContent"]);
   }
+
   public static function Store($ShowLocation, $request) {
 
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();

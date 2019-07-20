@@ -91,7 +91,7 @@ class SmartDataArrayM extends Model
         rmdir($dir);
       }
     }
-    function StoreHelperStore($ShowLocation,$SmartDataSubArrayLocation,$ShowDataID,$ShowAllDeepSmartData) {
+    function StoreHelperStore($ShowLocation,$SmartDataSubArrayLocation,$ShowDataID,$SmartDataItemShowFieldValues) {
 
       $ShowDataLocation = $ShowLocation."/".$ShowDataID;
 
@@ -100,7 +100,7 @@ class SmartDataArrayM extends Model
         mkdir($ShowDataLocation);
       }
       // dd ($ShowDataLocation);
-      foreach($ShowAllDeepSmartData as $key => $value) {
+      foreach($SmartDataItemShowFieldValues as $key => $value) {
         $SmartDataArrayLocation = $ShowDataLocation ."/". $key;
         if (!is_string($value)){
           if (!file_exists($SmartDataArrayLocation)) {
@@ -124,8 +124,9 @@ class SmartDataArrayM extends Model
     $SmartDataBaseLocation = SmartDataArrayM::ShowBaseLocation();
     $ShowDataID = $SmartDataBaseLocation.$SmartDataRelativeLocation;
 
-    $ShowAllDeepSmartData = SmartDataArrayM::Show($ShowDataID, $ShowID);
-    // dd($ShowAllDeepSmartData);
+    // $ShowAllDeepSmartData = SmartDataArrayM::Show($ShowDataID, $ShowID);
+    $SmartDataItemShowFieldValues = $request->get("SmartDataItemShowFieldValues");
+    dd($SmartDataItemShowFieldValues);
 
     $ShowDataLocation = $ShowLocation."/".$ShowDataID;
     // dd($ShowDataLocation);
@@ -136,7 +137,7 @@ class SmartDataArrayM extends Model
 
       $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
       $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
-      StoreHelperStore($ShowLocation, null,$ShowDataID,$ShowAllDeepSmartData);
+      StoreHelperStore($ShowLocation, null,$ShowDataID,$SmartDataItemShowFieldValues);
 
     // }
 
