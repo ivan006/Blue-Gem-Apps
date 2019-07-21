@@ -151,11 +151,11 @@ class PostM extends Model
     // g
   }
 
-  public static function ShowAllDeepSmartData($ShowID) {
-    $SmartDataArrayShowBaseLocation = SmartDataArrayM::ShowBaseLocation();
-    return $ShowAllDeepSmartData = SmartDataArrayM::Show($SmartDataArrayShowBaseLocation, $ShowID);
-
-  }
+  // public static function ShowAllDeepSmartData($ShowID) {
+  //   $SmartDataArrayShowBaseLocation = SmartDataArrayM::ShowBaseLocation();
+  //   return $ShowAllDeepSmartData = SmartDataArrayM::Show($SmartDataArrayShowBaseLocation, $ShowID);
+  //
+  // }
   public static function ShowAllShallowSmartData() {
 
     // if (is_dir($ShowLocation)) {

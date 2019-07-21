@@ -112,7 +112,14 @@ class Post extends Controller
       // $SubPostDeepList = PostM::ShowSubPost(func_get_args());
       // dd(func_get_args()[0]);
       $ShowID = PostM::ShowID(func_get_args());
-      $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData($ShowID);
+
+      $SmartDataArrayShowBaseLocation = SmartDataArrayM::ShowBaseLocation();
+      if (isset(SmartDataArrayM::Show($ShowID)[$SmartDataArrayShowBaseLocation])) {
+        $ShowAllDeepSmartData[$SmartDataArrayShowBaseLocation] = SmartDataArrayM::Show($ShowID)[$SmartDataArrayShowBaseLocation];
+      } else {
+        $ShowAllDeepSmartData[$SmartDataArrayShowBaseLocation] = null;
+      }
+
       // $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData("hey - Copy/smart/smartdataarray");
       // dd ($ShowAllDeepSmartData);
       $ShowAllShallowSmartData = PostM::ShowAllShallowSmartData(func_get_args());

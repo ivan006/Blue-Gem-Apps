@@ -28,7 +28,7 @@
           $SmartDataArrayShowBaseLocationEncoded = g_base64_encode($SmartDataArrayShowBaseLocation);
           foreach($smartData as $key => $value2){
             $SmartDataLocation = $SmartDataLocationParent.'['.g_base64_encode($key).']';
-            $SmartDataID = "SmartDataItemShowFieldValues[".$SmartDataArrayShowBaseLocationEncoded."]".$SmartDataLocation;
+            $SmartDataID = "SmartDataItemShowFieldValues".$SmartDataLocation;
             if (is_array($value2)) {
               ?>
               <li>
@@ -63,7 +63,10 @@
                 <?php
                 // dd($ShowAllDeepSmartData);
                 ?>
-                <?php list1($SmartDataArrayShowBaseLocation,$ShowAllDeepSmartData, null, null, $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes);?>
+                <?php list1($SmartDataArrayShowBaseLocation,$ShowAllDeepSmartData,  null,               null,                     $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes);?>
+                <?php
+                // list1($SmartDataArrayShowBaseLocation,$smartData,             $SmartDataLocation, $SmartDataLocationParent, $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes){
+                   ?>
               </ul>
             </li>
           </ul>

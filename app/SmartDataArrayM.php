@@ -49,8 +49,8 @@ class SmartDataArrayM extends Model
 
     return $allURLs;
   }
-  public static function Show($ShowDataID, $ShowID) {
-    if(!function_exists('App\ShowAllDeepSmartDataHelper')){
+  public static function Show($ShowID) {
+    if(!function_exists('App\ShowHelper')){
       function ShowHelper($ShowLocation) {
         $result = array();
         $shallowList = scandir($ShowLocation);
@@ -68,7 +68,8 @@ class SmartDataArrayM extends Model
       }
     }
 
-    $ShowLocation = PostM::ShowLocation($ShowID)."/".$ShowDataID;
+    // $ShowLocation = PostM::ShowLocation($ShowID)."/".$ShowDataID;
+    $ShowLocation = PostM::ShowLocation($ShowID);
     // dd($ShowLocation);
     if (is_dir($ShowLocation)) {
       // $Show[$ShowDataID] =   ShowHelper($ShowLocation);
@@ -95,29 +96,68 @@ class SmartDataArrayM extends Model
     }
     function StoreHelperStore($ShowLocation,$SmartDataSubArrayLocation,$ShowDataID,$SmartDataItemShowFieldValues) {
 
-      $ShowDataLocation = $ShowLocation."/".$ShowDataID;
+      // $ShowDataLocation = $ShowLocation."/".$ShowDataID;
 
       // $ShowLocation,$ShowDataID
-      if (!file_exists($ShowDataLocation)) {
-        mkdir($ShowDataLocation);
-      }
-      dd ($ShowDataLocation);
+      // if (!file_exists($ShowDataLocation)) {
+      //   mkdir($ShowDataLocation);
+      // }
+      // dd ($ShowDataLocation);
+      // dd($SmartDataItemShowFieldValues);
       foreach($SmartDataItemShowFieldValues as $key => $value) {
-        $SmartDataArrayLocation = $ShowDataLocation ."/". $key;
-        dd($SmartDataArrayLocation);
-        if (!is_string($value)){
-          if (!file_exists($SmartDataArrayLocation)) {
-            mkdir($SmartDataArrayLocation);
+        // dd($SmartDataItemShowFieldValues);
+        // dd($ShowLocation);
+
+        // dd($ShowDataID);
+        // dd($SmartDataArrayLocation);
+        // dd($SmartDataArrayLocation);
+        // dd();
+        if (
+          $key !== 'DeepSmartDataArrayStore'
+          && $key !== 'SmartDataName'
+          && $key !== 'SmartDataLocationParent'
+          && $key !== 'SmartDataContent'
+          && $key !== 'SmartDataLocation'
+        )  {
+          if (!isset($value['SmartDataContent'])){
+
+            // dd($value);
+            // dd($value[]['SmartDataLocationParent']);
+            // $key = base64_decode($key);
+            $key = $key;
+            if (!empty($ShowDataID)) {
+              $ShowDataID =$ShowDataID."/".$key;
+            } else {
+              $ShowDataID =$key;
+            }
+            // dd($ShowDataID);
+
+            $SmartDataArrayLocation = $ShowLocation ."/". $ShowDataID;
+            // dd($SmartDataArrayLocation);
+            if (!file_exists($SmartDataArrayLocation)) {
+              mkdir($SmartDataArrayLocation);
+            }
+            StoreHelperStore($ShowLocation,$SmartDataSubArrayLocation, $ShowDataID, $value);
+          } else {
+            // dd($value);
+            // $key = base64_decode($key);
+            $key = $key;
+            if (!empty($ShowDataID)) {
+              $ShowDataID =$ShowDataID."/".$key;
+            } else {
+              $ShowDataID =$key;
+            }
+            $content = $value;
+            // dd("/". $SmartDataSubArrayLocation."/". $key);
+            // dd($ShowDataID);
+            $SmartDataArrayLocation = $ShowLocation."/".$ShowDataID;
+            // dd($SmartDataArrayLocation);
+            file_put_contents($SmartDataArrayLocation,$value);
+
+
           }
-          StoreHelperStore($ShowDataLocation,$ShowDataID."/". $key, $key, $value);
-        } else {
-          $content = $value;
-          // dd("/". $SmartDataSubArrayLocation."/". $key);
-
-          file_put_contents($SmartDataArrayLocation,$value);
-
-
         }
+
       }
 
     }
@@ -140,7 +180,8 @@ class SmartDataArrayM extends Model
 
       $SmartDataItemM_ShowAttributeTypes = SmartDataItemM::ShowAttributeTypes();
       $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
-      StoreHelperStore($ShowLocation, null,$ShowDataID,$SmartDataItemShowFieldValues);
+      // StoreHelperStore($ShowLocation, null,$ShowDataID,$SmartDataItemShowFieldValues);
+      StoreHelperStore($ShowLocation, null,null,$SmartDataItemShowFieldValues);
 
     // }
 
