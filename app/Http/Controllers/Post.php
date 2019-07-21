@@ -119,7 +119,7 @@ class Post extends Controller
       } else {
         $ShowAllDeepSmartData[$SmartDataArrayShowBaseLocation] = null;
       }
-
+      // dd($ShowAllDeepSmartData);
       // $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData("hey - Copy/smart/smartdataarray");
       // dd ($ShowAllDeepSmartData);
       $ShowAllShallowSmartData = PostM::ShowAllShallowSmartData(func_get_args());

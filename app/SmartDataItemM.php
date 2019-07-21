@@ -16,8 +16,7 @@ class SmartDataItemM extends Model
 {
 
   public static function ShowActions() {
-    $ShowActions["DeepSmartDataItemStore"] =   'DeepSmartDataItemStore';
-    $ShowActions["DeepSmartDataArrayStore"] =   'DeepSmartDataArrayStore';
+    $ShowActions["SelectedSmartDataItem"] =   'SelectedSmartDataItem';
     $ShowActions["ShallowSmartDataStore"] =   'ShallowSmartDataStore';
     $ShowActions["RichDataStore"] =   'RichDataStore';
     $ShowActions["DeepSmartDataArrayStoreFromSingleField"] =   'DeepSmartDataArrayStoreFromSingleField';
