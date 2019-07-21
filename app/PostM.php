@@ -178,7 +178,7 @@ class PostM extends Model
   }
 
   public static function Store($arguments, $request) {
-    dd($request);
+    // dd($request)
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
     $ShowID = PostM::ShowID($arguments);
 
@@ -219,7 +219,7 @@ class PostM extends Model
       // code...
       $SmartDataArray =  json_decode($request->get('smart'), true);
       SmartDataArrayM::StoreFromSingleField($ShowLocation, $SmartDataArray);
-    } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']))) {
+    } elseif (!empty($request->get('SmartDataItemShowFieldValues_Form'))) {
       SmartDataArrayM::Store($ShowLocation, $request, $ShowID);
     } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataItemStore']))) {
       SmartDataItemM::Store($ShowLocation, $request);
@@ -227,5 +227,8 @@ class PostM extends Model
 
 
     }
+    // dd($request);
+    // dd($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']);
+    // dd($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']));
   }
 }

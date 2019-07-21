@@ -101,9 +101,10 @@ class SmartDataArrayM extends Model
       if (!file_exists($ShowDataLocation)) {
         mkdir($ShowDataLocation);
       }
-      // dd ($ShowDataLocation);
+      dd ($ShowDataLocation);
       foreach($SmartDataItemShowFieldValues as $key => $value) {
         $SmartDataArrayLocation = $ShowDataLocation ."/". $key;
+        dd($SmartDataArrayLocation);
         if (!is_string($value)){
           if (!file_exists($SmartDataArrayLocation)) {
             mkdir($SmartDataArrayLocation);
@@ -128,11 +129,11 @@ class SmartDataArrayM extends Model
 
     // $ShowAllDeepSmartData = SmartDataArrayM::Show($ShowDataID, $ShowID);
     $SmartDataItemShowFieldValues = $request->get("SmartDataItemShowFieldValues");
-    dd($SmartDataItemShowFieldValues);
+    // dd($SmartDataItemShowFieldValues);
 
     $ShowDataLocation = $ShowLocation."/".$ShowDataID;
     // dd($ShowDataLocation);
-
+    // dd(1);
     // if (!empty($ShowDataLocation)) {
       // $SmartDataArray2['smart'] = $SmartDataArray;
       StoreHelperDestroy($ShowDataLocation);

@@ -6,8 +6,7 @@
 
 <link rel="stylesheet" href="{{ URL::asset('js/FlexiJsonEditor/jsoneditor.css') }}"/>
 
-<form  id="form" enctype="multipart/form-data" name="form" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
-  {{csrf_field()}}
+
 
   <h1>Sub-posts</h1>
   <div class="">
@@ -18,6 +17,9 @@
 
     <h2>Deep Smart Data</h2>
     <div class="">
+      <form  id="form" enctype="multipart/form-data" name="SmartDataItemShowFieldValues" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
+        {{csrf_field()}}
+        <input style="display: none;" type="text" name="SmartDataItemShowFieldValues_Form" value="1">
 
 
       <?php
@@ -69,7 +71,10 @@
         <?php
       }
       ?>
+      </form>
     </div>
+  <form  id="form" enctype="multipart/form-data" name="form" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
+    {{csrf_field()}}
     <h2>Shallow Smart Data</h2>
     <div class="">
       <div class="g-multi-level-dropdownd">
