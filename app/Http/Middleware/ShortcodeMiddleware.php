@@ -6,7 +6,7 @@ use Closure;
 use App\NetworkM;
 use App\PostM;
 use App\SmartDataItemM;
-use App\SmartDataArrayM;
+
 
 
 class ShortcodeMiddleware

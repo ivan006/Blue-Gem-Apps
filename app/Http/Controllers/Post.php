@@ -9,7 +9,7 @@ use App\MetadataM;
 use App\RichDataM;
 
 use App\SmartDataItemM;
-use App\SmartDataArrayM;
+
 
 
 
@@ -113,11 +113,12 @@ class Post extends Controller
       // dd(func_get_args()[0]);
       $ShowID = PostM::ShowID(func_get_args());
 
-      $SmartDataArrayShowBaseLocation = SmartDataArrayM::ShowBaseLocation();
-      if (isset(SmartDataArrayM::Show($ShowID)[$SmartDataArrayShowBaseLocation])) {
-        $ShowAllDeepSmartData[$SmartDataArrayShowBaseLocation] = SmartDataArrayM::Show($ShowID)[$SmartDataArrayShowBaseLocation];
+      $SmartDataArrayShowBaseLocation = SmartDataItemM::ShowBaseLocation();
+      if (isset(SmartDataItemM::Show($ShowID)[$SmartDataArrayShowBaseLocation])) {
+        // $ShowAllDeepSmartData[$SmartDataArrayShowBaseLocation] = SmartDataItemM::Show($ShowID)[$SmartDataArrayShowBaseLocation];
+        $ShowAllDeepSmartData = SmartDataItemM::Show($ShowID);
       } else {
-        $ShowAllDeepSmartData[$SmartDataArrayShowBaseLocation] = null;
+        $ShowAllDeepSmartData = null;
       }
       // dd($ShowAllDeepSmartData);
       // $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData("hey - Copy/smart/smartdataarray");
@@ -129,7 +130,7 @@ class Post extends Controller
       $allURLs = PostM::ShowActions(func_get_args());
 
       $RichDataShow = RichDataM::Show(func_get_args());
-      $SmartDataArrayShowBaseLocation = SmartDataArrayM::ShowBaseLocation();
+      $SmartDataArrayShowBaseLocation = SmartDataItemM::ShowBaseLocation();
 
       return view('edit', compact(
         'ShowAllDeepSmartData',

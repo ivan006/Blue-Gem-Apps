@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\NetworkM;
 use App\PostM;
 use App\SmartDataItemM;
-use App\SmartDataArrayM;
+
 
 
 
@@ -117,9 +117,9 @@ class PostM extends Model
         foreach ($dataNameList as $key => $value) {
           if (!in_array($value,array(".","..")))  {
             $dataLocation = $ShowLocation . "/" . $value;
-            if (is_dir($dataLocation) and basename($dataLocation) !== SmartDataArrayM::ShowBaseLocation()){
+            if (is_dir($dataLocation) and basename($dataLocation) !== SmartDataItemM::ShowBaseLocation()){
               $subDataNameList = scandir($dataLocation);
-              $blackList = array(".","..",SmartDataArrayM::ShowBaseLocation(),"rich.txt");
+              $blackList = array(".","..",SmartDataItemM::ShowBaseLocation(),"rich.txt");
               $whiteList = array_diff_key($subDataNameList,$blackList);
               if (!empty($whiteList)) {
                 $result[$value] = ShowSubPostHelper($dataLocation,$staticdir,$ShowID);
@@ -152,8 +152,8 @@ class PostM extends Model
   }
 
   // public static function ShowAllDeepSmartData($ShowID) {
-  //   $SmartDataArrayShowBaseLocation = SmartDataArrayM::ShowBaseLocation();
-  //   return $ShowAllDeepSmartData = SmartDataArrayM::Show($SmartDataArrayShowBaseLocation, $ShowID);
+  //   $SmartDataArrayShowBaseLocation = SmartDataItemM::ShowBaseLocation();
+  //   return $ShowAllDeepSmartData = SmartDataItemM::Show($SmartDataArrayShowBaseLocation, $ShowID);
   //
   // }
   public static function ShowAllShallowSmartData() {
@@ -187,17 +187,17 @@ class PostM extends Model
       function StoreSmartDataFromFile($arguments, $request) {
         $ShowID = PostM::ShowID($arguments);
 
-        $request->zip_file->storeAs("public/".$ShowID."/".SmartDataArrayM::ShowBaseLocation(), $request->zip_file->getClientOriginalName());
+        $request->zip_file->storeAs("public/".$ShowID."/".SmartDataItemM::ShowBaseLocation(), $request->zip_file->getClientOriginalName());
         // $path = "Econet/".NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
         // $path = NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
-        $path = NetworkM::ShowBaseLocation().$ShowID."/".SmartDataArrayM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName();
+        $path = NetworkM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName();
         // dd($path);
         // $Path = public_path($ShowID);
 
         $zipper = new \Chumper\Zipper\Zipper;
-        $zipper->make($path)->extractTo(NetworkM::ShowBaseLocation().$ShowID."/".SmartDataArrayM::ShowBaseLocation()."/");
+        $zipper->make($path)->extractTo(NetworkM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/");
         $zipper->close();
-        unlink(NetworkM::ShowBaseLocation().$ShowID."/".SmartDataArrayM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName());
+        unlink(NetworkM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName());
       }
       if (null !== $request->file('zip_file')) {
         StoreSmartDataFromFile($arguments, $request);
@@ -215,20 +215,9 @@ class PostM extends Model
       }
 
       StoreRichData($ShowLocation, $request);
-    } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStoreFromSingleField'])) ) {
-      // code...
-      $SmartDataArray =  json_decode($request->get('smart'), true);
-      SmartDataArrayM::StoreFromSingleField($ShowLocation, $SmartDataArray);
-    } elseif (!empty($request->get('SmartDataItemShowFieldValues_Form'))) {
-      SmartDataArrayM::Store($ShowLocation, $request, $ShowID);
-    } elseif (!empty($request->get($SmartDataItemM_ShowActions['DeepSmartDataItemStore']))) {
-      SmartDataItemM::Store($ShowLocation, $request);
-
-
-
     }
-    // dd($request);
-    // dd($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']);
-    // dd($request->get($SmartDataItemM_ShowActions['DeepSmartDataArrayStore']));
+    elseif (!empty($request->get('SmartDataItemShowFieldValues_Form'))) {
+      SmartDataItemM::Store($ShowLocation, $request, $ShowID);
+    }
   }
 }

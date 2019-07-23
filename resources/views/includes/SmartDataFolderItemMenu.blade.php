@@ -1,4 +1,4 @@
-<?php function DeepSmartDataArrayMenu($SmartDataID, $SmartDataItemM_ShowActions){ ?>
+<?php function SmartDataFolderItemMenu($SmartDataID, $SmartDataItemM_ShowActions){ ?>
   <div class="" style="  z-index: 1;position: relative;">
     Smart Data Array
     <span style="display: none;">1</span>

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\PostM;
 use App\SubPostM;
 use App\SmartDataItemM;
-use App\SmartDataArrayM;
+
 
 
 
@@ -30,9 +30,9 @@ class NetworkM extends Model
     foreach ($dataNameList as $key => $value) {
       if (!in_array($value,array(".","..")))  {
         $dataLocation = $ShowBaseLocation . "/" . $value;
-        if (is_dir($dataLocation) and basename($dataLocation) !== SmartDataArrayM::ShowBaseLocation()){
+        if (is_dir($dataLocation) and basename($dataLocation) !== SmartDataItemM::ShowBaseLocation()){
           $subDataNameList = scandir($dataLocation);
-          $blackList = array(".","..",SmartDataArrayM::ShowBaseLocation(),"rich.txt");
+          $blackList = array(".","..",SmartDataItemM::ShowBaseLocation(),"rich.txt");
           $whiteList = array_diff_key($subDataNameList,$blackList);
           if (!empty($whiteList)) {
             // $result[$value] = PostM::ShowSubPostHelper($dataLocation,$staticdir);
