@@ -64,6 +64,7 @@ class PostM extends Model
 
     return $arguments;
   }
+
   public static function ShowBaseIDPlusBaseLocation() {
     return NetworkM::ShowBaseLocation().PostM::ShowBaseID(func_get_args()[0]);
   }
@@ -101,6 +102,7 @@ class PostM extends Model
     // dd($allURLs);
     return $allURLs;
   }
+
   public static function ShowSubPost() {
 
 
@@ -156,6 +158,7 @@ class PostM extends Model
   //   return $ShowAllDeepSmartData = SmartDataItemM::ShowAll($SmartDataArrayShowBaseLocation, $ShowID);
   //
   // }
+
   public static function ShowAllShallowSmartData() {
 
     // if (is_dir($ShowLocation)) {

@@ -38,6 +38,7 @@ class SmartDataItemM extends Model
   }
 
   public static function ShowAll($ShowID) {
+
     if(!function_exists('App\ShowHelper')){
       function ShowHelper($ShowLocation) {
         $result = array();
@@ -65,6 +66,30 @@ class SmartDataItemM extends Model
 
       return $Show;
     }
+  }
+
+  public static function Show($ShowID, $DataID) {
+
+    // $ShowLocation = PostM::ShowLocation($ShowID)."/".$ShowDataID;
+
+    $ShowLocation = PostM::ShowLocation($ShowID);
+    // dd($ShowLocation);
+
+      // $Show[$ShowDataID] =   ShowHelper($ShowLocation);
+
+      $DataLocation = $ShowLocation . "/" . $DataID;
+      if (file_exists($DataLocation)){
+
+        $result = file_get_contents($DataLocation);
+        return  $result;
+      } else {
+        return  'error';
+
+      }
+
+
+
+
   }
 
   public static function g_base64_decode($value) {
