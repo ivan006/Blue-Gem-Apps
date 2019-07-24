@@ -1,6 +1,7 @@
+  @include('includes.theme-css')
 @include('includes.menu_post')
 
-
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
 
 
 <link rel="stylesheet" href="{{ URL::asset('js/FlexiJsonEditor/jsoneditor.css') }}"/>
@@ -76,5 +77,7 @@
     echo $VPgCont["rich.txt"];
   }
   ?>
+
+</div>
 
 </div>

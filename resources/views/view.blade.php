@@ -1,6 +1,6 @@
-
+  @include('includes.theme-css')
 @include('includes.menu_post')
-
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
 <?php
 if (file_exists($ShowBaseIDPlusBaseLocation."/header.php")) {
   // code...
@@ -22,5 +22,7 @@ if (file_exists($ShowBaseIDPlusBaseLocation."/header.php")) {
   }
 
   ?>
+
+</div>
 
 </div>
