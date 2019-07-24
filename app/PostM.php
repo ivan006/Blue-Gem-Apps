@@ -153,7 +153,7 @@ class PostM extends Model
 
   // public static function ShowAllDeepSmartData($ShowID) {
   //   $SmartDataArrayShowBaseLocation = SmartDataItemM::ShowBaseLocation();
-  //   return $ShowAllDeepSmartData = SmartDataItemM::Show($SmartDataArrayShowBaseLocation, $ShowID);
+  //   return $ShowAllDeepSmartData = SmartDataItemM::ShowAll($SmartDataArrayShowBaseLocation, $ShowID);
   //
   // }
   public static function ShowAllShallowSmartData() {
@@ -183,7 +183,8 @@ class PostM extends Model
     $ShowID = PostM::ShowID($arguments);
 
     $ShowLocation = PostM::ShowLocation($ShowID);
-    if (!empty($request->get($SmartDataItemM_ShowActions['RichDataStore'])) ) {
+    if (!empty($request->get('All_Content'))) {
+      // dd(123);
       function StoreSmartDataFromFile($arguments, $request) {
         $ShowID = PostM::ShowID($arguments);
 
@@ -203,20 +204,25 @@ class PostM extends Model
         StoreSmartDataFromFile($arguments, $request);
       }
 
-      function StoreRichData($ShowLocation, $request){
-
-        $filename =  "rich.txt";
-        $file =  $ShowLocation."/".$filename;
-        // echo file_get_contents($file);
-
-        $contents =  $request->get('contents');
-        file_put_contents($file,$contents);
-
-      }
-
-      StoreRichData($ShowLocation, $request);
     }
     elseif (!empty($request->get('SmartDataItemShowFieldValues_Form'))) {
+
+      // if (!empty($request->get($SmartDataItemM_ShowActions['RichDataStore'])) ) {
+      //
+      //
+      //   function StoreRichData($ShowLocation, $request){
+      //
+      //     $filename =  "rich.txt";
+      //     $file =  $ShowLocation."/".$filename;
+      //     // echo file_get_contents($file);
+      //
+      //     $contents =  $request->get('contents');
+      //     file_put_contents($file,$contents);
+      //
+      //   }
+      //
+      //   StoreRichData($ShowLocation, $request);
+      // }
       SmartDataItemM::Store($ShowLocation, $request, $ShowID);
     }
   }

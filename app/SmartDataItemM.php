@@ -22,6 +22,7 @@ class SmartDataItemM extends Model
     $ShowActions["DeepSmartDataArrayStoreFromSingleField"] =   'DeepSmartDataArrayStoreFromSingleField';
     return $ShowActions;
   }
+
   public static function ShowAttributeTypes() {
     $ShowAttributeTypes["/SmartDataName"] =   'SmartDataName';
     $ShowAttributeTypes["/SmartDataContent"] =   'SmartDataContent';
@@ -32,12 +33,11 @@ class SmartDataItemM extends Model
     return $ShowAttributeTypes;
   }
 
-
   public static function ShowBaseLocation() {
     return "smart";
   }
 
-  public static function Show($ShowID) {
+  public static function ShowAll($ShowID) {
     if(!function_exists('App\ShowHelper')){
       function ShowHelper($ShowLocation) {
         $result = array();
@@ -66,10 +66,7 @@ class SmartDataItemM extends Model
       return $Show;
     }
   }
-  public static function g_base64_encode($value) {
-    return base64_encode($value);
-    // return $value;
-  }
+
   public static function g_base64_decode($value) {
     return base64_decode($value);
     // return $value;

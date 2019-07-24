@@ -114,9 +114,9 @@ class Post extends Controller
       $ShowID = PostM::ShowID(func_get_args());
 
       $SmartDataArrayShowBaseLocation = SmartDataItemM::ShowBaseLocation();
-      if (isset(SmartDataItemM::Show($ShowID)[$SmartDataArrayShowBaseLocation])) {
-        // $ShowAllDeepSmartData[$SmartDataArrayShowBaseLocation] = SmartDataItemM::Show($ShowID)[$SmartDataArrayShowBaseLocation];
-        $ShowAllDeepSmartData = SmartDataItemM::Show($ShowID);
+      if (isset(SmartDataItemM::ShowAll($ShowID)[$SmartDataArrayShowBaseLocation])) {
+        // $ShowAllDeepSmartData[$SmartDataArrayShowBaseLocation] = SmartDataItemM::ShowAll($ShowID)[$SmartDataArrayShowBaseLocation];
+        $ShowAllDeepSmartData = SmartDataItemM::ShowAll($ShowID);
       } else {
         $ShowAllDeepSmartData = null;
       }

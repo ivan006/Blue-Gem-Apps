@@ -14,10 +14,12 @@
 </div>
 <h1>Data</h1>
 
-<form  id="form" enctype="multipart/form-data" name="SmartDataItemShowFieldValues" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
+<div class="">
+  <form  id="form" enctype="multipart/form-data" name="1" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
 
-  {{csrf_field()}}
-  <div class="">
+        <input style="display: none;" type="text" name="All_Content" value="1">
+
+    {{csrf_field()}}
 
     <h2>All Content</h2>
     <div class="">
@@ -25,6 +27,9 @@
       <input type="file" name="zip_file" />
       <input type="submit" name="<?php echo $SmartDataItemM_ShowActions['RichDataStore'] ?>" value="Store"><br>
     </div>
+
+  </form>
+  <form  id="form" enctype="multipart/form-data" name="SmartDataItemShowFieldValues" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
 
     <h2>Rich Data</h2>
     <div class="">
@@ -45,9 +50,10 @@
       }
       ?>
     </div>
+    {{csrf_field()}}
     <h2>Deep Smart Data</h2>
     <div class="">
-      {{csrf_field()}}
+
       <input style="display: none;" type="text" name="SmartDataItemShowFieldValues_Form" value="1">
 
 
@@ -146,7 +152,7 @@
     </div>
 
 
-  </div>
-</form>
+  </form>
+</div>
 
 <br>
