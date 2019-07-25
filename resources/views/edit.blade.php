@@ -192,19 +192,22 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         <div class="g-multi-level-dropdownd">
 
           <?php
-          dd($ShowAllDeepSmartData);
-          foreach($ShowAllDeepSmartData as $key => $value2){
-            // dd($SmartDataLocationParent);
-            $SmartDataLocation = '['.g_base64_encode($key).']';
-            $SmartDataID = "SmartDataItemShowFieldValues".$SmartDataLocation;
-            if (!is_array($value2) && $key !== $String_rich) {
+          // dd($ShowAllDeepSmartData);
+          if (isset($ShowAllDeepSmartData)) {
+            // code...
+            foreach($ShowAllDeepSmartData as $key => $value2){
+              // dd($SmartDataLocationParent);
+              $SmartDataLocation = '['.g_base64_encode($key).']';
+              $SmartDataID = "SmartDataItemShowFieldValues".$SmartDataLocation;
+              if (!is_array($value2) && $key !== $String_rich) {
 
-              ?>
-              <span><?php echo SmartDataFileItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?></span>
-              <input class="g-bor-gre"  style="width:100%" type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
-              <textarea class="g-bor-gre g-bor-top-0"  style="width:100%" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" cols="80"><?php echo $value2; ?></textarea>
+                ?>
+                <span><?php echo SmartDataFileItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?></span>
+                <input class="g-bor-gre"  style="width:100%" type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
+                <textarea class="g-bor-gre g-bor-top-0"  style="width:100%" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" cols="80"><?php echo $value2; ?></textarea>
 
-              <?php
+                <?php
+              }
             }
           }
           ?>
