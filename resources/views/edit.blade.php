@@ -192,6 +192,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         <div class="g-multi-level-dropdownd">
 
           <?php
+          dd($ShowAllDeepSmartData);
           foreach($ShowAllDeepSmartData as $key => $value2){
             // dd($SmartDataLocationParent);
             $SmartDataLocation = '['.g_base64_encode($key).']';
