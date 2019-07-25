@@ -8,9 +8,9 @@
 <!-- Footer -->
 
 
-<footer class="w3-container w3-theme-d5">
+<!-- <footer class="w3-container w3-theme-d5">
 <p>Powered by Floral Builder</p>
-</footer>
+</footer> -->
 
 <script>
 // Accordion
