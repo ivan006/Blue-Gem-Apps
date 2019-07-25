@@ -1,3 +1,4 @@
+heres our summer price: [r]smart/price/prices/summer price[/r]<br>
+heres our summer price: [r]smart/price/prices/price/winter price[/r]<br>
 heres our summer price: [r]smart/smartdataarray/prices/summer price[/r]<br>
-heres our summer price: [r]smart/smartdataarray/prices/winter price[/r]<br>heres our summer price: [r]smart/smartdataarray/prices/summer price[/r]<br>
 heres our summer price: [r]smart/smartdataarray/prices/winter price[/r]
