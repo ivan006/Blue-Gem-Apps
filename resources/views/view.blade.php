@@ -1,4 +1,3 @@
-@include('includes.general-include-one-of-four')
 
 
 <style>
@@ -20,5 +19,28 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 </style>
 
-@include('includes.general-include-two-of-four')
 @include('includes.menu_post')
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+</div>
+<?php
+if (file_exists($ShowBaseIDPlusBaseLocation."/header.php")) {
+  // code...
+
+  include($ShowBaseIDPlusBaseLocation."/header.php");
+}
+?>
+
+
+
+<div class="" style="background-color: white; padding: 0em; width: 100%; height: 200px;">
+
+  <?php
+
+  if (!empty($RichDataShow )) {
+    echo $RichDataShow ;
+  }
+
+  ?>
+
+</div>

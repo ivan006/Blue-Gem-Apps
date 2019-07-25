@@ -13,7 +13,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
   padding-left: 1em;
 }
 .g-bor-gre {
-  border: 2px whitesmoke solid;
+  border: 2px lightgrey solid;
 }
 .g-bor-top-0 {
   border-top: 0px ;
