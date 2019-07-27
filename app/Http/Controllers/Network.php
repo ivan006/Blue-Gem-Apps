@@ -88,7 +88,7 @@ class Network extends Controller
         $RichDataShow = RichDataM::Show(func_get_args());
 
 
-        return view('view', compact('allURLs', 'ShowBaseIDPlusBaseLocation', 'RichDataShow'));
+        return view('group-read', compact('allURLs', 'ShowBaseIDPlusBaseLocation', 'RichDataShow'));
       } else {
         // dd(2);
         $allURLs = PostM::ShowActions(func_get_args());
@@ -98,7 +98,7 @@ class Network extends Controller
 
         // echo Route::getCurrentRoute()->getPath();
 
-        return view('browse', compact('PostList', 'allURLs'));
+        return view('network-read', compact('PostList', 'allURLs'));
       }
     }
 
@@ -141,7 +141,7 @@ class Network extends Controller
         $RichDataShow = RichDataM::Show(func_get_args());
         $SmartDataArrayShowBaseLocation = SmartDataItemM::ShowBaseLocation();
 
-        return view('edit', compact(
+        return view('group-edit', compact(
           'ShowAllDeepSmartData',
           'allURLs',
           'RichDataShow',
@@ -152,7 +152,17 @@ class Network extends Controller
         ));
 
       } else {
-        dd(1);
+        // dd(2);
+        $allURLs = PostM::ShowActions(func_get_args());
+
+        $PostList = NetworkM::ShowPost();
+
+        $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
+
+
+        // echo Route::getCurrentRoute()->getPath();
+
+        return view('network-edit', compact('PostList', 'allURLs', 'SmartDataItemM_ShowActions'));
       }
     }
 

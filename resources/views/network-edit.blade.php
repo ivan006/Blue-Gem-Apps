@@ -64,32 +64,60 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 
   <?php
-  if (isset($VSiteHeader)) {
-    echo $VSiteHeader;
-  }
-
-  if (isset($VPgCont["rich.txt"])) {
-    echo $VPgCont["rich.txt"];
-  }
+  // if (isset($VSiteHeader)) {
+  //   echo $VSiteHeader;
+  // }
+  //
+  // if (isset($VPgCont["rich.txt"])) {
+  //   echo $VPgCont["rich.txt"];
+  // }
   ?>
+<style media="screen">
+/* stuf */
+.f-treeview li.f-leaf {
+  list-style-image: url('https://www.w3.org/TR/wai-aria-practices/examples/treeview/treeview-1/images/file.png');
+}
+.f-treeview li {
+  list-style-image: url('https://www.w3.org/TR/wai-aria-practices/examples/treeview/treeview-1/images/closed.png');
+}
+/* stuf */
+</style>
 
 
-    <?php foreach($PostList as $key => $value){?>
-      <a href="{{$value['url']}}">
+
+
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
           <h2>
-            {{$key}}
+            Groups
 
           </h2>
+
+          <div class="f-treeview">
+            <ul>
+              <li>
+                Harmonyville.net
+                <?php echo SmartDataFolderItemMenu('hey - Copy',$SmartDataItemM_ShowActions); ?>
+                <ul>
+                  <?php foreach($PostList as $key => $value){?>
+                    <li class="f-leaf">
+                      <a href="{{$value['url']}}">
+                        {{$key}}
+                      </a>
+                    </li>
+                  <?php }?>
+
+                </ul>
+              </li>
+            </ul>
+          </div>
+
           <br>
 
         </div>
-      </a>
 
 
 
-    <?php }?>
 
 
 

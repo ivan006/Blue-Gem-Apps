@@ -1,17 +1,14 @@
-
-
-
 @include('includes.general-include-one-of-four')
 
 
 <style>
 html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
-.g-futuristic-indented-list {
-  margin-left: 1em;
-  margin-top: 1em;
-  border-left: 2px lightgrey solid;
-  padding-left: 1em;
-}
+/* .g-futuristic-indented-list {
+margin-left: 1em;
+margin-top: 1em;
+border-left: 2px lightgrey solid;
+padding-left: 1em;
+} */
 .g-bor-gre {
   border: 2px lightgrey solid;
 }
@@ -20,7 +17,14 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 }
 
-
+/* stuf */
+.f-treeview li.f-leaf {
+  list-style-image: url('https://www.w3.org/TR/wai-aria-practices/examples/treeview/treeview-1/images/file.png');
+}
+.f-treeview li {
+  list-style-image: url('https://www.w3.org/TR/wai-aria-practices/examples/treeview/treeview-1/images/closed.png');
+}
+/* stuf */
 </style>
 
 @include('includes.general-include-two-of-four')
@@ -129,69 +133,91 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
         <?php
         if (!empty($ShowAllDeepSmartData)) {
-          function list1($SmartDataArrayShowBaseLocation,$smartData, $SmartDataLocation, $SmartDataLocationParent, $SmartDataItemM_ShowActions, $SmartDataItemM_ShowAttributeTypes){
+          function list1(
+          $SmartDataArrayShowBaseLocation,
+          $smartData,
+          $SmartDataLocation,
+          $SmartDataLocationParent,
+          $SmartDataItemM_ShowActions,
+          $SmartDataItemM_ShowAttributeTypes
+          ){
             $SmartDataArrayShowBaseLocationEncoded = g_base64_encode($SmartDataArrayShowBaseLocation);
-            foreach($smartData as $key => $value2){
-              // dd($SmartDataLocationParent);
-              $SmartDataLocation = $SmartDataLocationParent.'['.g_base64_encode($key).']';
-              $SmartDataID = "SmartDataItemShowFieldValues".$SmartDataLocation;
-              ?>
-              <div class="g-futuristic-indented-list"><br>
+            ?>
+            <ul>
+              <?php
+              foreach($smartData as $key => $value2){
+                // dd($SmartDataLocationParent);
+                $SmartDataLocation = $SmartDataLocationParent.'['.g_base64_encode($key).']';
+                $SmartDataID = "SmartDataItemShowFieldValues".$SmartDataLocation;
+                ?>
 
                 <?php
                 if (is_array($value2)) {
                   ?>
+                  <li>
+                      <?php
+                      // dd($SmartDataID);
+                      ?>
+                      <input class="g-bor-gre"  style="" type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>">
+                      <?php echo SmartDataFolderItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?>
 
-                  <?php
-                  // dd($SmartDataID);
-                  ?>
-                  <span><?php echo SmartDataFolderItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?></span>
-                  <input class="g-bor-gre"  style="width:100%;" type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
 
-
-                  <?php
-                  list1(
-                  $SmartDataArrayShowBaseLocationEncoded,
-                  $value2,
-                  $SmartDataLocation,
-                  $SmartDataLocation,
-                  $SmartDataItemM_ShowActions,
-                  $SmartDataItemM_ShowAttributeTypes
-                  );
-                  ?>
+                      <?php
+                      list1(
+                      $SmartDataArrayShowBaseLocationEncoded,
+                      $value2,
+                      $SmartDataLocation,
+                      $SmartDataLocation,
+                      $SmartDataItemM_ShowActions,
+                      $SmartDataItemM_ShowAttributeTypes
+                      );
+                      ?>
+                  </li>
 
 
                 <?php  } elseif ($key !== "url") {?>
+                  <li class="f-leaf">
+                    <input class="g-bor-gre"  style="" type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>">
+                    <?php echo SmartDataFileItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?>
 
-                  <span><?php echo SmartDataFileItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?></span>
-                  <input class="g-bor-gre"  style="width:100%;" type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
-                  <textarea class="g-bor-gre g-bor-top-0"  style="width:100%;" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" ><?php echo $value2; ?></textarea>
+                    <textarea class="g-bor-gre "  style="width:100%;" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" ><?php echo $value2; ?></textarea>
+                  </li>
 
                   <?php
                 }
                 ?>
-                <br>
-              </div>
-              <?php
-            }
+
+
+
+                <?php
+              }
+              ?>
+            </ul>
+            <?php
           }
 
           // dd($ShowAllDeepSmartData);
           ?>
+          <div class="f-treeview" >
+
+
+            <?php
+            // dd($ShowAllDeepSmartData);
+            // dd($SmartDataArrayShowBaseLocation);
+            $ShowAllDeepSmartDataSmart['smart'] = $ShowAllDeepSmartData['smart'];
+            // $ShowAllDeepSmartDataSmart = $ShowAllDeepSmartData;
+            // $ShowAllDeepSmartData = $ShowAllDeepSmartDataSmart;
+            list1(
+            $SmartDataArrayShowBaseLocation,
+            $ShowAllDeepSmartDataSmart,
+            null,
+            null,
+            $SmartDataItemM_ShowActions,
+            $SmartDataItemM_ShowAttributeTypes
+            );
+            ?>
+          </div>
           <?php
-          // dd($ShowAllDeepSmartData);
-          // dd($SmartDataArrayShowBaseLocation);
-          $ShowAllDeepSmartDataSmart['smart'] = $ShowAllDeepSmartData['smart'];
-          // $ShowAllDeepSmartDataSmart = $ShowAllDeepSmartData;
-          // $ShowAllDeepSmartData = $ShowAllDeepSmartDataSmart;
-          list1(
-          $SmartDataArrayShowBaseLocation,
-          $ShowAllDeepSmartDataSmart,
-          null,
-          null,
-          $SmartDataItemM_ShowActions,
-          $SmartDataItemM_ShowAttributeTypes
-          );
 
         }
         ?>
@@ -222,7 +248,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
                 ?>
                 <span><?php echo SmartDataFileItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?></span>
                 <input class="g-bor-gre"  style="width:100%" type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>"><br>
-                <textarea class="g-bor-gre g-bor-top-0"  style="width:100%" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" cols="80"><?php echo $value2; ?></textarea>
+                <textarea class="g-bor-gre "  style="width:100%" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" cols="80"><?php echo $value2; ?></textarea>
 
                 <?php
               }
