@@ -76,25 +76,32 @@ class PostM extends Model
       // dd(func_get_args());
 
       $ShowID = PostM::ShowID(func_get_args()[0]);
-      $allURLs['sub_post_read'] =   route('Post.show',$ShowID);
-      $allURLs['sub_post_edit'] = route('Post.edit',$ShowID);
+      $allURLs['sub_post_read'] =   route('Network.show',$ShowID);
+      $allURLs['sub_post_edit'] = route('Network.edit',$ShowID);
+      $allURLs['sub_post_store'] = route('Network.store',$ShowID);
 
       // $allURLs['sub_post_update'] = route('Post.update',$ShowID.$ShowID);
-      $allURLs['sub_post_destroy'] = route('Post.destroy',$ShowID);
-      $allURLs['sub_post_store'] = route('Post.store',$ShowID);
-      $allURLs['sub_post_create'] = route('Post.create');
-      // $allURLs['sub_post_index'] = route('Post.index',$ShowID.$ShowID);
+      // $allURLs['sub_post_destroy'] = route('Network.destroy',$ShowID);
+      // $allURLs['sub_post_create'] = route('Network.create');
+      // $allURLs['sub_post_index'] = route('Network.index',$ShowID.$ShowID);
 
 
 
-      $allURLs['post_create'] = route('Post.create');
-      $allURLs['post_index'] = route('Post.index');
+      // $allURLs['post_create'] = route('Network.create');
+      // $allURLs['post_index'] = route('Network.index');
     } else {
-      $allURLs['sub_post_read'] =   " ";
-      $allURLs['sub_post_edit'] = " ";
 
-      $allURLs['sub_post_destroy'] =  " ";
-      $allURLs['sub_post_create'] =  " ";
+      $ShowID = null;
+      $allURLs['sub_post_read'] =   route('Network.show',$ShowID);
+      $allURLs['sub_post_edit'] = route('Network.edit',$ShowID);
+      $allURLs['sub_post_store'] = route('Network.store',$ShowID);
+
+
+      // $allURLs['sub_post_read'] =   " ";
+      // $allURLs['sub_post_edit'] = " ";
+      //
+      // $allURLs['sub_post_destroy'] =  " ";
+      // $allURLs['sub_post_create'] =  " ";
 
 
     }
@@ -115,7 +122,7 @@ class PostM extends Model
         $dataNameList = scandir($ShowLocation);
 
         $url = str_replace($staticdir, "", $ShowLocation);
-        $result["url"] = route("Post.show")."/".$ShowID.$url;
+        $result["url"] = route("Network.show")."/".$ShowID.$url;
         foreach ($dataNameList as $key => $value) {
           if (!in_array($value,array(".","..")))  {
             $dataLocation = $ShowLocation . "/" . $value;
@@ -126,10 +133,10 @@ class PostM extends Model
               if (!empty($whiteList)) {
                 $result[$value] = ShowSubPostHelper($dataLocation,$staticdir,$ShowID);
                 // $url = str_replace($staticdir."/", "", $dataLocation);
-                // $result[$value]["url"] = route("Post.show")."/".$ShowID."/".$url;
+                // $result[$value]["url"] = route("Network.show")."/".$ShowID."/".$url;
               } else {
                 $url = str_replace($staticdir, "", $dataLocation);
-                $result[$value] = route("Post.show")."/".$ShowID.$url;
+                $result[$value] = route("Network.show")."/".$ShowID.$url;
               }
             }
           }

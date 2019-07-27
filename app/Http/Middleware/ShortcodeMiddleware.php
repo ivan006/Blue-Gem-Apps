@@ -72,54 +72,58 @@ class ShortcodeMiddleware
               }
 
               $arguments = $request->route()->parameters();
-
-              $arguments = array_values($arguments);
-              $arguments2[0] = $arguments[0];
-              foreach ($matches[0] as $key => $value) {
+              if (!empty($arguments)) {
+                // code...
                 // dd($arguments);
 
+                $arguments = array_values($arguments);
+                $arguments2[0] = $arguments[0];
+                foreach ($matches[0] as $key => $value) {
+                  // dd($arguments);
 
 
-                $VPgsLocs = PostM::ShowSubPost($arguments2);
-                // dd($arguments2);
-                // dd($VPgsLocs);
-                ob_start();
 
-                page_list($VPgsLocs,  $value,$preg_match_all);
+                  $VPgsLocs = PostM::ShowSubPost($arguments2);
+                  // dd($arguments2);
+                  // dd($VPgsLocs);
+                  ob_start();
 
-                $result = ob_get_contents();
-                ob_end_clean();
+                  page_list($VPgsLocs,  $value,$preg_match_all);
 
-                $responceContent = str_replace($value, $result, $responceContent);
+                  $result = ob_get_contents();
+                  ob_end_clean();
 
+                  $responceContent = str_replace($value, $result, $responceContent);
+
+                }
+                // code  example ..
+                // <div class="g-multi-level-dropdown">
+                //   <ul>
+                //     [page_list]
+                //     [twig]
+                //     <li>
+                //       <a href="[link]">
+                //         [name]
+                //       </a>
+                //       <span class="toggle">
+                //       <a href="#">+</a>
+                //       <ul>
+                //         [inner_twig]
+                //       </ul>
+                //       </span>
+                //     </li>
+                //     [/twig]
+                //     [leaf]
+                //     <li>
+                //       <a href="[link]">
+                //         [name]
+                //       </a>
+                //     </li>
+                //     [/leaf]
+                //     [/page_list]
+                //   </ul>
+                // </div>
               }
-              // code  example ..
-              // <div class="g-multi-level-dropdown">
-              //   <ul>
-              //     [page_list]
-              //     [twig]
-              //     <li>
-              //       <a href="[link]">
-              //         [name]
-              //       </a>
-              //       <span class="toggle">
-              //       <a href="#">+</a>
-              //       <ul>
-              //         [inner_twig]
-              //       </ul>
-              //       </span>
-              //     </li>
-              //     [/twig]
-              //     [leaf]
-              //     <li>
-              //       <a href="[link]">
-              //         [name]
-              //       </a>
-              //     </li>
-              //     [/leaf]
-              //     [/page_list]
-              //   </ul>
-              // </div>
 
             }
           }

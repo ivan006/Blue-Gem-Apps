@@ -37,10 +37,10 @@ class NetworkM extends Model
           if (!empty($whiteList)) {
             // $result[$value] = PostM::ShowSubPostHelper($dataLocation,$staticdir);
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value]["url"] = route('Post.show', $url);
+            $result[$value]["url"] = route('Network.show', $url);
           } else {
             $url = str_replace($staticdir."/", "", $dataLocation);
-            $result[$value] = route('Post.show', $url);
+            $result[$value] = route('Network.show', $url);
           }
         }
       }
