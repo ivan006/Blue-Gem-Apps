@@ -103,6 +103,7 @@ class SmartDataItemM extends Model
       foreach ($SmartDataItemShowFieldValues as $key => $value) {
         // dd($SmartDataItemShowFieldValues);
         // dd($SmartDataItemShowFieldValues);
+        // dd($SmartDataItemShowFieldValues);
 
         $String_SelectedSmartDataItem = 'SelectedSmartDataItem';
         $String_SmartDataName = 'SmartDataName';
