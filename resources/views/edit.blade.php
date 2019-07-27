@@ -63,7 +63,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
     {{csrf_field()}}
     <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
-      <h2>All Content</h2>
+      <h2>Upload Content</h2>
       <div class="">
         <label>Please Select Zip File</label>
         <input class="g-bor-gre"  type="file" name="zip_file" />

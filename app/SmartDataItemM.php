@@ -101,7 +101,8 @@ class SmartDataItemM extends Model
     function StoreHelperDestroy($ShowLocation,$ShowDataID, $SelectedSmartDataItem, $SmartDataItemShowFieldValues) {
       // dd($SmartDataItemShowFieldValues);
       foreach ($SmartDataItemShowFieldValues as $key => $value) {
-
+        // dd($SmartDataItemShowFieldValues);
+        // dd($SmartDataItemShowFieldValues);
 
         $String_SelectedSmartDataItem = 'SelectedSmartDataItem';
         $String_SmartDataName = 'SmartDataName';
@@ -116,7 +117,7 @@ class SmartDataItemM extends Model
         && $key !== $String_SmartDataLocation
         ) {
           $key = SmartDataItemM::g_base64_decode($key);
-          if (!isset($value[$String_SmartDataContent])) {
+          if (!array_key_exists($String_SmartDataContent, $value)) {
             // dd(1);
             if (isset($value[$String_SelectedSmartDataItem]) OR $SelectedSmartDataItem == 1) {
               $SelectedSmartDataItemInheritance = 1;
@@ -156,7 +157,7 @@ class SmartDataItemM extends Model
         && $key !== $String_SmartDataLocation
         )  {
           $key = SmartDataItemM::g_base64_decode($key);
-          if (!isset($value[$String_SmartDataContent])){
+          if (!array_key_exists($String_SmartDataContent, $value)){
             if (isset($value[$String_SelectedSmartDataItem]) OR $SelectedSmartDataItem == 1) {
               $SmartDataName = $value[$String_SmartDataName];
               $SmartDataArrayLocation = $ShowLocation . $ShowDataID."/".$SmartDataName;
