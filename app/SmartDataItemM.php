@@ -104,6 +104,7 @@ class SmartDataItemM extends Model
         // dd($SmartDataItemShowFieldValues);
         // dd($SmartDataItemShowFieldValues);
         // dd($SmartDataItemShowFieldValues);
+        // dd($SmartDataItemShowFieldValues);
 
         $String_SelectedSmartDataItem = 'SelectedSmartDataItem';
         $String_SmartDataName = 'SmartDataName';

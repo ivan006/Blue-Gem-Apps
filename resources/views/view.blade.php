@@ -21,8 +21,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 @include('includes.menu_post')
 
-<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
-</div>
+
 <?php
 if (file_exists($ShowBaseIDPlusBaseLocation."/header.txt")) {
   // code...

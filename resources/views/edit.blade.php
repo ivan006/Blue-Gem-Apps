@@ -73,7 +73,27 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
     </div>
 
   </form>
+  <form  id="form" enctype="multipart/form-data" name="1" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
+
+    <input class="g-bor-gre"  style="display: none;" type="text" name="Upload_content" value="1">
+
+    {{csrf_field()}}
+    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+
+      <h2>Upload Content</h2>
+      <div class="">
+        <label>Please Select Zip File</label>
+        <input class="g-bor-gre"  type="file" name="zip_file" />
+        <input class="g-bor-gre"  type="submit" name="<?php echo $SmartDataItemM_ShowActions['RichDataStore'] ?>" value="Store"><br>
+      </div>
+      <br>
+    </div>
+
+  </form>
   <form  id="form" enctype="multipart/form-data" name="SmartDataItemShowFieldValues" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
+    {{csrf_field()}}
+    <input class="g-bor-gre"  style="display: none;" type="text" name="SmartDataItemShowFieldValues_Form" value="1">
+
     <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
       <h2>Rich Data</h2>
@@ -97,7 +117,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
       </div>
       <br>
     </div>
-    {{csrf_field()}}
+
 
 
     <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
@@ -105,8 +125,6 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
       <h2>Deep Smart Data</h2>
       <div class="">
-
-        <input class="g-bor-gre"  style="display: none;" type="text" name="SmartDataItemShowFieldValues_Form" value="1">
 
 
         <?php
