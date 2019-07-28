@@ -26,6 +26,7 @@ class GroupM extends Model
   public static function ShowAll() {
     $ShowBaseLocation = GroupM::ShowBaseLocation();
     $dataNameList = scandir($ShowBaseLocation);
+    $result = array();
     foreach ($dataNameList as $key => $value) {
       $dataLocation = $ShowBaseLocation . "/" . $value;
       if (!in_array($value,array(".","..")) && is_dir($dataLocation) )  {

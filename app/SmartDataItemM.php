@@ -50,6 +50,12 @@ class SmartDataItemM extends Model
               $result[$value] = ShowHelper($DataLocation);
             } else {
               $result[$value] = file_get_contents($DataLocation);
+              // if (1==1) {
+              //   $result[$value] = mime_content_type($DataLocation);
+              // } else {
+              //
+              //   $result[$value] = file_get_contents($DataLocation);
+              // }
             }
           }
         }
