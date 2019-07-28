@@ -88,9 +88,9 @@ class NetworkM extends Model
   //   return func_get_args()[0][0];
   // }
 
-  // public static function Store($request) {
-  //   mkdir(self::BaseLocation()."/".$request->get('name'));
-  // }
+  public static function Store($request) {
+    mkdir(self::BaseLocation()."/".$request->get('name'));
+  }
 
 
 

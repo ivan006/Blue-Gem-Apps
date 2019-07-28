@@ -35,9 +35,9 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 
 
-@include('includes.SmartDataFileItemMenu')
-@include('includes.SmartDataFolderItemMenu')
-@include('includes.ShallowSmartDataMenu')
+@include('includes.item-menus/SmartDataFileItemMenu')
+@include('includes.item-menus/SmartDataFolderItemMenu')
+@include('includes.item-menus/ShallowSmartDataMenu')
 @include('includes.encode_decode')
 
 @include('includes.menu_post')

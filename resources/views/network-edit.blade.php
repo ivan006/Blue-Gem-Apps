@@ -11,9 +11,10 @@
 
 
 
-@include('includes.SmartDataFileItemMenu')
-@include('includes.SmartDataFolderItemMenu')
-@include('includes.ShallowSmartDataMenu')
+@include('includes.item-menus/SmartDataFileItemMenu')
+@include('includes.item-menus/SmartDataFolderItemMenu')
+@include('includes.item-menus/SmartDataNetworkItemMenu')
+@include('includes.item-menus/ShallowSmartDataMenu')
 @include('includes.encode_decode')
 
 @include('includes.menu_post')
@@ -55,18 +56,7 @@
   //   echo $VPgCont["rich.txt"];
   // }
   ?>
-<style media="screen">
-/* stuf */
-.f-treeview li.f-leaf {
-  list-style-image: url('https://www.w3.org/TR/wai-aria-practices/examples/treeview/treeview-1/images/file.png');
-}
-.f-treeview li {
-  list-style-image: url('https://www.w3.org/TR/wai-aria-practices/examples/treeview/treeview-1/images/closed.png');
-}
-/* stuf */
 
-
-</style>
 
 
 
@@ -80,25 +70,30 @@
             Groups
 
           </h2>
+          <form  enctype="multipart/form-data" name="1" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
 
-          <div class="f-treeview">
-            <ul>
-              <li>
-                Harmonyville.net
-                <?php echo SmartDataFolderItemMenu('hey - Copy',$SmartDataItemM_ShowActions); ?>
-                <ul>
-                  <?php foreach($PostList as $key => $value){?>
-                    <li class="f-leaf">
-                      <a href="{{$value['url']}}">
-                        {{$key}}
-                      </a>
-                    </li>
-                  <?php }?>
+            <input class="g-bor-gre"  style="display: none;" type="text" name="All_Content" value="1">
 
-                </ul>
-              </li>
-            </ul>
-          </div>
+            {{csrf_field()}}
+            <div class="f-treeview">
+              <ul>
+                <li>
+                  Network
+                  <?php echo SmartDataNetworkItemMenu('hey - Copy',$SmartDataItemM_ShowActions); ?>
+                  <ul>
+                    <?php foreach($PostList as $key => $value){?>
+                      <li class="f-leaf">
+                        <a href="{{$value['url']}}">
+                          {{$key}}
+                        </a>
+                      </li>
+                    <?php }?>
+
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </form>
 
           <br>
 
