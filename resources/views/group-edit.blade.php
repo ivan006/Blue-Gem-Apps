@@ -16,8 +16,6 @@
 @include('includes.base-dom/general-include-three-of-four')
 
 
-
-
 <!-- Left Column -->
 <div class="w3-col m2">
 
@@ -31,17 +29,14 @@
 <!-- Middle Column -->
 <div class="w3-col m8">
 
-
-
-
   <form  id="form" enctype="multipart/form-data" name="1" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
 
-    <input class="g-bor-gre"  style="display: none;" type="text" name="Upload_content" value="1">
+    <input class="g-bor-gre"  style="display: none;" type="text" name="post_files_create_from_zip" value="1">
 
     {{csrf_field()}}
     <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
-      <h2>Folder from zip upload</h2>
+      <h2>Create post files from Zip</h2>
       <div class="">
         <label>Please Select Zip File</label>
         <input class="g-bor-gre"  type="file" name="zip_file" />
@@ -221,7 +216,7 @@
 
 
   </form>
-  
+
   <form  id="form" enctype="multipart/form-data" name="1" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
 
     <input class="g-bor-gre"  style="display: none;" type="text" name="All_Content" value="1">

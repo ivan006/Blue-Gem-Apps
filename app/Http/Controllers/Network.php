@@ -60,7 +60,7 @@ class Network extends Controller
         return redirect($allURLs['sub_post_edit']);
       } else {
         // dd(2);
-        GroupM::Store($request);
+        GroupM::Create($request);
 
         $allURLs = PostM::ShowActions($arguments);
         // dd($allURLs['sub_post_edit']);

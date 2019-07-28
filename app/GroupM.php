@@ -41,7 +41,7 @@ class GroupM extends Model
     return GroupM::ShowBaseLocation().func_get_args()[0];
   }
 
-  public static function Store($request) {
+  public static function Create($request) {
     // dd($request);
     mkdir(GroupM::ShowBaseLocation()."/".$request->get('name'));
   }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\GroupM;
 use App\PostM;
 use App\SmartDataItemM;
+use App\FileM;
 
 
 
@@ -195,23 +196,21 @@ class PostM extends Model
     $ShowLocation = PostM::ShowLocation($ShowID);
     if (!empty($request->get('All_Content'))) {
       // dd(123);
-      function StoreSmartDataFromFile($arguments, $request) {
-        $ShowID = PostM::ShowID($arguments);
 
-        $request->zip_file->storeAs("public/".$ShowID."/".SmartDataItemM::ShowBaseLocation(), $request->zip_file->getClientOriginalName());
-        // $path = "Econet/".GroupM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
-        // $path = GroupM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
-        $path = GroupM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName();
-        // dd($path);
-        // $Path = public_path($ShowID);
-
-        $zipper = new \Chumper\Zipper\Zipper;
-        $zipper->make($path)->extractTo(GroupM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/");
-        $zipper->close();
-        unlink(GroupM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName());
-      }
       if (null !== $request->file('zip_file')) {
-        StoreSmartDataFromFile($arguments, $request);
+
+        $SubLocation = SmartDataItemM::ShowBaseLocation()."/";
+        FileM::CreateFromZip($arguments, $request, $SubLocation );
+      }
+
+    }
+    elseif (!empty($request->get('post_files_create_from_zip'))) {
+      // dd(123);
+
+      if (null !== $request->file('zip_file')) {
+
+        $SubLocation = null;
+        FileM::CreateFromZip($arguments, $request, $SubLocation );
       }
 
     }
