@@ -37,16 +37,6 @@
 <!-- Middle Column -->
 <div class="w3-col m8">
 
-
-
-
-
-
-
-
-
-
-
   <?php
   // if (isset($VSiteHeader)) {
   //   echo $VSiteHeader;
@@ -56,14 +46,6 @@
   //   echo $VPgCont["rich.txt"];
   // }
   ?>
-
-
-
-
-
-
-
-
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
           <h2>
@@ -81,6 +63,7 @@
                   Network
                   <?php echo SmartDataNetworkItemMenu('hey - Copy',$SmartDataItemM_ShowActions); ?>
                   <ul>
+                    <?php //dd($PostList) ?>
                     <?php foreach($PostList as $key => $value){?>
                       <li class="f-leaf">
                         <a href="{{$value['url']}}">

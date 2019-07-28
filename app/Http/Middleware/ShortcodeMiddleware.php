@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\NetworkM;
+use App\GroupM;
 use App\PostM;
 use App\SmartDataItemM;
 

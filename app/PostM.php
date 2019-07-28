@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Http\Request;
-use App\NetworkM;
+use App\GroupM;
 use App\PostM;
 use App\SmartDataItemM;
 
@@ -19,7 +19,7 @@ class PostM extends Model
   // needed to make  link in subPosts list and to use with "storeAs" function start
   public static function ShowID(){
 
-    // $root= NetworkM::ShowBaseLocation();
+    // $root= GroupM::ShowBaseLocation();
     $arguments = func_get_args()[0];
     // var_dump($arguments);
     // array_shift($arguments);
@@ -42,7 +42,7 @@ class PostM extends Model
   public static function ShowLocation($ShowID) {
 
     // dd(func_get_args()[0]);
-    // echo NetworkM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
+    // echo GroupM::ShowBaseLocation().PostM::ShowID(func_get_args()[0]);
 
 
 
@@ -50,9 +50,9 @@ class PostM extends Model
     // var_dump($arguments);
     if (!empty($ShowID)) {
 
-      return  NetworkM::ShowBaseLocation().$ShowID;
+      return  GroupM::ShowBaseLocation().$ShowID;
     } else {
-      // return  NetworkM::ShowBaseLocation().NetworkM::ShowID(func_get_args()[0]);
+      // return  GroupM::ShowBaseLocation().GroupM::ShowID(func_get_args()[0]);
       return "now what";
     }
 
@@ -66,7 +66,7 @@ class PostM extends Model
   }
 
   public static function ShowBaseIDPlusBaseLocation() {
-    return NetworkM::ShowBaseLocation().PostM::ShowBaseID(func_get_args()[0]);
+    return GroupM::ShowBaseLocation().PostM::ShowBaseID(func_get_args()[0]);
   }
   // needed for header call end
 
@@ -147,8 +147,8 @@ class PostM extends Model
 
 
     $ShowID = PostM::ShowID(func_get_args()[0]);
-    $ShowLocation = NetworkM::ShowLocation($ShowID);
-    $staticdir = NetworkM::ShowLocation($ShowID);
+    $ShowLocation = GroupM::ShowLocation($ShowID);
+    $staticdir = GroupM::ShowLocation($ShowID);
 
     $result[$ShowID] = ShowSubPostHelper($ShowLocation,$staticdir,$ShowID);
 
@@ -199,16 +199,16 @@ class PostM extends Model
         $ShowID = PostM::ShowID($arguments);
 
         $request->zip_file->storeAs("public/".$ShowID."/".SmartDataItemM::ShowBaseLocation(), $request->zip_file->getClientOriginalName());
-        // $path = "Econet/".NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
-        // $path = NetworkM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
-        $path = NetworkM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName();
+        // $path = "Econet/".GroupM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
+        // $path = GroupM::ShowBaseLocation().$ShowID."/".$request->zip_file->getClientOriginalName();
+        $path = GroupM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName();
         // dd($path);
         // $Path = public_path($ShowID);
 
         $zipper = new \Chumper\Zipper\Zipper;
-        $zipper->make($path)->extractTo(NetworkM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/");
+        $zipper->make($path)->extractTo(GroupM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/");
         $zipper->close();
-        unlink(NetworkM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName());
+        unlink(GroupM::ShowBaseLocation().$ShowID."/".SmartDataItemM::ShowBaseLocation()."/".$request->zip_file->getClientOriginalName());
       }
       if (null !== $request->file('zip_file')) {
         StoreSmartDataFromFile($arguments, $request);

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\NetworkM;
+use App\GroupM;
 use App\PostM;
 use App\MetadataM;
 use App\RichDataM;
@@ -48,16 +48,26 @@ class Network extends Controller
       // dd($request);
       $arguments = func_get_args();
       array_shift($arguments);
-      PostM::Store($arguments, $request);
+      if (!empty($arguments)) {
+        // dd(1);
+        // dd($arguments);
+        PostM::Store($arguments, $request);
+
+        $allURLs = PostM::ShowActions($arguments);
+        // dd($allURLs['sub_post_edit']);
 
 
+        return redirect($allURLs['sub_post_edit']);
+      } else {
+        // dd(2);
+        GroupM::Store($request);
 
+        $allURLs = PostM::ShowActions($arguments);
+        // dd($allURLs['sub_post_edit']);
 
-      $allURLs = PostM::ShowActions($arguments);
-      // dd($allURLs['sub_post_edit']);
+        return redirect($allURLs['sub_post_edit']);
 
-
-      return redirect($allURLs['sub_post_edit']);
+      }
     }
 
     /**
@@ -79,7 +89,7 @@ class Network extends Controller
         // dd($SubPostDeepList);
         // $ShowAllDeepSmartData = PostM::ShowAllDeepSmartData(func_get_args()[0]);
         // $func_get_args =func_get_args();
-        // $VSiteHeader = PostM::ShowAllDeepSmartDataHelper(NetworkM::ShowLocation(end($func_get_args)));
+        // $VSiteHeader = PostM::ShowAllDeepSmartDataHelper(GroupM::ShowLocation(end($func_get_args)));
 
 
         $allURLs = PostM::ShowActions(func_get_args());
@@ -93,7 +103,7 @@ class Network extends Controller
         // dd(2);
         $allURLs = PostM::ShowActions(func_get_args());
 
-        $PostList = NetworkM::ShowPost();
+        $PostList = GroupM::ShowAll();
 
 
         // echo Route::getCurrentRoute()->getPath();
@@ -155,7 +165,7 @@ class Network extends Controller
         // dd(2);
         $allURLs = PostM::ShowActions(func_get_args());
 
-        $PostList = NetworkM::ShowPost();
+        $PostList = GroupM::ShowAll();
 
         $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
 

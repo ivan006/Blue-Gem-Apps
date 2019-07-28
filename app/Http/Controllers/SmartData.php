@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\NetworkM;
+use App\GroupM;
 use App\PostM;
 use App\MetadataM;
 
