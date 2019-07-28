@@ -46,16 +46,33 @@ class SmartDataItemM extends Model
         foreach ($shallowList as $key => $value) {
           if (!in_array($value,array(".","..")))  {
             $DataLocation = $ShowLocation . "/" . $value;
+
+            $Attribute_types = array(
+              '1' => 'SmartDataType',
+              '2' => 'SmartDataContent'
+            );
             if (is_dir($DataLocation)){
+
               $result[$value] = ShowHelper($DataLocation);
+              $result[$value][$Attribute_types['1']] = 'dir';
             } else {
-              $result[$value] = file_get_contents($DataLocation);
-              // if (1==1) {
-              //   $result[$value] = mime_content_type($DataLocation);
-              // } else {
-              //
-              //   $result[$value] = file_get_contents($DataLocation);
-              // }
+              // $result[$value] = file_get_contents($DataLocation);
+
+              if (mime_content_type($DataLocation) == "image/jpeg") {
+                $type = pathinfo($DataLocation, PATHINFO_EXTENSION);
+                $data = file_get_contents($DataLocation);
+                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+                $result[$value][$Attribute_types['2']] = $base64;
+                $result[$value][$Attribute_types['1']] = 'img';
+              } elseif (mime_content_type($DataLocation) == "text/plain" OR mime_content_type($DataLocation) == "text/html") {
+
+                $result[$value][$Attribute_types['2']] = file_get_contents($DataLocation);
+                $result[$value][$Attribute_types['1']] = 'text';
+              } else {
+                $result[$value][$Attribute_types['2']] = "error dont support this: ".mime_content_type($DataLocation);
+                $result[$value][$Attribute_types['1']] = 'text';
+              }
             }
           }
         }

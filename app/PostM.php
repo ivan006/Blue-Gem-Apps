@@ -189,7 +189,7 @@ class PostM extends Model
   }
 
   public static function Store($arguments, $request) {
-    // dd($request)
+    dd($request);
     $SmartDataItemM_ShowActions = SmartDataItemM::ShowActions();
     $ShowID = PostM::ShowID($arguments);
 
