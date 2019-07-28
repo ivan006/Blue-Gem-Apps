@@ -1,7 +1,7 @@
 
 
 
-@include('includes.general-include-one-of-four')
+@include('includes.base-dom/general-include-one-of-four')
 
 
 <style>
@@ -31,7 +31,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 /* stuf */
 </style>
 
-@include('includes.general-include-two-of-four')
+@include('includes.base-dom/general-include-two-of-four')
 
 
 
@@ -42,7 +42,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 @include('includes.menu_post')
 
-@include('includes.general-include-three-of-four')
+@include('includes.base-dom/general-include-three-of-four')
 
 
 
@@ -135,4 +135,4 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 
 
-@include('includes.general-include-four-of-four')
+@include('includes.base-dom/general-include-four-of-four')

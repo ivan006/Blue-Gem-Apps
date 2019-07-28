@@ -1,33 +1,8 @@
-@include('includes.general-include-one-of-four')
+@include('includes.base-dom/general-include-one-of-four')
 
+  <link href="{{ asset('css/treeview.css') }}" rel="stylesheet">
 
-<style>
-html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
-/* .g-futuristic-indented-list {
-margin-left: 1em;
-margin-top: 1em;
-border-left: 2px lightgrey solid;
-padding-left: 1em;
-} */
-.g-bor-gre {
-  border: 2px lightgrey solid;
-}
-.g-bor-top-0 {
-  border-top: 0px ;
-
-}
-
-/* stuf */
-.f-treeview li.f-leaf {
-  list-style-image: url('https://www.w3.org/TR/wai-aria-practices/examples/treeview/treeview-1/images/file.png');
-}
-.f-treeview li {
-  list-style-image: url('https://www.w3.org/TR/wai-aria-practices/examples/treeview/treeview-1/images/closed.png');
-}
-/* stuf */
-</style>
-
-@include('includes.general-include-two-of-four')
+@include('includes.base-dom/general-include-two-of-four')
 
 
 
@@ -38,7 +13,7 @@ padding-left: 1em;
 
 @include('includes.menu_post')
 
-@include('includes.general-include-three-of-four')
+@include('includes.base-dom/general-include-three-of-four')
 
 
 
@@ -291,4 +266,4 @@ padding-left: 1em;
 
 
 
-@include('includes.general-include-four-of-four')
+@include('includes.base-dom/general-include-four-of-four')
