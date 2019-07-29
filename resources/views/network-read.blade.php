@@ -35,7 +35,32 @@
 
 <!-- Middle Column -->
 <div class="w3-col m8">
+  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
+    <h2>
+      Guide
+
+    </h2>
+    <p>
+      Welcome to Harmonyville.
+    </p>
+    <ul>
+      <li>
+        To view content just select a group from the list below.
+      </li>
+
+
+
+      <li>
+        To edit the group click "mode", at the top, and select "edit" mode after opeing it.
+      </li>
+
+    </ul>
+
+
+    <br>
+
+  </div>
   <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
     <h2>

@@ -141,7 +141,16 @@ class ShortcodeMiddleware
                 $shortcode = $value;
                 $parameter = str_replace("[r]", "", $shortcode);
                 $parameter = str_replace("[/r]", "", $parameter);
-                $result = SmartDataItemM::Show($arguments2[0], $parameter  );
+                // dd($parameter);
+                $Attribute_types = array(
+                  '1' => 'SmartDataType',
+                  '2' => 'SmartDataContent'
+                );
+                $ShowLocation = PostM::ShowLocation($arguments2[0]);
+                $DataLocation = $ShowLocation . "/" . $parameter;
+                $result = SmartDataItemM::Show($DataLocation);
+
+
                 // $retrieval_path = url('/')."/blogApi/".$parameter;
                 //
                 //
@@ -158,7 +167,10 @@ class ShortcodeMiddleware
                 // } else {
                 //   $result = "error";
                 // }
-                $responceContent = str_replace($shortcode, $result, $responceContent);
+
+
+                  $responceContent = str_replace($shortcode, $result[$Attribute_types[2]], $responceContent);
+
 
               }
 

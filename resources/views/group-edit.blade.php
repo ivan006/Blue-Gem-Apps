@@ -28,7 +28,28 @@
 
 <!-- Middle Column -->
 <div class="w3-col m8">
+  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
+    <h2>
+      Guide
+
+    </h2>
+    <p>
+      Well done!
+    </p>
+    <ul>
+      <li>
+        Please explore the below options!
+      </li>
+
+
+
+    </ul>
+
+
+    <br>
+
+  </div>
   <form  id="form" enctype="multipart/form-data" name="1" class="" action="{{ $allURLs['sub_post_store'] }}" method="post">
 
     <input class="g-bor-gre"  style="display: none;" type="text" name="post_files_create_from_zip" value="1">
@@ -60,17 +81,23 @@
       <div class="">
 
         <?php
-        $String_rich = "rich.txt";
+        $String_rich = "rich.html";
         $key = $String_rich;
 
         $key_encode = g_base64_encode($key);
-        if (isset($ShowAllDeepSmartData["rich.txt"])) {
+        if (isset($ShowAllDeepSmartData["rich.html"])) {
           // code...
           $SmartDataID = "SmartDataItemShowFieldValues[".$key_encode."]";
           ?>
           <span><?php echo SmartDataFileItemMenu($SmartDataID,$SmartDataItemM_ShowActions); ?></span>
           <input class="g-bor-gre"  style="display:none;" type="text" name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataName'] ?>]" value="<?php echo $key ?>">
-          <textarea class="g-bor-gre "  style="width:100%;"  name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" ><?php echo $ShowAllDeepSmartData["rich.txt"][$Attribute_types['2']]; ?></textarea>
+          <?php
+          // if (!isset($ShowAllDeepSmartData["rich.html"][$Attribute_types['2']])) {
+          //   // code...
+          //   dd($ShowAllDeepSmartData);
+          // }
+          ?>
+          <textarea class="g-bor-gre "  style="width:100%;"  name="<?php echo $SmartDataID ?>[<?php echo $SmartDataItemM_ShowAttributeTypes['/SmartDataContent'] ?>]" rows="8" ><?php echo $ShowAllDeepSmartData["rich.html"][$Attribute_types['2']]; ?></textarea>
           <?php
         }
         ?>

@@ -59,7 +59,7 @@ class GroupM extends Model
   //         $subDataNameList = scandir($dataLocation);
   //         // dd($dataLocation);
   //         // dd($subDataNameList);
-  //         $blackList = array(".","..",SmartDataItemM::ShowBaseLocation(),"rich.txt");
+  //         $blackList = array(".","..",SmartDataItemM::ShowBaseLocation(),"rich.html");
   //         $whiteList = array_diff_key($subDataNameList,$blackList);
   //         // dd($whiteList );
   //         if (!empty($whiteList)) {

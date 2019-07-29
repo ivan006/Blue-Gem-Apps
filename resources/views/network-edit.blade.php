@@ -42,10 +42,43 @@
   //   echo $VSiteHeader;
   // }
   //
-  // if (isset($VPgCont["rich.txt"])) {
-  //   echo $VPgCont["rich.txt"];
+  // if (isset($VPgCont["rich.html"])) {
+  //   echo $VPgCont["rich.html"];
   // }
   ?>
+  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+
+    <h2>
+      Guide
+
+    </h2>
+    <p>
+      Well done!
+    </p>
+    <ul>
+      <li>
+        Now click the "create" button below
+      </li>
+      <li>
+        Then enter a group name and then click "submit"
+      </li>
+    </ul>
+    <ul>
+      <li>
+        Then to view your group click on it.
+      </li>
+      <li>
+        Bear in mind that to begin with it will be empty.
+      </li>
+      <li>
+        So to create content for your group click "mode -> edit" again after opeing it.
+      </li>
+
+    </ul>
+
+    <br>
+
+  </div>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
 
           <h2>

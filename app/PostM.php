@@ -129,7 +129,7 @@ class PostM extends Model
             $dataLocation = $ShowLocation . "/" . $value;
             if (is_dir($dataLocation) and basename($dataLocation) !== SmartDataItemM::ShowBaseLocation()){
               $subDataNameList = scandir($dataLocation);
-              $blackList = array(".","..",SmartDataItemM::ShowBaseLocation(),"rich.txt");
+              $blackList = array(".","..",SmartDataItemM::ShowBaseLocation(),"rich.html");
               $whiteList = array_diff_key($subDataNameList,$blackList);
               if (!empty($whiteList)) {
                 $result[$value] = ShowSubPostHelper($dataLocation,$staticdir,$ShowID);
@@ -178,7 +178,7 @@ class PostM extends Model
       // dd($shallowList);
       foreach ($shallowList as $key => $value) {
         $DataLocation = $ShowLocation . $value;
-        if (!in_array($value,array(".","..", "rich.txt") ) &&   !is_dir($DataLocation))  {
+        if (!in_array($value,array(".","..", "rich.html") ) &&   !is_dir($DataLocation))  {
           // dd($DataLocation);
           $result[$value] = file_get_contents($DataLocation);
         }
@@ -221,7 +221,7 @@ class PostM extends Model
       //
       //   function StoreRichData($ShowLocation, $request){
       //
-      //     $filename =  "rich.txt";
+      //     $filename =  "rich.html";
       //     $file =  $ShowLocation."/".$filename;
       //     // echo file_get_contents($file);
       //

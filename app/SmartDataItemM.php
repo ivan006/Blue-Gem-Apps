@@ -43,7 +43,15 @@ class SmartDataItemM extends Model
       function ShowHelper($ShowLocation) {
         $result = array();
         $shallowList = scandir($ShowLocation);
+        // dd($shallowList);
+        // echo $ShowLocation."<br>";
+        // if ($ShowLocation == "/home/vagrant/code-b/storage/app/public/aaas/smart") {
+        //   // code...
+        //   dd($shallowList);
+        // }
+
         foreach ($shallowList as $key => $value) {
+
           if (!in_array($value,array(".","..")))  {
             $DataLocation = $ShowLocation . "/" . $value;
 
@@ -52,27 +60,10 @@ class SmartDataItemM extends Model
               '2' => 'SmartDataContent'
             );
             if (is_dir($DataLocation)){
-
               $result[$value] = ShowHelper($DataLocation);
               $result[$value][$Attribute_types['1']] = 'dir';
             } else {
-              // $result[$value] = file_get_contents($DataLocation);
-
-              if (mime_content_type($DataLocation) == "image/jpeg") {
-                $type = pathinfo($DataLocation, PATHINFO_EXTENSION);
-                $data = file_get_contents($DataLocation);
-                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-
-                $result[$value][$Attribute_types['2']] = $base64;
-                $result[$value][$Attribute_types['1']] = 'img';
-              } elseif (mime_content_type($DataLocation) == "text/plain" OR mime_content_type($DataLocation) == "text/html") {
-
-                $result[$value][$Attribute_types['2']] = file_get_contents($DataLocation);
-                $result[$value][$Attribute_types['1']] = 'text';
-              } else {
-                $result[$value][$Attribute_types['2']] = "error dont support this: ".mime_content_type($DataLocation);
-                $result[$value][$Attribute_types['1']] = 'text';
-              }
+              $result[$value] = SmartDataItemM::Show($DataLocation);
             }
           }
         }
@@ -86,32 +77,57 @@ class SmartDataItemM extends Model
     if (is_dir($ShowLocation)) {
       // $Show[$ShowDataID] =   ShowHelper($ShowLocation);
       $Show =   ShowHelper($ShowLocation);
-
+      // dd($Show);
       return $Show;
     }
   }
 
-  public static function Show($ShowID, $DataID) {
+  public static function Show($DataLocation) {
+
+    // $result = file_get_contents($DataLocation);
+    $Attribute_types = array(
+      '1' => 'SmartDataType',
+      '2' => 'SmartDataContent'
+    );
+    if (file_exists($DataLocation)){
+      if (mime_content_type($DataLocation) == "image/jpeg") {
+        $type = pathinfo($DataLocation, PATHINFO_EXTENSION);
+        $data = file_get_contents($DataLocation);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $result[$Attribute_types['2']] = $base64;
+        $result[$Attribute_types['1']] = 'img';
+      } elseif (mime_content_type($DataLocation) == "text/plain" OR mime_content_type($DataLocation) == "text/html") {
+
+        $result[$Attribute_types['2']] = file_get_contents($DataLocation);
+        $result[$Attribute_types['1']] = 'text';
+      } else {
+        $result[$Attribute_types['2']] = "error dont support this: ".mime_content_type($DataLocation);
+        $result[$Attribute_types['1']] = 'text';
+      }
+      return $result;
+    } else {
+      $result[$Attribute_types['2']] = "error";
+      $result[$Attribute_types['1']] = 'null';
+
+      return $result;
+    }
+
+  }
+  public static function ShowOld($ShowID, $DataID) {
 
     // $ShowLocation = PostM::ShowLocation($ShowID)."/".$ShowDataID;
 
     $ShowLocation = PostM::ShowLocation($ShowID);
     // dd($ShowLocation);
-
       // $Show[$ShowDataID] =   ShowHelper($ShowLocation);
-
       $DataLocation = $ShowLocation . "/" . $DataID;
       if (file_exists($DataLocation)){
-
         $result = file_get_contents($DataLocation);
         return  $result;
       } else {
         return  'error';
-
       }
-
-
-
 
   }
 
